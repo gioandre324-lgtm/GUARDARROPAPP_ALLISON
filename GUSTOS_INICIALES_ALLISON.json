@@ -1,0 +1,127 @@
+{
+  "propietaria": "Allison",
+  "fecha_generacion": "2026-08-11",
+  "perfil": {
+    "edad": 29,
+    "estatura_cm": 153,
+    "talla_habitual": "M",
+    "tallas_registradas": [
+      "S",
+      "M",
+      "XS/S"
+    ],
+    "tipo_cuerpo": null,
+    "notas_talla": "Talla predominante M; algunas prendas S/XS-S según la marca."
+  },
+  "preferencias_estilo": {
+    "estilos_preferidos": [
+      "smart",
+      "casual",
+      "elegante",
+      "oficina"
+    ],
+    "prioridad_estilos": [
+      {
+        "estilo": "oficina",
+        "descripcion": "Prendas formales/semi-formales para el trabajo: blazers, camisas, pantalones sastre wide-leg, chalecos."
+      },
+      {
+        "estilo": "smart",
+        "descripcion": "Combinación entre formal y casual: sweaters, tops tejidos, blazers cropped."
+      },
+      {
+        "estilo": "elegante",
+        "descripcion": "Prendas para ocasiones especiales: blusas drapeadas, blazers, body, chalecos con botones dorados."
+      },
+      {
+        "estilo": "casual",
+        "descripcion": "Prendas de uso diario: camisetas, sweaters básicos, sudaderas, jeans/denim."
+      }
+    ],
+    "ocasiones_frecuentes": [
+      "oficina",
+      "elegante",
+      "casual",
+      "smart"
+    ],
+    "prendas_favoritas_por_tipo": {
+      "parte_superior": [
+        "sweater",
+        "blusa",
+        "camisa"
+      ],
+      "chaqueta_abrigo": [
+        "blazer",
+        "chaleco"
+      ],
+      "pantalon": [
+        "wide-leg de talle alto"
+      ],
+      "calzado": [
+        "botines de tacón"
+      ]
+    }
+  },
+  "paleta_de_color": {
+    "colores_dominantes": [
+      "crema",
+      "beige",
+      "marrón",
+      "negro",
+      "azul marino",
+      "gris"
+    ],
+    "colores_de_acento": [
+      "vino",
+      "rosa palo",
+      "lila",
+      "verde oliva",
+      "azul medio"
+    ],
+    "notas": "Guardarropa de base neutra (crema/beige/marrón/negro/azul marino) combinada con acentos en tonos pastel y vino."
+  },
+  "preferencias_prenda": {
+    "cuellos_preferidos": [
+      "V",
+      "redondo",
+      "solapa/polo",
+      "drapeado"
+    ],
+    "mangas_preferidas": [
+      "larga",
+      "corta",
+      "3/4"
+    ],
+    "estampados_preferidos": [
+      "liso",
+      "rayas",
+      "texturas tejidas"
+    ],
+    "materiales_frecuentes": [
+      "tejido de punto",
+      "satinado",
+      "lino",
+      "algodón"
+    ],
+    "detalles_que_le_gustan": [
+      "botones dorados",
+      "cinturones anudables",
+      "cuellos drapeados",
+      "bordados"
+    ]
+  },
+  "reglas_recomendacion": {
+    "clima": "Ajustar recomendaciones por estación: sweaters/chalecos/botines en otoño-invierno; blusas, tops sin mangas, lino y body en primavera-verano.",
+    "combinaciones_sugeridas": [
+      "Blazer + pantalón wide-leg + botines para look de oficina.",
+      "Sweater tejido + wide-leg para smart casual.",
+      "Blusa drapeada + chaleco sastre para elegante.",
+      "Camiseta básica + jeans/denim para casual."
+    ]
+  },
+  "estado_inicial": {
+    "onboarding_completo": true,
+    "fuente_datos": "Cuestionario inicial + inventario fotográfico de guardarropa (ROPA_ALLISON.json)",
+    "requiere_actualizacion_periodica": true
+  }
+}

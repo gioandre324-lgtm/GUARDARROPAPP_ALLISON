@@ -1,0 +1,1612 @@
+{
+  "propietaria": "Allison",
+  "fecha_generacion": "2026-08-11",
+  "total_prendas": 53,
+  "carpeta_fotos_origen": "GUARDARROPA/APP PARA ALLISON",
+  "prendas": [
+    {
+      "id": "ALL-001",
+      "archivo_foto": "20260812_003704660_iOS.jpg",
+      "categoria": "parte_superior",
+      "subcategoria": "blusa",
+      "nombre": "Blusa crema drapeada con broche dorado",
+      "color_principal": "crema",
+      "colores": [
+        "crema"
+      ],
+      "estampado": "liso",
+      "manga": "corta",
+      "cuello": "drapeado asimétrico",
+      "marca": null,
+      "talla": null,
+      "estilo": [
+        "elegante",
+        "smart"
+      ],
+      "ocasion": [
+        "oficina",
+        "elegante"
+      ],
+      "estacion": [
+        "todo el año"
+      ],
+      "notas": "Detalle de argollas doradas en el hombro",
+      "veces_usada": 0,
+      "favorita": false
+    },
+    {
+      "id": "ALL-002",
+      "archivo_foto": "20260812_003704731_iOS.jpg",
+      "categoria": "calzado",
+      "subcategoria": "botines",
+      "nombre": "Botines negros de cuero tacón grueso",
+      "color_principal": "negro",
+      "colores": [
+        "negro"
+      ],
+      "estampado": "liso",
+      "manga": null,
+      "cuello": null,
+      "marca": null,
+      "talla": null,
+      "estilo": [
+        "elegante",
+        "smart"
+      ],
+      "ocasion": [
+        "oficina",
+        "elegante",
+        "casual"
+      ],
+      "estacion": [
+        "otoño",
+        "invierno"
+      ],
+      "notas": "Punta fina, tacón grueso forrado, cierre lateral",
+      "veces_usada": 0,
+      "favorita": false
+    },
+    {
+      "id": "ALL-003",
+      "archivo_foto": "20260812_003704764_iOS.jpg",
+      "categoria": "pantalon",
+      "subcategoria": "sastre wide-leg",
+      "nombre": "Pantalón sastre marrón oscuro wide-leg",
+      "color_principal": "marrón oscuro",
+      "colores": [
+        "marrón oscuro"
+      ],
+      "estampado": "liso",
+      "manga": null,
+      "cuello": null,
+      "marca": null,
+      "talla": "M",
+      "estilo": [
+        "smart",
+        "oficina"
+      ],
+      "ocasion": [
+        "oficina",
+        "smart"
+      ],
+      "estacion": [
+        "todo el año"
+      ],
+      "notas": "Talle alto, pinzas delanteras, pierna ancha",
+      "veces_usada": 0,
+      "favorita": false
+    },
+    {
+      "id": "ALL-004",
+      "archivo_foto": "20260812_003704793_iOS.jpg",
+      "categoria": "calzado",
+      "subcategoria": "botines",
+      "nombre": "Botines topo/gris tacón grueso",
+      "color_principal": "topo",
+      "colores": [
+        "topo"
+      ],
+      "estampado": "liso",
+      "manga": null,
+      "cuello": null,
+      "marca": null,
+      "talla": null,
+      "estilo": [
+        "elegante",
+        "smart",
+        "casual"
+      ],
+      "ocasion": [
+        "oficina",
+        "casual",
+        "elegante"
+      ],
+      "estacion": [
+        "otoño",
+        "invierno"
+      ],
+      "notas": "Punta fina, hebilla decorativa lateral",
+      "veces_usada": 0,
+      "favorita": false
+    },
+    {
+      "id": "ALL-005",
+      "archivo_foto": "20260812_003704831_iOS.jpg",
+      "categoria": "parte_superior",
+      "subcategoria": "sweater",
+      "nombre": "Sweater tejido rayas camel y blanco cuello polo",
+      "color_principal": "camel",
+      "colores": [
+        "camel",
+        "blanco"
+      ],
+      "estampado": "rayas",
+      "manga": "larga",
+      "cuello": "solapa polo",
+      "marca": "Xiomi",
+      "talla": "M",
+      "estilo": [
+        "casual",
+        "smart"
+      ],
+      "ocasion": [
+        "casual",
+        "oficina"
+      ],
+      "estacion": [
+        "otoño",
+        "invierno"
+      ],
+      "notas": "",
+      "veces_usada": 0,
+      "favorita": false
+    },
+    {
+      "id": "ALL-006",
+      "archivo_foto": "20260812_003704869_iOS.jpg",
+      "categoria": "parte_superior",
+      "subcategoria": "sweater",
+      "nombre": "Sweater tejido rayas negro y blanco cuello polo",
+      "color_principal": "negro",
+      "colores": [
+        "negro",
+        "blanco"
+      ],
+      "estampado": "rayas",
+      "manga": "larga",
+      "cuello": "solapa polo",
+      "marca": "Xiomi",
+      "talla": "M",
+      "estilo": [
+        "casual",
+        "smart"
+      ],
+      "ocasion": [
+        "casual",
+        "oficina"
+      ],
+      "estacion": [
+        "otoño",
+        "invierno"
+      ],
+      "notas": "",
+      "veces_usada": 0,
+      "favorita": false
+    },
+    {
+      "id": "ALL-007",
+      "archivo_foto": "20260812_003704897_iOS.jpg",
+      "categoria": "chaqueta_abrigo",
+      "subcategoria": "blazer",
+      "nombre": "Blazer crop crema",
+      "color_principal": "crema",
+      "colores": [
+        "crema"
+      ],
+      "estampado": "liso",
+      "manga": "larga",
+      "cuello": "solapa",
+      "marca": "Colombia Fashion",
+      "talla": "M",
+      "estilo": [
+        "elegante",
+        "smart",
+        "oficina"
+      ],
+      "ocasion": [
+        "oficina",
+        "elegante"
+      ],
+      "estacion": [
+        "todo el año"
+      ],
+      "notas": "Corte crop, doble botón",
+      "veces_usada": 0,
+      "favorita": false
+    },
+    {
+      "id": "ALL-008",
+      "archivo_foto": "20260812_003704925_iOS.jpg",
+      "categoria": "chaqueta_abrigo",
+      "subcategoria": "blazer",
+      "nombre": "Blazer crop azul marino",
+      "color_principal": "azul marino",
+      "colores": [
+        "azul marino"
+      ],
+      "estampado": "liso",
+      "manga": "larga",
+      "cuello": "solapa",
+      "marca": "Zara",
+      "talla": null,
+      "estilo": [
+        "elegante",
+        "smart",
+        "oficina"
+      ],
+      "ocasion": [
+        "oficina",
+        "elegante"
+      ],
+      "estacion": [
+        "todo el año"
+      ],
+      "notas": "Corte crop, botones metálicos",
+      "veces_usada": 0,
+      "favorita": false
+    },
+    {
+      "id": "ALL-009",
+      "archivo_foto": "20260812_003704956_iOS.jpg",
+      "categoria": "parte_superior",
+      "subcategoria": "camisa",
+      "nombre": "Camisa satinada azul marino",
+      "color_principal": "azul marino",
+      "colores": [
+        "azul marino"
+      ],
+      "estampado": "liso",
+      "manga": "larga",
+      "cuello": "camisero",
+      "marca": "Marquis",
+      "talla": "M",
+      "estilo": [
+        "smart",
+        "oficina",
+        "elegante"
+      ],
+      "ocasion": [
+        "oficina",
+        "elegante"
+      ],
+      "estacion": [
+        "todo el año"
+      ],
+      "notas": "Tela satinada con brillo, bolsillo delantero",
+      "veces_usada": 0,
+      "favorita": false
+    },
+    {
+      "id": "ALL-010",
+      "archivo_foto": "20260812_003704988_iOS.jpg",
+      "categoria": "chaqueta_abrigo",
+      "subcategoria": "chaleco largo",
+      "nombre": "Chaleco largo estilo trench color topo",
+      "color_principal": "topo",
+      "colores": [
+        "topo"
+      ],
+      "estampado": "liso",
+      "manga": "sin mangas",
+      "cuello": "solapa ancha",
+      "marca": "Colombia Fashion",
+      "talla": "M",
+      "estilo": [
+        "elegante",
+        "smart"
+      ],
+      "ocasion": [
+        "oficina",
+        "elegante"
+      ],
+      "estacion": [
+        "otoño",
+        "invierno"
+      ],
+      "notas": "Largo midi con cinturón para anudar, doble botonadura",
+      "veces_usada": 0,
+      "favorita": false
+    },
+    {
+      "id": "ALL-011",
+      "archivo_foto": "20260812_003705023_iOS.jpg",
+      "categoria": "parte_superior",
+      "subcategoria": "sweater",
+      "nombre": "Sweater tejido crudo cuello V trenzado",
+      "color_principal": "crudo",
+      "colores": [
+        "crudo"
+      ],
+      "estampado": "trenzado",
+      "manga": "larga",
+      "cuello": "V",
+      "marca": null,
+      "talla": null,
+      "estilo": [
+        "casual",
+        "smart"
+      ],
+      "ocasion": [
+        "casual",
+        "oficina"
+      ],
+      "estacion": [
+        "otoño",
+        "invierno"
+      ],
+      "notas": "",
+      "veces_usada": 0,
+      "favorita": false
+    },
+    {
+      "id": "ALL-012",
+      "archivo_foto": "20260812_003705059_iOS.jpg",
+      "categoria": "chaqueta_abrigo",
+      "subcategoria": "blazer",
+      "nombre": "Blazer rosa palo",
+      "color_principal": "rosa palo",
+      "colores": [
+        "rosa palo"
+      ],
+      "estampado": "liso",
+      "manga": "3/4 ajustable",
+      "cuello": "solapa",
+      "marca": "Marquis",
+      "talla": "S",
+      "estilo": [
+        "elegante",
+        "smart"
+      ],
+      "ocasion": [
+        "oficina",
+        "elegante"
+      ],
+      "estacion": [
+        "todo el año"
+      ],
+      "notas": "Bolsillos con solapa, manga 3/4 con puño ajustable",
+      "veces_usada": 0,
+      "favorita": false
+    },
+    {
+      "id": "ALL-013",
+      "archivo_foto": "20260812_003705091_iOS.jpg",
+      "categoria": "parte_superior",
+      "subcategoria": "camisa",
+      "nombre": "Camisa a rayas rosa y blanco",
+      "color_principal": "rosa",
+      "colores": [
+        "rosa",
+        "blanco"
+      ],
+      "estampado": "rayas",
+      "manga": "larga",
+      "cuello": "camisero",
+      "marca": "Loving",
+      "talla": null,
+      "estilo": [
+        "casual",
+        "smart"
+      ],
+      "ocasion": [
+        "oficina",
+        "casual"
+      ],
+      "estacion": [
+        "todo el año"
+      ],
+      "notas": "",
+      "veces_usada": 0,
+      "favorita": false
+    },
+    {
+      "id": "ALL-014",
+      "archivo_foto": "20260812_003705127_iOS.jpg",
+      "categoria": "parte_superior",
+      "subcategoria": "sweater",
+      "nombre": "Sweater vino cuello V con ribete blanco",
+      "color_principal": "vino",
+      "colores": [
+        "vino"
+      ],
+      "estampado": "liso con ribete",
+      "manga": "larga",
+      "cuello": "V",
+      "marca": "Xiomi",
+      "talla": "M",
+      "estilo": [
+        "casual",
+        "smart"
+      ],
+      "ocasion": [
+        "casual",
+        "oficina"
+      ],
+      "estacion": [
+        "otoño",
+        "invierno"
+      ],
+      "notas": "",
+      "veces_usada": 0,
+      "favorita": false
+    },
+    {
+      "id": "ALL-015",
+      "archivo_foto": "20260812_003705159_iOS.jpg",
+      "categoria": "parte_superior",
+      "subcategoria": "sweater",
+      "nombre": "Sweater crema con texto bordado",
+      "color_principal": "crema",
+      "colores": [
+        "crema"
+      ],
+      "estampado": "texto bordado",
+      "manga": "larga",
+      "cuello": "redondo",
+      "marca": "Index",
+      "talla": "S",
+      "estilo": [
+        "casual"
+      ],
+      "ocasion": [
+        "casual"
+      ],
+      "estacion": [
+        "otoño",
+        "invierno"
+      ],
+      "notas": "Bordado 'KISS ME LIKE YOU WANNA BE LOVED'",
+      "veces_usada": 0,
+      "favorita": false
+    },
+    {
+      "id": "ALL-016",
+      "archivo_foto": "20260812_003705194_iOS.jpg",
+      "categoria": "parte_superior",
+      "subcategoria": "sweater",
+      "nombre": "Sweater tejido gris cuello V",
+      "color_principal": "gris",
+      "colores": [
+        "gris"
+      ],
+      "estampado": "liso",
+      "manga": "larga",
+      "cuello": "V",
+      "marca": "Singular",
+      "talla": null,
+      "estilo": [
+        "casual",
+        "smart"
+      ],
+      "ocasion": [
+        "casual",
+        "oficina"
+      ],
+      "estacion": [
+        "otoño",
+        "invierno"
+      ],
+      "notas": "",
+      "veces_usada": 0,
+      "favorita": false
+    },
+    {
+      "id": "ALL-017",
+      "archivo_foto": "20260812_003705239_iOS.jpg",
+      "categoria": "parte_superior",
+      "subcategoria": "sweater",
+      "nombre": "Sweater jacquard gris y blanco motivo nórdico",
+      "color_principal": "gris",
+      "colores": [
+        "gris",
+        "blanco"
+      ],
+      "estampado": "jacquard nórdico",
+      "manga": "larga",
+      "cuello": "redondo",
+      "marca": null,
+      "talla": null,
+      "estilo": [
+        "casual"
+      ],
+      "ocasion": [
+        "casual"
+      ],
+      "estacion": [
+        "invierno"
+      ],
+      "notas": "",
+      "veces_usada": 0,
+      "favorita": false
+    },
+    {
+      "id": "ALL-018",
+      "archivo_foto": "20260812_003705277_iOS.jpg",
+      "categoria": "parte_superior",
+      "subcategoria": "sudadera",
+      "nombre": "Sudadera crudo con cierre 1/4",
+      "color_principal": "crudo",
+      "colores": [
+        "crudo"
+      ],
+      "estampado": "liso",
+      "manga": "larga",
+      "cuello": "cuello alto con cierre",
+      "marca": "H&M",
+      "talla": null,
+      "estilo": [
+        "casual"
+      ],
+      "ocasion": [
+        "casual"
+      ],
+      "estacion": [
+        "otoño",
+        "invierno"
+      ],
+      "notas": "",
+      "veces_usada": 0,
+      "favorita": false
+    },
+    {
+      "id": "ALL-019",
+      "archivo_foto": "20260812_003705310_iOS.jpg",
+      "categoria": "parte_superior",
+      "subcategoria": "sweater",
+      "nombre": "Sweater tejido rayas blanco y gris cuello polo",
+      "color_principal": "blanco",
+      "colores": [
+        "blanco",
+        "gris"
+      ],
+      "estampado": "rayas",
+      "manga": "larga",
+      "cuello": "solapa polo",
+      "marca": null,
+      "talla": null,
+      "estilo": [
+        "casual",
+        "smart"
+      ],
+      "ocasion": [
+        "casual",
+        "oficina"
+      ],
+      "estacion": [
+        "otoño",
+        "invierno"
+      ],
+      "notas": "",
+      "veces_usada": 0,
+      "favorita": false
+    },
+    {
+      "id": "ALL-020",
+      "archivo_foto": "20260812_003705344_iOS.jpg",
+      "categoria": "chaqueta_abrigo",
+      "subcategoria": "chaqueta denim",
+      "nombre": "Chaqueta de mezclilla blanca",
+      "color_principal": "blanco",
+      "colores": [
+        "blanco"
+      ],
+      "estampado": "liso",
+      "manga": "larga",
+      "cuello": "camisero",
+      "marca": "Index Denim",
+      "talla": "XS/S",
+      "estilo": [
+        "casual",
+        "smart"
+      ],
+      "ocasion": [
+        "casual"
+      ],
+      "estacion": [
+        "todo el año"
+      ],
+      "notas": "Bolsillo con solapa y botón metálico",
+      "veces_usada": 0,
+      "favorita": false
+    },
+    {
+      "id": "ALL-021",
+      "archivo_foto": "20260812_003705377_iOS.jpg",
+      "categoria": "parte_superior",
+      "subcategoria": "sweater",
+      "nombre": "Sweater blanco cuello V con botones",
+      "color_principal": "blanco",
+      "colores": [
+        "blanco"
+      ],
+      "estampado": "liso",
+      "manga": "larga",
+      "cuello": "V con botones",
+      "marca": null,
+      "talla": null,
+      "estilo": [
+        "casual",
+        "smart"
+      ],
+      "ocasion": [
+        "casual",
+        "oficina"
+      ],
+      "estacion": [
+        "otoño",
+        "invierno"
+      ],
+      "notas": "",
+      "veces_usada": 0,
+      "favorita": false
+    },
+    {
+      "id": "ALL-022",
+      "archivo_foto": "20260812_003705420_iOS.jpg",
+      "categoria": "parte_superior",
+      "subcategoria": "top tejido",
+      "nombre": "Top tejido blanco cuello cuadrado",
+      "color_principal": "blanco",
+      "colores": [
+        "blanco"
+      ],
+      "estampado": "liso",
+      "manga": "larga con puño volante",
+      "cuello": "cuadrado",
+      "marca": "Malabar",
+      "talla": "M",
+      "estilo": [
+        "elegante",
+        "smart",
+        "casual"
+      ],
+      "ocasion": [
+        "oficina",
+        "casual"
+      ],
+      "estacion": [
+        "todo el año"
+      ],
+      "notas": "Puños con volante, silueta ajustada",
+      "veces_usada": 0,
+      "favorita": false
+    },
+    {
+      "id": "ALL-023",
+      "archivo_foto": "20260812_003705457_iOS.jpg",
+      "categoria": "parte_superior",
+      "subcategoria": "camiseta",
+      "nombre": "Camiseta básica crema",
+      "color_principal": "crema",
+      "colores": [
+        "crema"
+      ],
+      "estampado": "liso",
+      "manga": "corta",
+      "cuello": "redondo",
+      "marca": null,
+      "talla": null,
+      "estilo": [
+        "casual"
+      ],
+      "ocasion": [
+        "casual"
+      ],
+      "estacion": [
+        "todo el año"
+      ],
+      "notas": "",
+      "veces_usada": 0,
+      "favorita": false
+    },
+    {
+      "id": "ALL-024",
+      "archivo_foto": "20260812_003705509_iOS.jpg",
+      "categoria": "parte_superior",
+      "subcategoria": "sweater",
+      "nombre": "Sweater gris claro cuello redondo",
+      "color_principal": "gris claro",
+      "colores": [
+        "gris claro"
+      ],
+      "estampado": "liso",
+      "manga": "larga",
+      "cuello": "redondo",
+      "marca": "Hypnotic",
+      "talla": "M",
+      "estilo": [
+        "casual",
+        "smart"
+      ],
+      "ocasion": [
+        "casual",
+        "oficina"
+      ],
+      "estacion": [
+        "otoño",
+        "invierno"
+      ],
+      "notas": "",
+      "veces_usada": 0,
+      "favorita": false
+    },
+    {
+      "id": "ALL-025",
+      "archivo_foto": "20260812_003705585_iOS.jpg",
+      "categoria": "parte_superior",
+      "subcategoria": "sweater",
+      "nombre": "Sweater verde oliva cuello redondo",
+      "color_principal": "verde oliva",
+      "colores": [
+        "verde oliva"
+      ],
+      "estampado": "liso",
+      "manga": "larga",
+      "cuello": "redondo",
+      "marca": "Hypnotic",
+      "talla": "M",
+      "estilo": [
+        "casual",
+        "smart"
+      ],
+      "ocasion": [
+        "casual",
+        "oficina"
+      ],
+      "estacion": [
+        "otoño",
+        "invierno"
+      ],
+      "notas": "",
+      "veces_usada": 0,
+      "favorita": false
+    },
+    {
+      "id": "ALL-026",
+      "archivo_foto": "20260812_003705618_iOS.jpg",
+      "categoria": "parte_superior",
+      "subcategoria": "sweater",
+      "nombre": "Sweater crema manga larga cuello redondo",
+      "color_principal": "crema",
+      "colores": [
+        "crema"
+      ],
+      "estampado": "liso",
+      "manga": "larga",
+      "cuello": "redondo",
+      "marca": null,
+      "talla": null,
+      "estilo": [
+        "casual"
+      ],
+      "ocasion": [
+        "casual"
+      ],
+      "estacion": [
+        "otoño",
+        "invierno"
+      ],
+      "notas": "",
+      "veces_usada": 0,
+      "favorita": false
+    },
+    {
+      "id": "ALL-027",
+      "archivo_foto": "20260812_003705673_iOS.jpg",
+      "categoria": "parte_superior",
+      "subcategoria": "camiseta",
+      "nombre": "Camiseta marrón manga corta",
+      "color_principal": "marrón",
+      "colores": [
+        "marrón"
+      ],
+      "estampado": "liso",
+      "manga": "corta",
+      "cuello": "redondo",
+      "marca": null,
+      "talla": null,
+      "estilo": [
+        "casual"
+      ],
+      "ocasion": [
+        "casual"
+      ],
+      "estacion": [
+        "todo el año"
+      ],
+      "notas": "",
+      "veces_usada": 0,
+      "favorita": false
+    },
+    {
+      "id": "ALL-028",
+      "archivo_foto": "20260812_003705701_iOS.jpg",
+      "categoria": "parte_superior",
+      "subcategoria": "camiseta crop",
+      "nombre": "Camiseta crop marrón",
+      "color_principal": "marrón",
+      "colores": [
+        "marrón"
+      ],
+      "estampado": "liso",
+      "manga": "corta",
+      "cuello": "redondo",
+      "marca": "Aquaplast",
+      "talla": null,
+      "estilo": [
+        "casual"
+      ],
+      "ocasion": [
+        "casual"
+      ],
+      "estacion": [
+        "todo el año"
+      ],
+      "notas": "",
+      "veces_usada": 0,
+      "favorita": false
+    },
+    {
+      "id": "ALL-029",
+      "archivo_foto": "20260812_003705732_iOS.jpg",
+      "categoria": "parte_superior",
+      "subcategoria": "sweater",
+      "nombre": "Sweater marrón/camel cuello redondo manga murciélago",
+      "color_principal": "marrón",
+      "colores": [
+        "marrón"
+      ],
+      "estampado": "liso",
+      "manga": "corta murciélago",
+      "cuello": "redondo",
+      "marca": null,
+      "talla": null,
+      "estilo": [
+        "casual"
+      ],
+      "ocasion": [
+        "casual"
+      ],
+      "estacion": [
+        "otoño"
+      ],
+      "notas": "",
+      "veces_usada": 0,
+      "favorita": false
+    },
+    {
+      "id": "ALL-030",
+      "archivo_foto": "20260812_003705763_iOS.jpg",
+      "categoria": "parte_superior",
+      "subcategoria": "top henley",
+      "nombre": "Top ribbed marrón oscuro con botones",
+      "color_principal": "marrón oscuro",
+      "colores": [
+        "marrón oscuro"
+      ],
+      "estampado": "acanalado",
+      "manga": "larga",
+      "cuello": "redondo con botones",
+      "marca": null,
+      "talla": null,
+      "estilo": [
+        "casual",
+        "smart"
+      ],
+      "ocasion": [
+        "casual"
+      ],
+      "estacion": [
+        "otoño",
+        "invierno"
+      ],
+      "notas": "",
+      "veces_usada": 0,
+      "favorita": false
+    },
+    {
+      "id": "ALL-031",
+      "archivo_foto": "20260812_003705793_iOS.jpg",
+      "categoria": "chaqueta_abrigo",
+      "subcategoria": "chaleco corto",
+      "nombre": "Chaleco corto marrón con botones dorados",
+      "color_principal": "marrón",
+      "colores": [
+        "marrón"
+      ],
+      "estampado": "liso",
+      "manga": "sin mangas",
+      "cuello": "redondo asimétrico",
+      "marca": null,
+      "talla": null,
+      "estilo": [
+        "elegante",
+        "smart"
+      ],
+      "ocasion": [
+        "oficina",
+        "elegante"
+      ],
+      "estacion": [
+        "todo el año"
+      ],
+      "notas": "Botones dorados decorativos, bolsillos con solapa",
+      "veces_usada": 0,
+      "favorita": false
+    },
+    {
+      "id": "ALL-032",
+      "archivo_foto": "20260812_003705821_iOS.jpg",
+      "categoria": "parte_superior",
+      "subcategoria": "blusa",
+      "nombre": "Blusa marrón/canela drapeada con broche dorado",
+      "color_principal": "marrón claro",
+      "colores": [
+        "marrón claro"
+      ],
+      "estampado": "liso",
+      "manga": "corta",
+      "cuello": "drapeado asimétrico",
+      "marca": null,
+      "talla": null,
+      "estilo": [
+        "elegante",
+        "smart"
+      ],
+      "ocasion": [
+        "oficina",
+        "elegante"
+      ],
+      "estacion": [
+        "todo el año"
+      ],
+      "notas": "Detalle de argollas doradas en el hombro, mismo modelo que ALL-001 en otro color",
+      "veces_usada": 0,
+      "favorita": false
+    },
+    {
+      "id": "ALL-033",
+      "archivo_foto": "20260812_003705852_iOS.jpg",
+      "categoria": "chaqueta_abrigo",
+      "subcategoria": "chaqueta lino",
+      "nombre": "Chaqueta de lino beige con cinturón",
+      "color_principal": "beige",
+      "colores": [
+        "beige"
+      ],
+      "estampado": "liso",
+      "manga": "3/4",
+      "cuello": "solapa",
+      "marca": "H&M",
+      "talla": null,
+      "estilo": [
+        "casual",
+        "smart"
+      ],
+      "ocasion": [
+        "casual",
+        "oficina"
+      ],
+      "estacion": [
+        "primavera",
+        "verano"
+      ],
+      "notas": "Tela de lino texturizada, cinturón para anudar",
+      "veces_usada": 0,
+      "favorita": false
+    },
+    {
+      "id": "ALL-034",
+      "archivo_foto": "20260812_003705881_iOS.jpg",
+      "categoria": "parte_superior",
+      "subcategoria": "sweater",
+      "nombre": "Sweater lila cuello V con botones manga murciélago",
+      "color_principal": "lila",
+      "colores": [
+        "lila"
+      ],
+      "estampado": "liso",
+      "manga": "3/4 murciélago",
+      "cuello": "V con botones",
+      "marca": "Malabar",
+      "talla": "M",
+      "estilo": [
+        "casual",
+        "smart"
+      ],
+      "ocasion": [
+        "casual",
+        "oficina"
+      ],
+      "estacion": [
+        "otoño",
+        "invierno"
+      ],
+      "notas": "",
+      "veces_usada": 0,
+      "favorita": false
+    },
+    {
+      "id": "ALL-035",
+      "archivo_foto": "20260812_003705910_iOS.jpg",
+      "categoria": "parte_superior",
+      "subcategoria": "sweater",
+      "nombre": "Sweater azul marino bordado de margaritas",
+      "color_principal": "azul marino",
+      "colores": [
+        "azul marino"
+      ],
+      "estampado": "bordado floral",
+      "manga": "larga",
+      "cuello": "redondo",
+      "marca": null,
+      "talla": null,
+      "estilo": [
+        "casual"
+      ],
+      "ocasion": [
+        "casual"
+      ],
+      "estacion": [
+        "otoño",
+        "invierno"
+      ],
+      "notas": "",
+      "veces_usada": 0,
+      "favorita": false
+    },
+    {
+      "id": "ALL-036",
+      "archivo_foto": "20260812_003705941_iOS.jpg",
+      "categoria": "parte_superior",
+      "subcategoria": "camiseta crop",
+      "nombre": "Camiseta crop gris",
+      "color_principal": "gris",
+      "colores": [
+        "gris"
+      ],
+      "estampado": "liso",
+      "manga": "corta",
+      "cuello": "redondo",
+      "marca": null,
+      "talla": null,
+      "estilo": [
+        "casual"
+      ],
+      "ocasion": [
+        "casual"
+      ],
+      "estacion": [
+        "todo el año"
+      ],
+      "notas": "",
+      "veces_usada": 0,
+      "favorita": false
+    },
+    {
+      "id": "ALL-037",
+      "archivo_foto": "20260812_003705970_iOS.jpg",
+      "categoria": "parte_superior",
+      "subcategoria": "top henley",
+      "nombre": "Top ribbed gris oscuro con botones",
+      "color_principal": "gris oscuro",
+      "colores": [
+        "gris oscuro"
+      ],
+      "estampado": "acanalado",
+      "manga": "larga",
+      "cuello": "redondo con botones",
+      "marca": null,
+      "talla": null,
+      "estilo": [
+        "casual",
+        "smart"
+      ],
+      "ocasion": [
+        "casual"
+      ],
+      "estacion": [
+        "otoño",
+        "invierno"
+      ],
+      "notas": "",
+      "veces_usada": 0,
+      "favorita": false
+    },
+    {
+      "id": "ALL-038",
+      "archivo_foto": "20260812_003706004_iOS.jpg",
+      "categoria": "parte_superior",
+      "subcategoria": "top sin mangas",
+      "nombre": "Top tejido negro cuello V sin mangas",
+      "color_principal": "negro",
+      "colores": [
+        "negro"
+      ],
+      "estampado": "liso",
+      "manga": "sin mangas",
+      "cuello": "V",
+      "marca": null,
+      "talla": null,
+      "estilo": [
+        "elegante",
+        "smart",
+        "casual"
+      ],
+      "ocasion": [
+        "oficina",
+        "elegante",
+        "casual"
+      ],
+      "estacion": [
+        "todo el año"
+      ],
+      "notas": "",
+      "veces_usada": 0,
+      "favorita": false
+    },
+    {
+      "id": "ALL-039",
+      "archivo_foto": "20260812_003706036_iOS.jpg",
+      "categoria": "parte_superior",
+      "subcategoria": "top sin mangas",
+      "nombre": "Top con textura negro/gris sin mangas",
+      "color_principal": "negro",
+      "colores": [
+        "negro"
+      ],
+      "estampado": "textura jacquard",
+      "manga": "sin mangas",
+      "cuello": "barco",
+      "marca": null,
+      "talla": null,
+      "estilo": [
+        "casual",
+        "smart"
+      ],
+      "ocasion": [
+        "casual",
+        "oficina"
+      ],
+      "estacion": [
+        "primavera",
+        "verano"
+      ],
+      "notas": "",
+      "veces_usada": 0,
+      "favorita": false
+    },
+    {
+      "id": "ALL-040",
+      "archivo_foto": "20260812_003706072_iOS.jpg",
+      "categoria": "parte_superior",
+      "subcategoria": "sweater",
+      "nombre": "Sweater negro cuello redondo",
+      "color_principal": "negro",
+      "colores": [
+        "negro"
+      ],
+      "estampado": "liso",
+      "manga": "larga",
+      "cuello": "redondo",
+      "marca": null,
+      "talla": null,
+      "estilo": [
+        "casual",
+        "smart"
+      ],
+      "ocasion": [
+        "casual",
+        "oficina"
+      ],
+      "estacion": [
+        "otoño",
+        "invierno"
+      ],
+      "notas": "",
+      "veces_usada": 0,
+      "favorita": false
+    },
+    {
+      "id": "ALL-041",
+      "archivo_foto": "20260812_003706111_iOS.jpg",
+      "categoria": "parte_superior",
+      "subcategoria": "camiseta",
+      "nombre": "Camiseta negra cuello V",
+      "color_principal": "negro",
+      "colores": [
+        "negro"
+      ],
+      "estampado": "liso",
+      "manga": "corta",
+      "cuello": "V",
+      "marca": "Basic Woman",
+      "talla": "M",
+      "estilo": [
+        "casual"
+      ],
+      "ocasion": [
+        "casual"
+      ],
+      "estacion": [
+        "todo el año"
+      ],
+      "notas": "",
+      "veces_usada": 0,
+      "favorita": false
+    },
+    {
+      "id": "ALL-042",
+      "archivo_foto": "20260812_003706146_iOS.jpg",
+      "categoria": "parte_superior",
+      "subcategoria": "camiseta",
+      "nombre": "Camiseta gris azulado cuello V",
+      "color_principal": "gris azulado",
+      "colores": [
+        "gris azulado"
+      ],
+      "estampado": "liso",
+      "manga": "corta",
+      "cuello": "V",
+      "marca": "Basic Woman",
+      "talla": "M",
+      "estilo": [
+        "casual"
+      ],
+      "ocasion": [
+        "casual"
+      ],
+      "estacion": [
+        "todo el año"
+      ],
+      "notas": "",
+      "veces_usada": 0,
+      "favorita": false
+    },
+    {
+      "id": "ALL-043",
+      "archivo_foto": "20260812_003706178_iOS.jpg",
+      "categoria": "parte_superior",
+      "subcategoria": "camiseta crop",
+      "nombre": "Camiseta crop negra",
+      "color_principal": "negro",
+      "colores": [
+        "negro"
+      ],
+      "estampado": "liso",
+      "manga": "corta",
+      "cuello": "redondo",
+      "marca": null,
+      "talla": null,
+      "estilo": [
+        "casual"
+      ],
+      "ocasion": [
+        "casual"
+      ],
+      "estacion": [
+        "todo el año"
+      ],
+      "notas": "",
+      "veces_usada": 0,
+      "favorita": false
+    },
+    {
+      "id": "ALL-044",
+      "archivo_foto": "20260812_003706209_iOS.jpg",
+      "categoria": "parte_superior",
+      "subcategoria": "body",
+      "nombre": "Body negro de tirantes",
+      "color_principal": "negro",
+      "colores": [
+        "negro"
+      ],
+      "estampado": "liso",
+      "manga": "sin mangas",
+      "cuello": "escote redondo",
+      "marca": null,
+      "talla": null,
+      "estilo": [
+        "elegante",
+        "smart",
+        "casual"
+      ],
+      "ocasion": [
+        "elegante",
+        "casual"
+      ],
+      "estacion": [
+        "primavera",
+        "verano"
+      ],
+      "notas": "",
+      "veces_usada": 0,
+      "favorita": false
+    },
+    {
+      "id": "ALL-045",
+      "archivo_foto": "20260812_003706271_iOS.jpg",
+      "categoria": "chaqueta_abrigo",
+      "subcategoria": "chaleco sastre",
+      "nombre": "Chaleco sastre azul marino",
+      "color_principal": "azul marino",
+      "colores": [
+        "azul marino"
+      ],
+      "estampado": "liso",
+      "manga": "sin mangas",
+      "cuello": "V",
+      "marca": "Florchis",
+      "talla": "M",
+      "estilo": [
+        "elegante",
+        "smart",
+        "oficina"
+      ],
+      "ocasion": [
+        "oficina",
+        "elegante"
+      ],
+      "estacion": [
+        "todo el año"
+      ],
+      "notas": "Forro interior satinado, bolsillos con solapa",
+      "veces_usada": 0,
+      "favorita": false
+    },
+    {
+      "id": "ALL-046",
+      "archivo_foto": "20260812_003706303_iOS.jpg",
+      "categoria": "chaqueta_abrigo",
+      "subcategoria": "blazer",
+      "nombre": "Blazer crop beige/camel",
+      "color_principal": "beige",
+      "colores": [
+        "beige"
+      ],
+      "estampado": "liso",
+      "manga": "corta",
+      "cuello": "solapa",
+      "marca": "Colombia Fashion",
+      "talla": "M",
+      "estilo": [
+        "elegante",
+        "smart",
+        "oficina"
+      ],
+      "ocasion": [
+        "oficina",
+        "elegante"
+      ],
+      "estacion": [
+        "todo el año"
+      ],
+      "notas": "Corte crop, manga corta, un botón",
+      "veces_usada": 0,
+      "favorita": false
+    },
+    {
+      "id": "ALL-047",
+      "archivo_foto": "20260812_003706334_iOS.jpg",
+      "categoria": "chaqueta_abrigo",
+      "subcategoria": "blazer",
+      "nombre": "Blazer crop azul marino oscuro",
+      "color_principal": "azul marino",
+      "colores": [
+        "azul marino"
+      ],
+      "estampado": "liso",
+      "manga": "sin mangas",
+      "cuello": "solapa",
+      "marca": "Colombia Fashion",
+      "talla": "M",
+      "estilo": [
+        "elegante",
+        "smart",
+        "oficina"
+      ],
+      "ocasion": [
+        "oficina",
+        "elegante"
+      ],
+      "estacion": [
+        "todo el año"
+      ],
+      "notas": "Corte crop sin mangas, un botón",
+      "veces_usada": 0,
+      "favorita": false
+    },
+    {
+      "id": "ALL-048",
+      "archivo_foto": "20260812_003706395_iOS.jpg",
+      "categoria": "chaqueta_abrigo",
+      "subcategoria": "cardigan",
+      "nombre": "Cardigan/twin-set vino",
+      "color_principal": "vino",
+      "colores": [
+        "vino"
+      ],
+      "estampado": "liso",
+      "manga": "larga",
+      "cuello": "abierto",
+      "marca": "Hypnotic",
+      "talla": "M",
+      "estilo": [
+        "casual",
+        "smart"
+      ],
+      "ocasion": [
+        "casual",
+        "oficina"
+      ],
+      "estacion": [
+        "otoño",
+        "invierno"
+      ],
+      "notas": "Conjunto twin-set: cardigan abierto a juego con top interior",
+      "veces_usada": 0,
+      "favorita": false
+    },
+    {
+      "id": "ALL-049",
+      "archivo_foto": "20260812_003706427_iOS.jpg",
+      "categoria": "pantalon",
+      "subcategoria": "wide-leg",
+      "nombre": "Pantalón wide-leg beige/crema",
+      "color_principal": "beige",
+      "colores": [
+        "beige"
+      ],
+      "estampado": "liso",
+      "manga": null,
+      "cuello": null,
+      "marca": null,
+      "talla": null,
+      "estilo": [
+        "smart",
+        "oficina"
+      ],
+      "ocasion": [
+        "oficina",
+        "smart"
+      ],
+      "estacion": [
+        "todo el año"
+      ],
+      "notas": "Talle alto, pinzas delanteras, pierna ancha",
+      "veces_usada": 0,
+      "favorita": false
+    },
+    {
+      "id": "ALL-050",
+      "archivo_foto": "20260812_003706480_iOS.jpg",
+      "categoria": "pantalon",
+      "subcategoria": "wide-leg",
+      "nombre": "Pantalón wide-leg marrón chocolate",
+      "color_principal": "marrón",
+      "colores": [
+        "marrón"
+      ],
+      "estampado": "liso",
+      "manga": null,
+      "cuello": null,
+      "marca": "Hypnotic",
+      "talla": "M",
+      "estilo": [
+        "smart",
+        "oficina"
+      ],
+      "ocasion": [
+        "oficina",
+        "smart"
+      ],
+      "estacion": [
+        "todo el año"
+      ],
+      "notas": "Talle alto, pinzas delanteras, pierna ancha",
+      "veces_usada": 0,
+      "favorita": false
+    },
+    {
+      "id": "ALL-051",
+      "archivo_foto": "20260812_003706510_iOS.jpg",
+      "categoria": "pantalon",
+      "subcategoria": "wide-leg",
+      "nombre": "Pantalón wide-leg azul marino",
+      "color_principal": "azul marino",
+      "colores": [
+        "azul marino"
+      ],
+      "estampado": "liso",
+      "manga": null,
+      "cuello": null,
+      "marca": "Florchis",
+      "talla": "M",
+      "estilo": [
+        "smart",
+        "oficina"
+      ],
+      "ocasion": [
+        "oficina",
+        "smart"
+      ],
+      "estacion": [
+        "todo el año"
+      ],
+      "notas": "Talle alto, pinzas delanteras, pierna ancha",
+      "veces_usada": 0,
+      "favorita": false
+    },
+    {
+      "id": "ALL-052",
+      "archivo_foto": "20260812_003706536_iOS.jpg",
+      "categoria": "pantalon",
+      "subcategoria": "wide-leg",
+      "nombre": "Pantalón wide-leg azul medio",
+      "color_principal": "azul medio",
+      "colores": [
+        "azul medio"
+      ],
+      "estampado": "liso",
+      "manga": null,
+      "cuello": null,
+      "marca": "Florchis",
+      "talla": "M",
+      "estilo": [
+        "smart",
+        "oficina"
+      ],
+      "ocasion": [
+        "oficina",
+        "smart"
+      ],
+      "estacion": [
+        "todo el año"
+      ],
+      "notas": "Talle alto, pinzas delanteras, pierna ancha",
+      "veces_usada": 0,
+      "favorita": false
+    },
+    {
+      "id": "ALL-053",
+      "archivo_foto": "20260812_003706569_iOS.jpg",
+      "categoria": "pantalon",
+      "subcategoria": "wide-leg",
+      "nombre": "Pantalón wide-leg gris oscuro a rayas finas",
+      "color_principal": "gris oscuro",
+      "colores": [
+        "gris oscuro"
+      ],
+      "estampado": "rayas finas (pinstripe)",
+      "manga": null,
+      "cuello": null,
+      "marca": null,
+      "talla": null,
+      "estilo": [
+        "smart",
+        "oficina",
+        "elegante"
+      ],
+      "ocasion": [
+        "oficina",
+        "smart"
+      ],
+      "estacion": [
+        "todo el año"
+      ],
+      "notas": "Talle alto, pinzas delanteras, pierna ancha",
+      "veces_usada": 0,
+      "favorita": false
+    }
+  ]
+}
