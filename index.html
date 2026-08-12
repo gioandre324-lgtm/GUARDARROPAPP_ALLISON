@@ -1,0 +1,2485 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="theme-color" content="#faf8f5">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-title" content="Armario">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="apple-touch-icon" href="icon-192.png">
+<title>Armario · Arma tus outfits con tu propia ropa</title>
+<style>
+:root{--bg:#faf8f5;--card:#fff;--ink:#1c1a17;--mut:#6f6656;--line:#e6e0d6;--acc:#8a6f4d;--acc2:#3d4a3a;--warn:#a33;color-scheme:light}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);font:15px/1.5 -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif}
+header{padding:20px 24px 13px;border-bottom:1px solid var(--line);background:#fff}
+h1{margin:0;font-size:21px;letter-spacing:-.02em}
+.sub{color:var(--mut);font-size:13px;margin-top:3px}
+.wrap{max-width:1180px;margin:0 auto;padding:18px 24px 70px}
+.tabs{display:flex;gap:4px;margin:16px 0 18px;border-bottom:1px solid var(--line)}
+.tab{padding:9px 15px;cursor:pointer;border:none;background:none;font:inherit;color:var(--mut);border-bottom:2px solid transparent}
+.tab.on{color:var(--ink);border-bottom-color:var(--acc);font-weight:600}
+.panel{display:none}.panel.on{display:block}
+.ask{display:flex;gap:10px;flex-wrap:wrap;align-items:flex-start}
+textarea{flex:1;min-width:280px;min-height:76px;padding:12px 14px;border:1px solid var(--line);border-radius:10px;font:inherit;background:#fff;resize:vertical}
+button.go{padding:12px 22px;border:none;border-radius:10px;background:var(--ink);color:#fff;font:600 15px inherit;cursor:pointer}
+button.go:hover{background:#000}
+.chips{margin:12px 0 4px;display:flex;gap:7px;flex-wrap:wrap}
+.chip{padding:5px 11px;border:1px solid var(--line);border-radius:999px;background:#fff;cursor:pointer;font-size:13px;color:var(--mut)}
+.chip:hover{border-color:var(--acc);color:var(--acc)}
+.readout{margin:15px 0;padding:11px 14px;background:#fff;border:1px solid var(--line);border-radius:10px;font-size:13.5px;color:var(--mut)}
+.readout b{color:var(--ink)}
+.outfits{display:grid;grid-template-columns:repeat(auto-fill,minmax(330px,1fr));gap:18px;margin-top:18px}
+.of{background:var(--card);border:1px solid var(--line);border-radius:13px;overflow:hidden;display:flex;flex-direction:column}
+.of .hd{padding:11px 14px 9px;border-bottom:1px solid var(--line);display:flex;justify-content:space-between;align-items:center;gap:8px}
+.of .hd b{font-size:14px}
+.of .sc{background:var(--ink);color:#fff;font-size:11.5px;font-weight:700;padding:3px 9px;border-radius:999px;flex:0 0 auto}
+.of .sc.top{background:var(--acc)}
+.look{display:flex;gap:6px;padding:12px;background:#f7f4ef}
+.look .col{display:flex;flex-direction:column;gap:6px;flex:1;min-width:0}
+.pc{position:relative;border-radius:8px;overflow:hidden;background:#eae5dc;border:1px solid #e2dbd0}
+.pc img{width:100%;height:100%;object-fit:cover;display:block}
+.pc.big{aspect-ratio:3/4}
+.pc.sm{aspect-ratio:1/1}
+.pc .lb{position:absolute;left:0;right:0;bottom:0;background:linear-gradient(transparent,rgba(0,0,0,.72));color:#fff;font-size:10px;padding:12px 5px 3px;line-height:1.25}
+.ref{width:96px;flex:0 0 96px;display:flex;flex-direction:column;gap:4px}
+.ref .pc{aspect-ratio:3/4}
+.ref small{font-size:9.5px;color:var(--mut);text-align:center;line-height:1.2}
+.of .bd{padding:11px 14px 13px;display:flex;flex-direction:column;gap:8px;flex:1}
+.lst{font-size:12.5px;color:var(--mut);line-height:1.55}
+.lst b{color:var(--ink);font-weight:600}
+.tags{display:flex;gap:5px;flex-wrap:wrap}
+.tg{font-size:11px;padding:2px 7px;border-radius:5px;background:#f2ede5;color:var(--mut)}
+.tg.m{background:#e4ecdf;color:var(--acc2);font-weight:600}
+.why{font-size:12px;color:var(--mut);border-top:1px dashed var(--line);padding-top:7px}
+.acts{display:flex;gap:7px;margin-top:auto;flex-wrap:wrap}
+.mini{font-size:12px;padding:6px 11px;border:1px solid var(--line);border-radius:7px;background:#fff;cursor:pointer;color:var(--acc);font-family:inherit}
+.mini:hover{border-color:var(--acc)}
+.mini.done{background:#e4ecdf;color:var(--acc2);border-color:#cadcc2}
+.mini.no{color:var(--warn)}.mini.no:hover{border-color:var(--warn)}
+.pc .x{position:absolute;top:5px;right:5px;width:22px;height:22px;border-radius:50%;border:none;
+ background:rgba(28,26,23,.55);color:#fff;font:600 11px/1 inherit;cursor:pointer;opacity:0;transition:opacity .15s;padding:0}
+.pc:hover .x{opacity:1}
+.pc .x:hover{background:var(--warn)}
+@media (hover:none){.pc .x{opacity:.85}}
+#excl .chip{cursor:pointer}#excl .chip:hover{border-color:var(--warn);color:var(--warn)}
+.empty{padding:32px;text-align:center;color:var(--mut);background:#fff;border:1px dashed var(--line);border-radius:12px}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(130px,1fr));gap:11px;margin-top:10px}
+.gi{background:#fff;border:1px solid var(--line);border-radius:10px;overflow:hidden}
+.gi .pc{aspect-ratio:3/4;border:none;border-radius:0}
+.gi div.n{padding:7px 8px;font-size:11.5px;line-height:1.3}
+.gi div.n small{color:var(--mut);display:block;font-size:10.5px}
+h3.sec{margin:22px 0 6px;font-size:13px;letter-spacing:.05em;text-transform:uppercase;color:var(--mut)}
+h3.sec span{color:#bbb}
+.note{background:#fff;border:1px solid var(--line);border-left:3px solid var(--acc);border-radius:8px;padding:13px 15px;font-size:13.5px;color:var(--mut);margin:13px 0}
+.note b{color:var(--ink)}
+.stat{display:flex;gap:24px;flex-wrap:wrap;margin:14px 0}
+.stat div span{display:block;font-size:23px;font-weight:700}
+.stat div small{color:var(--mut);font-size:12px}
+.clima{display:flex;align-items:center;gap:12px;flex-wrap:wrap;background:#fff;border:1px solid var(--line);
+  border-left:3px solid var(--acc2);border-radius:10px;padding:12px 15px;margin:13px 0;font-size:13.5px;color:var(--mut)}
+.clima span{flex:1;min-width:180px}
+.clima b{color:var(--ink);font-size:17px}
+.clima small{display:block;color:var(--mut);font-size:12px;margin-top:2px}
+.mini.vest{color:var(--acc2);border-color:#cadcc2;background:#f2f7f0}
+.cal{display:flex;flex-wrap:wrap;gap:4px;margin:10px 0;max-width:340px}
+.cal i{width:15px;height:15px;border-radius:3px;background:#eee9e0;border:1px solid var(--line)}
+.cal i.on{background:var(--acc2);border-color:var(--acc2)}
+dialog{border:none;border-radius:14px;padding:0;max-width:640px;width:92%;box-shadow:0 18px 60px rgba(0,0,0,.3)}
+dialog::backdrop{background:rgba(28,26,23,.55)}
+.dlg{padding:20px 22px}
+.dlg h4{margin:0 0 4px;font-size:16px}
+.dlg p{margin:0 0 12px;font-size:13px;color:var(--mut)}
+.dlg textarea{width:100%;min-height:210px;font:12.5px/1.5 ui-monospace,Menlo,Consolas,monospace}
+.dlg .rw{display:flex;gap:9px;margin-top:12px;justify-content:flex-end}
+@media (max-width:700px){
+ header{padding:13px 15px 9px;position:sticky;top:0;z-index:5}
+ h1{font-size:18px}.sub{font-size:11.5px}
+ .wrap{padding:12px 14px 80px}
+ .tabs{margin:10px 0 13px;overflow-x:auto;scrollbar-width:none}
+ .tabs::-webkit-scrollbar{display:none}
+ .tab{padding:10px 12px;font-size:14px;white-space:nowrap;flex:0 0 auto}
+ .ask{flex-direction:column;gap:8px}
+ textarea{width:100%;min-width:0;font-size:16px}
+ button.go{width:100%;padding:14px}
+ .chips{gap:6px;overflow-x:auto;flex-wrap:nowrap;padding-bottom:4px;scrollbar-width:none}
+ .chips::-webkit-scrollbar{display:none}
+ .chip{white-space:nowrap;flex:0 0 auto;font-size:12.5px}
+ .outfits{grid-template-columns:1fr;gap:13px}
+ .ref{width:78px;flex:0 0 78px}
+ .grid{grid-template-columns:repeat(3,1fr);gap:8px}
+}
+
+.gi div.n{padding:7px 8px 8px}
+.gia{display:flex;gap:5px;margin-top:6px}
+.gia .mini{padding:4px 8px;font-size:10.5px;flex:1;text-align:center}
+.barratop{display:flex;gap:8px;flex-wrap:wrap;align-items:center;margin:4px 0 14px}
+.barratop .go{padding:11px 18px;font-size:14px}
+.campo{margin-top:13px}
+.campo label{display:block;font-size:11px;letter-spacing:.05em;text-transform:uppercase;color:var(--mut);margin-bottom:5px;font-weight:600}
+.campo input[type=text],.campo select{width:100%;padding:11px;border:1px solid var(--line);border-radius:9px;font:inherit;font-size:16px;background:#fff;color:var(--ink)}
+.campo textarea{width:100%;padding:11px;border:1px solid var(--line);border-radius:9px;font:inherit;font-size:15px;min-height:70px}
+.dosc{display:grid;grid-template-columns:1fr 1fr;gap:11px}
+.foto{width:100%;aspect-ratio:3/4;max-width:210px;margin:0 auto;border-radius:11px;overflow:hidden;background:#f2ede5;border:1px dashed var(--line);display:grid;place-items:center;cursor:pointer}
+.foto img{width:100%;height:100%;object-fit:cover}
+.foto span{font-size:12.5px;color:var(--mut);text-align:center;padding:12px;line-height:1.4}
+.pal{display:flex;gap:6px;flex-wrap:wrap}
+.pal .chip{cursor:pointer;user-select:none;padding-left:8px;display:flex;align-items:center;gap:6px}
+.pal .chip i{width:13px;height:13px;border-radius:50%;border:1px solid rgba(0,0,0,.18);display:inline-block}
+.pal .chip[aria-pressed=true]{border-color:var(--acc);background:#f4efe6;color:var(--ink);font-weight:600}
+.rango{display:flex;align-items:center;gap:11px}
+.rango input{flex:1}
+.rango b{min-width:60px;text-align:right;font-size:13px}
+dialog.big{max-width:520px}
+.dlg .rw2{display:flex;gap:9px;margin-top:18px}
+.dlg .rw2 .go{flex:1}
+.aviso{background:#fff6e8;border:1px solid #e8d5b0;border-left:3px solid #c89a4a;border-radius:8px;padding:11px 13px;font-size:12.5px;color:#6a5636;margin:11px 0;line-height:1.5}
+
+
+.pc.virt{display:grid;place-items:end center;border:1px solid rgba(0,0,0,.10)}
+.pc.virt .lb{background:linear-gradient(transparent,rgba(0,0,0,.62));font-size:10.5px;padding:16px 5px 4px}
+.modo{display:flex;gap:7px;align-items:center;flex-wrap:wrap;margin:0 0 13px}
+.modo .chip[aria-pressed=true]{background:var(--ink);color:#fff;border-color:var(--ink)}
+.modo select{padding:6px 9px;border:1px solid var(--line);border-radius:999px;font:inherit;font-size:12.5px;background:#fff;color:var(--mut)}
+.ideasnota{background:#f2f5f0;border:1px solid #d6e0d0;border-left:3px solid var(--acc2);border-radius:8px;padding:11px 13px;font-size:12.5px;color:#41503c;margin:0 0 14px;line-height:1.5}
+.ideasnota b{color:var(--acc2)}
+label.sw{display:flex;align-items:center;gap:9px;font-size:13.5px;color:var(--ink);margin-top:11px;cursor:pointer}
+label.sw input{width:17px;height:17px}
+</style>
+</head>
+<body>
+<header>
+  <h1>Armario</h1>
+  <div class="sub">Arma tus outfits con tu propia ropa</div>
+</header>
+
+<div class="wrap">
+  <div class="tabs">
+    <button class="tab on" data-p="p1">Armar outfit</button>
+    <button class="tab" data-p="p2">Mi guardarropa</button>
+    <button class="tab" data-p="p6">Viaje</button>
+    <button class="tab" data-p="p5">Mi uso</button>
+    <button class="tab" data-p="p3">Reglas</button>
+    <button class="tab" data-p="p4">Cómo funciona</button>
+  </div>
+
+  <div class="panel on" id="p1">
+    <div class="modo" id="modoRow">
+      <button class="chip" id="mReal" aria-pressed="true">Con mi ropa</button>
+      <button class="chip" id="mIdeas" aria-pressed="false">Ideas sin fotos</button>
+      <select id="selSexo" title="Para qué prendas te sugiero">
+        <option value="hombre">Ropa de hombre</option>
+        <option value="mujer">Ropa de mujer</option>
+      </select>
+    </div>
+    <div class="ideasnota" id="ideasNota" style="display:none"></div>
+    <div id="climaCaja"></div>
+    <div class="ask">
+      <textarea id="q" placeholder="Ej: reunión con amigos, algo elegante, oficina un viernes"></textarea>
+      <button class="go" id="btn">Armar</button>
+    </div>
+    <div class="chips" id="chips"></div>
+    <div class="readout" id="read" style="display:none"></div>
+    <div id="excl"></div>
+    <div id="res"></div>
+  </div>
+
+  <div class="panel" id="p2">
+    <div class="barratop">
+      <button class="go" id="bAdd">+ Agregar prenda</button>
+      <button class="mini" id="bImp">Importar armario</button>
+      <button class="mini" id="bExp">Exportar armario</button>
+      <input type="file" id="fImp" accept="application/json,.json" style="display:none">
+    </div>
+    <div class="note"><b>Tus prendas viven en este dispositivo.</b> Cada foto se guarda en el
+    almacen del navegador, no en un servidor: nadie mas las ve y la app sigue funcionando sin
+    internet. Toca <b>Editar</b> en cualquier prenda si quedo mal clasificada.</div>
+    <div id="dbmsg"></div>
+    <div id="wlist"></div>
+    <h3 class="sec">Tu descripcion fisica</h3>
+    <div class="note">Se usa solo para armar el texto del boton <b>Prompt IA</b>, para que la
+    imagen generada se parezca a ti.</div>
+    <div class="campo">
+      <textarea id="perfilTxt" placeholder="Ej: mujer de 29 años, 1.53 m de estatura, complexion media, cabello largo oscuro"></textarea>
+      <button class="mini" id="bPerfil" style="margin-top:8px">Guardar descripcion</button>
+      <label class="sw"><input type="checkbox" id="chkCorrea"> Uso correa, a tono con el calzado</label>
+    </div>
+  </div>
+
+  <div class="panel" id="p6">
+    <div class="note"><b>Qué hace esto.</b> No arma outfits sueltos: busca la <b>menor cantidad de
+    prendas</b> que te vista todos los días del viaje sin repetir conjunto. Repite calzado y
+    pantalones a propósito, que es lo que ocupa la maleta, y cambia lo de arriba. Si pones el
+    destino, mira el pronóstico real de esos días.</div>
+    <div class="campo"><label for="vjDest">¿A dónde vas?</label>
+      <input id="vjDest" placeholder="Ej: Cusco (opcional, para el clima)"></div>
+    <div class="dosc">
+      <div class="campo"><label for="vjDias">¿Cuántos días?</label>
+        <input type="number" id="vjDias" min="1" max="21" value="5"></div>
+      <div class="campo"><label for="vjMaleta">¿En qué lo llevas?</label>
+        <select id="vjMaleta">
+          <option value="mochila">Mochila</option>
+          <option value="cabina" selected>Maleta de cabina</option>
+          <option value="grande">Maleta grande</option>
+        </select></div>
+    </div>
+    <div class="campo"><label>¿Qué vas a hacer allá?</label><div class="pal" id="vjOcc"></div></div>
+    <div id="vjClima"></div>
+    <button class="go" id="vjGo">Armar maleta</button>
+    <div id="vjRes"></div>
+  </div>
+
+  <div class="panel" id="p5">
+    <div class="note"><b>Para qué sirve esto.</b> Marca <b>Me lo puse</b> en el outfit que uses y la app
+    lleva la cuenta sola. Sirve para ver qué prendas tienes olvidadas y para que el motor deje de
+    proponerte siempre lo mismo. Todo se guarda en este dispositivo.</div>
+    <div class="stat" id="usoStats"></div>
+    <div id="usoOlvido"></div>
+    <div id="usoCal"></div>
+    <div id="usoRank"></div>
+  </div>
+
+  <div class="panel" id="p3">
+    <div class="note"><b>De dónde salen las reglas.</b> Tus referencias de estilo no son el resultado: son la gramática. Cada una dice qué colores conviven bien a qué nivel de formalidad. La tabla de abajo se calcula sola contando cuántas veces dos familias de color aparecen juntas. Si agregas referencias, las reglas mejoran solas.</div>
+    <div class="stat" id="stats"></div>
+    <div id="afin"></div>
+  </div>
+
+  <div class="panel" id="p4">
+    <div class="note"><b>Qué hace la app.</b> Recorre todas las combinaciones posibles de tus prendas (pantalón + prenda de arriba + capa media opcional + abrigo opcional + calzado), puntúa cada una con las reglas de color y formalidad y te devuelve seis, armadas con tus propias fotos. Seis de la franja alta, no siempre las mismas seis.</div>
+    <div class="note"><b>Cómo puntúa.</b> Armonía de color según cuántas veces esas familias conviven en tus referencias. Formalidad del conjunto dentro del rango de la ocasión. Coherencia térmica con la temporada. Penaliza mezclar registros muy distintos (una sudadera bajo un saco) y repetir color sin que sea un tonal deliberado. La prenda que menciones entra sí o sí.</div>
+    <div class="note"><b>Tu perfil.</b> El motor asume que la prenda de arriba va por dentro del pantalón de vestir, pero no la camiseta ni con jeans. Si usas correa, actívala en <b>Mi guardarropa</b> y te dirá cuál toca en cada outfit. Tu descripción física también se escribe ahí y es la que viaja en el prompt de imagen, para que la foto generada se parezca a ti.</div>
+    <div class="note"><b>Modos de estilo.</b> Si tu app trae referencias de estilo cargadas, puedes pedirlas por nombre dentro de la búsqueda y el motor empuja la paleta y la formalidad hacia ese lado. Son modos que pides, no un ajuste permanente.</div>
+    <div class="note"><b>El código de vestimenta manda sobre el color.</b> Si dices oficina, trabajo, entrevista, boda o evento, quedan descartadas las zapatillas y los jeans antes de puntuar nada: no es una penalización que compita con la paleta, es una condición previa. Además el motor asume la prenda de arriba por dentro del pantalón y te lo pone en el prompt. Para levantarlo tienes que decirlo: <b>viernes</b>, <b>casual</b>, <b>sport</b>, <b>informal</b> o <b>relajado</b> abren los jeans y las zapatillas y bajan un punto la formalidad mínima.</div>
+    <div class="note"><b>Los cuatro botones de cada outfit.</b> <b>Me queda bien</b> guarda esa combinación de colores como regla y la sube en el orden de ahí en adelante. <b>No me convence</b> hace lo contrario, resta evidencia y cambia la tarjeta por otra alternativa buena, sorteada entre las mejores disponibles y evitando lo que ya viste; un descarte no tumba una regla bien respaldada, solo la mueve hacia abajo. <b>Otra</b> cambia la tarjeta sin aprender nada, para cuando el outfit está bien pero hoy no te provoca. Lo que aprende con los pulgares se aplica desde la siguiente búsqueda, no a las tarjetas que ya están en pantalla.</div>
+    <div class="note"><b>La cruz sobre cada prenda.</b> Si tienes algo sucio, prestado o en la tintorería, pasa el cursor por su foto y toca la ✕. Esa prenda sale de circulación y el motor rearma las seis opciones sin ella. Aparece arriba en una lista para que la devuelvas cuando esté lista. Se guarda en el navegador, así que sigue fuera si cierras la app.</div>
+    <div class="note"><b>El botón "Prompt IA".</b> Cada outfit genera el texto listo para pegar en ChatGPT o Gemini junto con una foto tuya de cuerpo entero, y te devuelve la imagen fotorrealista como los tableros que ya armaste. La app no genera esas imágenes: arma el conjunto y te da el encargo exacto.</div>
+    <div class="note"><b>Las reglas de color cambian según la ocasión.</b> Cada referencia trae anotada su formalidad, y el motor tiene tres tablas de color: formal, media y casual. Al pedir oficina o un evento aplica la formal; al pedir una reunión con amigos, la casual. Se nota: el par azul + blanco (jeans con camiseta blanca) vale 4,9 en la tabla casual y 2,3 en la formal, mientras que olivo + marrón sube de 2,8 a 3,8. Antes había una sola tabla con todo mezclado.</div>
+    <div class="note"><b>Los trajes van completos.</b> El saco de un traje solo se combina con su propio pantalón; el pantalón sí puede ir suelto. Puedes escribir <b>traje</b> o <b>terno</b> y el color, y te arma el conjunto entero.</div>
+    <div class="note"><b>Cada búsqueda te da opciones distintas.</b> El motor ya no te devuelve siempre las seis mejores del ranking, que era lo que hacía que la misma pregunta diera siempre lo mismo. Ahora sortea dentro de la franja alta dando más peso a lo que puntúa mejor, baja lo que te enseñó en las últimas dos semanas, reserva dos de las seis tarjetas para prendas que llevan tiempo sin salir y no deja que un mismo acento de color ocupe más de la mitad. Si vuelves a pulsar Armar con la misma frase, sale otra cosa.</div>
+    <div class="note"><b>Todo pasa en tu navegador.</b> No hay servidor, no hay llamadas a ninguna IA, no consume nada. Funciona sin internet.</div>
+
+    <h3 class="sec">Tus votos</h3>
+    <div class="note"><b>Dónde se guardan.</b> Lo que marcas con «me queda bien» y «no me convence» se guarda en el navegador donde lo marcaste. Si votas desde el celular, esos votos no existen en la computadora, y al revés. Con estos botones los mueves de un lado a otro: exportas en un dispositivo, pasas el archivo y lo importas en el otro. El historial de lo ya mostrado no viaja: es local y desechable.</div>
+    <div style="display:flex;gap:8px;flex-wrap:wrap;margin:10px 0 4px">
+      <button class="mini" id="vexp">Exportar mis votos</button>
+      <label class="mini" style="cursor:pointer">Importar votos<input type="file" id="vimp" accept="application/json,.json" style="display:none"></label>
+      <button class="mini" id="volv">Olvidar lo ya mostrado</button>
+    </div>
+    <div id="vmsg" class="note" style="display:none"></div>
+  </div>
+</div>
+
+<dialog id="dprenda" class="big"><div class="dlg">
+  <h4 id="dpTit">Agregar prenda</h4>
+  <p>La foto se achica sola antes de guardarse. Sale mejor sobre fondo liso y con buena luz.</p>
+  <label class="foto" id="dpFoto" for="dpFile"><span>Tocar para tomar o elegir la foto</span></label>
+  <input type="file" id="dpFile" accept="image/*" style="display:none">
+  <label class="sw"><input type="checkbox" id="dpEmb" checked> Recortar el fondo y encuadrar la foto</label>
+  <div id="dpEmbMsg" class="aviso" style="display:none"></div>
+  <div class="campo"><label for="dpNom">Nombre</label>
+    <input type="text" id="dpNom" placeholder="Ej: Camisa celeste de lino" maxlength="60"></div>
+  <div class="dosc">
+    <div class="campo"><label for="dpCat">Donde va</label><select id="dpCat"></select></div>
+    <div class="campo"><label for="dpTipo">Que prenda es</label><select id="dpTipo"></select></div>
+  </div>
+  <div class="campo"><label>Colores <span id="dpAuto" style="text-transform:none;letter-spacing:0;font-weight:400"></span></label>
+    <div class="pal" id="dpPal"></div></div>
+  <div class="campo"><label for="dpF">Que tan formal es</label>
+    <div class="rango"><input type="range" id="dpF" min="1" max="5" step="1" value="3"><b id="dpFv">3 / 5</b></div></div>
+  <div class="campo"><label for="dpW">Cuanto abriga</label>
+    <div class="rango"><input type="range" id="dpW" min="1" max="3" step="1" value="1"><b id="dpWv">Ligera</b></div></div>
+  <div class="campo"><label>Temporada</label><div class="pal" id="dpTem"></div></div>
+  <div id="dpErr" class="aviso" style="display:none"></div>
+  <div class="rw2">
+    <button class="mini" id="dpCancel" style="flex:0 0 auto">Cancelar</button>
+    <button class="go" id="dpOk">Guardar prenda</button>
+  </div>
+</div></dialog>
+
+<dialog id="dlg"><div class="dlg">
+  <h4>Prompt para generar la imagen</h4>
+  <p>Pégalo en ChatGPT o Gemini junto con una foto tuya de cuerpo entero.</p>
+  <textarea id="ptxt" readonly></textarea>
+  <div class="rw"><button class="mini" id="pcopy">Copiar</button><button class="go" id="pclose" style="padding:9px 18px">Cerrar</button></div>
+</div></dialog>
+
+<script>
+let PINS=[]; /* gustos de cada persona: se cargan en arrancar() */
+let REFS=[];
+let W=[];
+
+/* ---------- familias de color ---------- */
+const FAM={
+ beige:["beige","crema","camel","arena","hueso","piedra","taupe","tostado","marfil"],
+ marron:["marron","chocolate","tabaco","cafe"],
+ olivo:["olivo","verde","militar","salvia"],
+ azul:["azul","celeste","denim"],
+ navy:["azul marino","marino","navy"],
+ gris:["gris","carbon","plomo"],
+ negro:["negro"], blanco:["blanco"], vino:["vino","burdeos","granate","guinda"], rosa:["rosa","salmon"]
+};
+const NEUTRAL=new Set(["beige","gris","blanco","negro","navy","marron"]);
+const norm=s=>s.toLowerCase().normalize("NFD").replace(/[̀-ͯ]/g,"");
+const FMAP={};for(const f in FAM)FAM[f].forEach(v=>FMAP[norm(v)]=f);
+const fam=c=>FMAP[norm(c)]||norm(c);
+
+/* ---------- afinidad: tres fuentes ---------- */
+/* 1. las referencias de estilo que traiga gustos_inicial.json (peso propio)
+   2. lo que marcas con el pulgar dentro de la app (peso 0.8, se guarda en el navegador)
+   Sin gustos cargados quedan solo las reglas generales de color y formalidad. */
+const RIDX={base:0,top:1,mid:2,out:3,shoe:4};
+const AF={}, FCOUNT={}, SRC={};          /* global: color con color, sin rol */
+let RAF={}, RFC={}, RTOT={};           /* dirigido: que color en que posicion */
+function addDoc(fs,w,src){
+  fs=[...new Set(fs)];
+  fs.forEach(f=>FCOUNT[f]=(FCOUNT[f]||0)+w);
+  for(let i=0;i<fs.length;i++)for(let j=i+1;j<fs.length;j++){
+    const k=[fs[i],fs[j]].sort().join("|");
+    AF[k]=(AF[k]||0)+w; (SRC[k]=SRC[k]||{})[src]=((SRC[k]||{})[src]||0)+w;
+  }
+}
+/* ---------- afinidad condicionada a la formalidad ----------
+   Cada referencia trae su formalidad anotada, pero hasta ahora se tiraba: una
+   referencia de oficina de formalidad 5 y una de fin de semana de formalidad 1
+   alimentaban la misma tabla de colores. Asi que al pedir "oficina" el motor
+   filtraba la formalidad de TUS prendas pero aplicaba reglas de color sacadas de
+   una olla donde lo formal y lo casual estaban mezclados.
+   Ahora hay tres tablas por banda. Cada referencia cuenta entera en su banda y a
+   mitad de peso en las vecinas, porque la frontera entre un 3 y un 4 es difusa y
+   sin ese solape las bandas quedan con celdas vacias. */
+const BANDAS=["baja","media","alta"];
+const bandaDe=f=>f<=2?"baja":(f>=4?"alta":"media");
+let AFB={baja:{},media:{},alta:{}}, FCB={baja:{},media:{},alta:{}};
+function addBanda(fs,w,f){
+  fs=[...new Set(fs)];
+  const b=bandaDe(f), i=BANDAS.indexOf(b);
+  const dest=[[b,1]];
+  if(i>0) dest.push([BANDAS[i-1],.5]);
+  if(i<2) dest.push([BANDAS[i+1],.5]);
+  for(const [bn,mul] of dest){
+    const W_=w*mul;
+    fs.forEach(x=>FCB[bn][x]=(FCB[bn][x]||0)+W_);
+    for(let a=0;a<fs.length;a++)for(let c=a+1;c<fs.length;c++){
+      const k=[fs[a],fs[c]].sort().join("|");
+      AFB[bn][k]=(AFB[bn][k]||0)+W_;
+    }
+  }
+}
+function recalcAFB(){
+  /* Estas tablas se derivan enteras de REFS, los gustos de color de cada
+     persona. Si REFS esta vacio -cliente sin gustos cargados todavia- quedan
+     vacias tambien: paletteScore ya sabe devolver neutro cuando no encuentra
+     nada, asi que el motor no se rompe, solo deja el sesgo personal fuera. */
+  AFB={baja:{},media:{},alta:{}}; FCB={baja:{},media:{},alta:{}};
+  RAF={}; RFC={}; RTOT={};
+  REFS.forEach(R=>{
+  const ent=Object.keys(R.r).filter(k=>R.r[k]).map(k=>[k,fam(R.r[k])]);
+  addDoc(ent.map(e=>e[1]),R.w,R.src);
+  addBanda(ent.map(e=>e[1]),R.w,R.f||3);
+  ent.forEach(([r,f])=>{ (RFC[r]=RFC[r]||{})[f]=(RFC[r][f]||0)+R.w; });
+  for(let i=0;i<ent.length;i++)for(let j=0;j<ent.length;j++){
+    if(RIDX[ent[i][0]]>=RIDX[ent[j][0]]) continue;
+    const rk=ent[i][0]+">"+ent[j][0];
+    (RAF[rk]=RAF[rk]||{})[ent[i][1]+"|"+ent[j][1]]=(RAF[rk][ent[i][1]+"|"+ent[j][1]]||0)+R.w;
+    RTOT[rk]=(RTOT[rk]||0)+R.w;
+  }
+});
+}
+/* ============================================================
+   APP_ID: por que existe.
+   El navegador guarda IndexedDB y localStorage POR ORIGEN, no por carpeta.
+   Dos apps publicadas en la misma cuenta de GitHub Pages
+   -usuario.github.io/armario y usuario.github.io/armario-maria- comparten
+   literalmente el mismo almacen: la segunda abria y mostraba la ropa de la
+   primera, sin importar cuantas veces se cambiara armario_inicial.json.
+   Aqui se deriva un identificador de la carpeta donde vive la app y se le
+   pone de prefijo a TODO lo que se guarda. Cada instalacion queda aislada
+   sin tener que configurar nada. */
+const APP_ID=(location.pathname.replace(/\/index\.html$/i,"").replace(/\/+$/,"")
+  .split("/").filter(Boolean).pop()||"raiz").toLowerCase().replace(/[^a-z0-9_-]/g,"");
+const NS=k=>APP_ID+"::"+k;
+const LS={
+  get:(k,d)=>{try{return JSON.parse(localStorage.getItem(NS(k))||d)}catch(e){return JSON.parse(d)}},
+  set:(k,v)=>{try{localStorage.setItem(NS(k),JSON.stringify(v))}catch(e){}}
+};
+const FBK="armario_feedback_v1", FBN="armario_negativo_v1", EXK="armario_no_disp_v1";
+const fbGet=()=>LS.get(FBK,"[]"), fbSet=v=>LS.set(FBK,v);
+const ngGet=()=>LS.get(FBN,"[]"), ngSet=v=>LS.set(FBN,v);
+fbGet().forEach(r=>addDoc(r,.8,"pulgar"));
+/* lo que descartaste resta evidencia, pero poco: un descarte no tumba una regla
+   bien respaldada, solo la mueve hacia abajo en el orden */
+const NEG={};
+const addNeg=fs=>{fs=[...new Set(fs)];for(let i=0;i<fs.length;i++)for(let j=i+1;j<fs.length;j++){
+  const k=[fs[i],fs[j]].sort().join("|"); NEG[k]=(NEG[k]||0)+.5; }};
+ngGet().forEach(addNeg);
+/* prendas marcadas como no disponibles (sucias, prestadas, en la tintoreria) */
+let EXCL=new Set(LS.get(EXK,"[]"));
+const exSave=()=>LS.set(EXK,[...EXCL]);
+/* Se usa afinidad NORMALIZADA, no el conteo bruto: el beige aparece en casi todos
+   los pines, asi que en crudo cualquier cosa con beige gana. Dividir por la raiz de
+   cuantas veces sale cada familia mide si conviven mas de lo que dictaria el azar. */
+/* afinidad global: dos colores conviven mas de lo que dictaria el azar */
+const affG=(a,b)=>{
+  if(a===b) return NEUTRAL.has(a)?3.5:0.6;
+  const k=[a,b].sort().join("|");
+  const raw=(AF[k]||0)-(NEG[k]||0);
+  if(raw<=0) return 0;
+  return 9*raw/Math.sqrt((FCOUNT[a]||1)*(FCOUNT[b]||1));
+};
+/* Banda activa: la fija la ocasion que pidas. Sin ocasion no hay banda y manda
+   la tabla global, como antes. */
+let BANDA=null;
+const aff=(a,b)=>{
+  const g=affG(a,b);
+  if(!BANDA||a===b) return g;
+  const k=[a,b].sort().join("|");
+  const na=FCB[BANDA][a]||0, nb=FCB[BANDA][b]||0;
+  const raw=(AFB[BANDA][k]||0)-(NEG[k]||0);
+  const d=(na&&nb&&raw>0)?9*raw/Math.sqrt(na*nb):0;
+  /* cuanto se cree a la banda depende de cuanta evidencia tiene para ESOS dos
+     colores. Con poca, manda la global. Y nunca se hunde por debajo de la mitad
+     de la global: que una banda no haya visto un par no significa que sea malo. */
+  const sop=Math.min(na,nb), lam=sop/(sop+10);
+  return Math.max((1-lam)*g+lam*d, .5*g);
+};
+/* afinidad dirigida: este color EN ESTA POSICION con ese color EN ESA OTRA.
+   Se mezcla con la global segun cuanta evidencia haya para ese par de roles;
+   con pocos datos manda la global, con muchos manda la dirigida. Nunca cae
+   del todo, porque no observado no es lo mismo que descartado. */
+function affRol(rA,fA,rB,fB){
+  const g=aff(fA,fB);
+  let ra=rA,fa=fA,rb=rB,fb=fB;
+  if(RIDX[ra]>RIDX[rb]){ ra=rB; fa=fB; rb=rA; fb=fA; }
+  const rk=ra+">"+rb, tab=RAF[rk];
+  if(!tab) return g;
+  const na=(RFC[ra]||{})[fa]||0, nb=(RFC[rb]||{})[fb]||0;
+  const dir=(na&&nb)?9*(tab[fa+"|"+fb]||0)/Math.sqrt(na*nb):0;
+  // la confianza en el dato dirigido depende de dos cosas: cuanta evidencia hay
+  // para ese par de roles Y cuanta hay para esos colores concretos en esas
+  // posiciones. Mis tableros casi no varian el calzado, asi que sin esto todo
+  // zapato claro quedaba castigado por falta de datos, no por ser mala idea.
+  const T=RTOT[rk]||0, sop=Math.min(na,nb);
+  const lam=Math.min(T/(T+8), sop/(sop+3));
+  return Math.max((1-lam)*g+lam*dir, .6*g);
+}
+
+/* ---------- precalculo: familias y afinidad por par de prendas ---------- */
+const STRONG=new Set(["olivo","vino","rosa","azul"]);
+const PATT=new Set(["4420","4421","4424","4425","4443","6011","7002"]);
+/* nivel de claridad: la gran mayoria de las referencias contrasta pantalon y
+   prenda de arriba en vez de usar un unico nivel. Sin este eje el motor daba por
+   buenos conjuntos planos como crema sobre crema sobre arena. */
+const CLARO=new Set(["blanco","crema","beige","piedra","arena","hueso","celeste","marfil"]);
+const OSCURO=new Set(["negro","azul marino","marino","navy","vino","burdeos","granate","carbon"]);
+const valorDe=w=>{
+  const n=w._n;
+  if(/oscuro|chocolate|carbon/.test(n)) return "oscuro";
+  if(w.c.some(c=>OSCURO.has(norm(c)))) return "oscuro";
+  if(/claro/.test(n)) return "claro";
+  if(w.c.some(c=>CLARO.has(norm(c)))) return "claro";
+  return "medio";
+};
+function precomputaW(){
+  W.forEach((w,i)=>{ w._i=i; w._n=norm(w.n); w._f=[...new Set(w.c.map(fam))];
+    w._st=w._f.some(x=>STRONG.has(x)); w._p=PATT.has(w.id); w._v=valorDe(w); });
+}
+/* La afinidad dirigida por rol esta implementada y las tablas se calculan, pero
+   HOY NO SE USA: medida contra los casos buenos da 86.1% frente al 91.0% de la
+   afinidad plana. Con 27 referencias no hay datos para llenar celdas por posicion.
+   Cuando el catalogo de pines crezca, poner USAR_ROL en true y volver a medir. */
+const USAR_ROL=false;
+const afinidad=(a,fa,b,fb)=>USAR_ROL?affRol(a,fa,b,fb):aff(fa,fb);
+let PAIR=[];
+/* La matriz de afinidad entre prendas depende de la banda de formalidad activa,
+   asi que hay una por banda. Se calcula la primera vez que se pide y se guarda:
+   son 77x77 celdas, milisegundos, pero no hace falta rehacerlo en cada consulta. */
+let PAIRB={};
+const calcPAIR=()=>W.map(a=>W.map(b=>{let best=0;
+  for(const x of a._f)for(const y of b._f){const v=afinidad(a.cat,x,b.cat,y);if(v>best)best=v;}
+  return best;}));
+const recalcPAIR=()=>{ PAIRB={}; PAIR=calcPAIR(); PAIRB[BANDA||""]=PAIR; };
+function setBanda(b){
+  BANDA=b||null;
+  const k=BANDA||"";
+  if(!PAIRB[k]) PAIRB[k]=calcPAIR();
+  PAIR=PAIRB[k];
+}
+const famsOf=o=>o._f;
+
+/* ---------- diccionarios de lectura ---------- */
+const GARMENTS={abrigo:["abrigo","sobretodo","gabardina","tapado","peacoat"],chaqueta:["chaqueta","casaca","overshirt","sobrecamisa","trucker","bomber","harrington","cazadora"],saco:["saco","blazer","americana","traje","terno"],sueter:["sueter","sweater","chompa","knit","jersey","pulover","sudadera"],camisa:["camisa","oxford","franela"],polo:["polo"],camiseta:["camiseta","polera","tshirt","t-shirt","henley"],pantalon:["pantalon","chino","chinos","slack","sastre"],jeans:["jean","jeans","denim","vaquero"],zapatos:["zapato","mocasin","loafer","bota","botin","derby","chelsea"],zapatillas:["zapatilla","sneaker","tenis"]};
+/* Tipos que el buscador tambien debe entender, aunque hoy solo existan en el
+   catalogo de ideas: sin esto, escribir "falda" o "vestido" no anclaba nada. */
+Object.assign(GARMENTS,{short:["short","bermuda","bermudas"],falda:["falda"],
+  blusa:["blusa"],vestido:["vestido"]});
+const STYLES={"old money":["old money","quiet luxury","elegante","clasico","refinado","pituco"],"smart casual":["smart casual","arreglado","semiformal","presentable"],"business casual":["business casual","oficina","trabajo","chamba"],casual:["casual","relajado","informal","diario"],minimal:["minimal","minimalista","sobrio","simple"],streetwear:["street","streetwear","urbano"],preppy:["preppy","ivy","universitario"],finance:["finance","ejecutivo"]};
+
+/* Modos de estilo. Llegan desde gustos_inicial.json, nunca escritos aqui: son
+   gustos de cada persona y dejarlos fijos en el codigo hacia que la app de un
+   cliente heredara las referencias de otro. Vacio = el motor puntua solo con
+   las reglas generales de color y formalidad. */
+let MODOS={};
+
+/* La correa es opcional: la mayoria de gente no usa, asi que por defecto
+   esta apagada y no aparece ni en las explicaciones ni en el prompt. Quien
+   la use la enciende en Mi guardarropa y vuelve la regla de siempre: a tono
+   con el calzado. */
+let USA_CORREA=false;
+const CINTURONES=[{n:"negro",fam:["negro","navy","gris"]},
+                  {n:"marrón",fam:["marron","vino"]},
+                  {n:"camel/caqui",fam:["beige","blanco","olivo"]}];
+const cinturonPara=shoe=>{
+  for(const c of CINTURONES) if(shoe._f.some(f=>c.fam.includes(f))) return c.n;
+  return "negro";
+};
+/* veto: prendas que el codigo de vestimenta descarta de plano. No es una
+   penalizacion que compita con el color, es una condicion previa: a la oficina
+   no se va en zapatillas por muy bien que combinen. tuck: la prenda de arriba
+   va por dentro del pantalon. */
+const OCC=[
+ {k:["reunion de amigos","amigos","juntada","salir con amigos","bar","cafe","almuerzo","paseo","fin de semana"],r:[1,3],l:"reunión informal"},
+ {k:["cita","date","salir con ella","aniversario","cena"],r:[2,4],l:"cita / cena"},
+ {k:["oficina","trabajo","trabajar","chamba","chambear","laboral","reunion de trabajo","presentacion","entrevista"],
+  r:[3,5],l:"oficina / trabajo",veto:["zapatillas","jeans"],tuck:true},
+ {k:["boda","matrimonio","evento","gala","formal","ceremonia"],r:[4,5],l:"evento formal",veto:["zapatillas","jeans"],tuck:true},
+ {k:["viaje","aeropuerto","universidad","clases","mandados"],r:[1,2],l:"día suelto"}];
+/* lo que levanta el veto: solo si se pide explicitamente */
+const LIBRE=["viernes","casual friday","casual","sport","informal","relajado","sin formalidad","puedo ir"];
+const SEASONS={verano:["verano","calor","caluroso"],invierno:["invierno","frio","helado"],otono:["otono","otoño"],primavera:["primavera","templado"]};
+
+function parse(raw){
+  const q=norm(raw), o={col:[],gar:[],est:[],occ:null,tem:[],no:[],anchor:[]};
+  for(const g in GARMENTS) if(GARMENTS[g].some(w=>new RegExp("(sin|nada de|no quiero|evitar)\\s+(\\w+\\s+){0,2}"+norm(w)).test(q))) o.no.push(g);
+  for(const f in FAM) if(FAM[f].some(w=>q.includes(norm(w)))) o.col.push(f);
+  for(const g in GARMENTS) if(GARMENTS[g].some(w=>q.includes(norm(w)))&&!o.no.includes(g)) o.gar.push(g);
+  for(const e in STYLES) if(STYLES[e].some(w=>q.includes(norm(w)))) o.est.push(e);
+  for(const c of OCC) if(c.k.some(w=>q.includes(norm(w)))){o.occ=c;break;}
+  for(const m in MODOS) if(MODOS[m].k.some(w=>q.includes(norm(w)))){o.modo=MODOS[m];o.modoN=m;break;}
+  o.libre=LIBRE.some(w=>q.includes(norm(w)));
+  if(o.occ&&o.occ.veto){
+    if(o.libre){ o.occ=Object.assign({},o.occ,{veto:null,tuck:false,r:[Math.max(1,o.occ.r[0]-1),o.occ.r[1]]}); }
+    else o.no=[...new Set([...o.no,...o.occ.veto])];
+  }
+  for(const s in SEASONS) if(SEASONS[s].some(w=>q.includes(norm(w)))) o.tem.push(s);
+  /* Prendas obligatorias. Antes todos los tipos y todos los colores mencionados
+     caian en un mismo saco y bastaba con que UNA de esas prendas entrara: pedir
+     "abrigo camel con pantalon olivo" honraba una de las dos y la otra se perdia,
+     y ademas cruzaba colores con prendas equivocadas. Ahora la frase se trocea
+     por conectores, cada trozo lleva su color pegado a su prenda, y el outfit
+     tiene que cumplir TODOS los grupos. Dos prendas del mismo hueco (camisa y
+     camiseta, las dos van arriba) se funden en un solo grupo de alternativas,
+     porque exigir las dos a la vez no dejaria ningun outfit posible. */
+  o.grupos=[];
+  if(o.gar.length){
+    const tipoW=new Set(Object.values(GARMENTS).flat().map(norm));
+    const porCat={};
+    const anota=(g,cs,txt)=>{
+      if(o.no.includes(g)) return false;
+      let l=W.filter(w=>w.t===g&&(!cs.length||w._f.some(f=>cs.includes(f))));
+      if(!l.length) l=W.filter(w=>w.t===g);
+      if(!l.length) return false;
+      const words=txt.split(/[^a-z0-9]+/).filter(x=>x.length>3).map(x=>x.replace(/es$|s$/,""))
+                     .filter(x=>x.length>3&&!tipoW.has(x));
+      const fino=l.filter(w=>words.some(x=>w._n.includes(x)));
+      if(fino.length&&fino.length<l.length) l=fino;
+      const cat=l[0].cat, ids=l.map(w=>w.id);
+      porCat[cat]=porCat[cat]?[...new Set(porCat[cat].concat(ids))]:ids;
+      return true;
+    };
+    const trozos=q.split(/\s+(?:con|y|mas|junto a|encima de|debajo de|sobre)\s+|[,;+]/)
+                  .map(t=>t.trim()).filter(Boolean);
+    let hubo=false;
+    for(const t of trozos){
+      const cs=[]; for(const f in FAM) if(FAM[f].some(w=>t.includes(norm(w)))) cs.push(f);
+      for(const g in GARMENTS) if(GARMENTS[g].some(w=>t.includes(norm(w)))) hubo=anota(g,cs,t)||hubo;
+    }
+    // si el troceo no pesca nada (frase rara, sin conectores), se cae al modo de antes
+    if(!hubo) o.gar.forEach(g=>anota(g,o.col,q));
+    o.grupos=Object.keys(porCat).map(cat=>({cat,ids:porCat[cat]}));
+    o.anchor=[...new Set(o.grupos.reduce((a,gr)=>a.concat(gr.ids),[]))];
+  }
+  return o;
+}
+
+/* ---------- motor ---------- */
+const by=c=>W.filter(w=>w.cat===c);
+let BASE=[],TOP=[],MID=[],OUT=[],SHOE=[];
+function recalcSlots(){ BASE=by("base");TOP=by("top");MID=by("mid");OUT=by("out");SHOE=by("shoe"); }
+const WT={base:.24,top:.24,mid:.14,out:.22,shoe:.16};
+
+/* Promedio encogido hacia la media general. Con un promedio limpio, un outfit de
+   tres piezas solo tiene tres pares que pueden salir mal y otro de cinco tiene
+   diez, asi que los conjuntos cortos ganaban siempre por construccion. */
+/* Probe encoger el promedio hacia la media general para no favorecer a los
+   outfits de pocas piezas. Medido: empeora. Con encogimiento 0 la mediana de los
+   casos buenos es 86.1%, con 4 baja a 82.9% y con 16 a 80.1%. Queda sin encoger. */
+function colorScore(items){
+  let tot=0,n=0,strong=0;
+  for(let i=0;i<items.length;i++){
+    if(items[i]._st) strong++;
+    const row=PAIR[items[i]._i];
+    for(let j=i+1;j<items.length;j++){ tot+=row[items[j]._i]; n++; }
+  }
+  let s=n?tot/n:0;
+  if(strong>2) s-=1.1*(strong-2);
+  return s;
+}
+function formality(o){
+  let num=0,den=0;
+  for(const k in WT){ if(o[k]){ num+=o[k].f*WT[k]; den+=WT[k]; } }
+  return num/den;
+}
+function seasonFit(items,tem){
+  if(!tem.length) return 0;
+  let hit=0;
+  items.forEach(w=>{ if(w.te.includes("todo")||tem.some(t=>w.te.includes(t))) hit++; });
+  return (hit/items.length)*2 - 1;
+}
+function warmth(items){ return items.reduce((a,w)=>a+w.w,0); }
+
+/* Con 98 prendas el motor evalua mas de un millon de combinaciones por consulta,
+   y armar el texto de "por que" de cada una costaba mas que puntuarlas: cinco
+   segundos por busqueda. En la pasada masiva las explicaciones se tiran a un
+   sumidero y se vuelven a calcular solo para las que se guardan. */
+const NOWHY={push(){},unshift(){}};
+let EXPLICA=false;
+function evalOutfit(o,p,items){
+  const why=EXPLICA?[]:NOWHY;
+  let s=colorScore(items)*2.6;
+  if(!REFS.length){ if(s>1.4) why.push("combinación de colores clásica"); }
+  else if(s>3.2) why.push("paleta muy usada en tus gustos");
+  else if(s>1.8) why.push("paleta coherente");
+
+  const f=formality(o);
+  if(p.occ){
+    const lo=p.occ.r[0]-.4, hi=p.occ.r[1]+.4;
+    if(f<lo||f>hi){
+      if(!p.relax) return null;
+      const d=f<lo?lo-f:f-hi;
+      s-=2+d*3.2;
+      why.push("formalidad "+f.toFixed(1)+"/5, "+(f<lo?"por debajo de":"por encima de")+" la ocasión");
+    } else { s+=2.4; why.push("formalidad "+f.toFixed(1)+"/5 encaja"); }
+  }
+  // capa media: una sobrecamisa va sobre camiseta o polo, no sobre otra camisa
+  if(o.mid && o.mid.t==="camisa" && o.top.t==="camisa") return null;
+  /* Traje: el saco de un traje solo va con SU pantalon. Sin esto el motor
+     emparejaba el saco marron con el pantalon gris claro, que es el error
+     clasico de tratar un traje como dos prendas sueltas. El pantalon si puede
+     ir solo, eso si es correcto. */
+  if(o.out && o.out.par && (!o.base || o.base.id!==o.out.par)) return null;
+  // patron sobre patron
+  let pat=0; for(const w of items) if(w._p) pat++;
+  if(pat>1){ s-=2.2; why.push("dos estampados juntos"); }
+  /* El calzado se juzga contra la ocasion, no contra el promedio del propio
+     conjunto: las zapatillas valen 2 y entraban en ese promedio, o sea que
+     bajaban el numero con el que se las estaba juzgando y se colaban solas. */
+  const exig=p.occ?p.occ.r[0]:(p.est.includes("business casual")||p.est.includes("finance")?3:0);
+  if(exig>=3&&o.shoe.f<exig-.5){ s-=2.2+(exig-o.shoe.f)*1.6; why.push("el calzado queda corto para la ocasión"); }
+  // estructura de claridad
+  const niv=new Set(); for(const w of items) niv.add(w._v);
+  if(niv.size===1){ s-=3.2; why.push("todo al mismo nivel de claridad, queda plano"); }
+  else s+=1.1;
+  if(o.base._v===o.top._v) s-=1.4;
+  else { s+=1.3; why.push(o.top._v+" arriba sobre "+o.base._v+" abajo"); }
+  let fmin=9,fmax=0;
+  for(const w of items){ if(w.f<fmin)fmin=w.f; if(w.f>fmax)fmax=w.f; }
+  if(fmax-fmin>2){ s-=1.5; why.push("mezcla registros distintos"); }
+
+  /* Polo, camisa y chompa van por dentro del pantalon de vestir; con camiseta
+     y con jeans no. Vale siempre, no solo en la oficina. */
+  if((o.base.t==="pantalon"&&o.top.t!=="camiseta"&&!o.mid)||(p.occ&&p.occ.tuck))
+    why.push("por dentro del pantalón"+(USA_CORREA?", cinturón "+cinturonPara(o.shoe):""));
+
+  if(p.modo){
+    /* el numero de piezas oscuras es condicion, no bonificacion: si se deja
+       competir con el color, el marron gana siempre y el modo no se nota */
+    if(p.modo.oscuro){
+      let osc=0; for(const w of items) if(w._v==="oscuro") osc++;
+      if(osc<p.modo.oscuro) return null;
+      s+=.8*osc;
+    }
+    let hit=0; for(const w of items) if(w._f.some(x=>p.modo.fav.includes(x))) hit++;
+    s+=3.2*hit/items.length;
+    if(f<p.modo.r[0]-.4||f>p.modo.r[1]+.4) s-=1.5;
+  }
+  const sf=seasonFit(items,p.tem);
+  s+=sf*1.3;
+  const wm=warmth(items);
+  if(p.tem.includes("invierno")){ if(!o.out) s-=3; else if(wm>=9) { s+=1; why.push("abriga"); } }
+  if(p.tem.includes("verano")){ if(o.out) s-=2.2; if(o.mid) s-=1.4; if(wm<=6){ s+=1; why.push("ligero"); } }
+
+  if(p.anchorG&&p.anchorG.length){
+    const nom=[]; let n=0;
+    for(const gr of p.anchorG){
+      const hit=items.find(w=>gr.has(w.id));
+      if(hit){ n++; nom.push(hit.n.toLowerCase()); }
+      else if(!p.anchorSoft) return null;
+    }
+    if(!n) return null;
+    // cumplir dos prendas pedidas vale mas que cumplir una
+    s+=4*(n/p.anchorG.length)+1.5*(n-1);
+    why.unshift("lleva tu "+nom.join(" y tu "));
+  } else if(p.col.length){
+    const cf=new Set(); for(const w of items) for(const f of w._f) cf.add(f);
+    const hit=p.col.filter(c=>cf.has(c));
+    if(hit.length){ s+=1.5*hit.length; why.push("color "+hit.join(", ")); }
+  }
+
+  if(p.tight){
+    const d=new Set(); for(const w of items) for(const f of w._f) d.add(f);
+    if(d.size<=3){ s+=1.2; why.push("paleta corta"); } else s-=.8;
+  }
+  if(p.est.includes("casual")&&f>3.6) s-=1.5;
+  if((p.est.includes("business casual")||p.est.includes("finance"))&&f<3) s-=1.5;
+  return {s,f,why};
+}
+
+const SLOTS=["base","top","mid","out","shoe"];
+const PRESUPUESTO=320000;
+function enumerate(p){
+  /* La temporada no se le aplica al calzado: un botin de cuero se usa todo el
+     año en Lima, y filtrarlo en verano dejaba solo zapatillas, justo lo que no
+     queremos para la oficina. */
+  /* Una prenda que pides por su nombre no la filtra la temporada. Si dices "frio
+     con mi pantalon crema", el pantalon crema entra aunque este marcado como de
+     primavera y verano: lo pediste tu. Antes el filtro lo sacaba antes de mirar
+     las anclas y la consulta se quedaba sin ninguna combinacion posible. */
+  const anc=p.anchorSet;
+  const enTemp=w=>w.cat==="shoe"||(anc&&anc.has(w.id))||!p.tem.length||w.te.includes("todo")||p.tem.some(t=>w.te.includes(t));
+  const keep=l=>l.filter(w=>!p.no.includes(w.t)&&enTemp(w)&&!EXCL.has(w.id));
+  let bases=keep(BASE),tops=keep(TOP),shoes=keep(SHOE);
+  let midOpts=[null,...keep(MID)], outOpts=[null,...keep(OUT)];
+  /* Si pediste una prenda por su nombre, su hueco deja de ser una lista abierta:
+     solo entran las candidatas de ese grupo, y en las capas desaparece la opcion
+     "sin nada". Esto no es solo velocidad, es correccion: al anclar el saco de un
+     traje, el recorte por nucleos podia tirar justo el pantalon que le hace pareja
+     y la consulta se quedaba en cero. */
+  if(!p.anchorSoft&&p.grupos&&p.grupos.length){
+    const filtra=(l,ids)=>{const r=l.filter(w=>w&&ids.indexOf(w.id)>=0); return r.length?r:l;};
+    for(const gr of p.grupos){
+      if(gr.cat==="base") bases=filtra(bases,gr.ids);
+      else if(gr.cat==="top") tops=filtra(tops,gr.ids);
+      else if(gr.cat==="shoe") shoes=filtra(shoes,gr.ids);
+      else if(gr.cat==="mid") midOpts=filtra(midOpts,gr.ids);
+      else if(gr.cat==="out") outOpts=filtra(outOpts,gr.ids);
+    }
+  }
+  /* Dos etapas. Con 98 prendas la enumeracion completa son 1,1 millones de
+     combinaciones y cinco segundos por consulta, inaceptable en el celular.
+     Primero se puntua solo el nucleo (pantalon + prenda de arriba + calzado),
+     que es barato, y se descartan los nucleos con peor armonia de color; luego
+     se prueban capas y abrigos solo sobre los nucleos que sobrevivieron.
+     Los nucleos que llevan una prenda que pediste por su nombre nunca se
+     descartan, porque esos importan mas que el ranking. */
+  const nucleos=[];
+  for(const base of bases)
+   for(const top of tops)
+    for(const shoe of shoes){
+      const anc=p.anchorSet&&(p.anchorSet.has(base.id)||p.anchorSet.has(top.id)||p.anchorSet.has(shoe.id));
+      nucleos.push({base,top,shoe,q:colorScore([base,top,shoe]),anc});
+    }
+  const capas=midOpts.length*outOpts.length;
+  let vivos=nucleos;
+  /* Presupuesto de evaluaciones. Con 98 prendas el tope de 260.000 dejaba
+   pasar casi todos los nucleos; con 122 sobrevivia el 4% y la logica de
+   diversidad trabajaba sobre un pozo ya recortado. Ademas ya no se corta
+   solo por la cabeza: 60% son los mejores nucleos y 40% una muestra
+   repartida del resto, para que lo bueno-pero-no-primero siga entrando. */
+  if(nucleos.length*capas>PRESUPUESTO){
+    const tope=Math.max(2200,Math.ceil(PRESUPUESTO/capas));
+    const libres=nucleos.filter(n=>!n.anc).sort((a,b)=>b.q-a.q);
+    const cab=Math.min(libres.length,Math.ceil(tope*.6));
+    const sel=libres.slice(0,cab), resto=libres.slice(cab);
+    const cuota=tope-cab;
+    if(resto.length&&cuota>0){
+      const paso=resto.length/cuota;
+      for(let i=0;i<cuota;i++){ const x=resto[Math.floor(i*paso)]; if(x) sel.push(x); }
+    }
+    vivos=nucleos.filter(n=>n.anc).concat(sel);
+  }
+  /* Antes se guardaban TODAS las combinaciones validas y se ordenaba la lista
+     entera: en una consulta de oficina son 437.000 objetos, y ese sort solo
+     costaba mas de medio segundo. Nadie mira mas alla de las primeras miles,
+     asi que ahora se mantiene una lista acotada: cuando se llena, se ordena
+     una vez, se recorta y el peor puntaje que sobrevivio se vuelve el piso de
+     entrada. El resultado visible es identico, porque lo que se tira son
+     combinaciones que jamas habrian llegado a la pantalla. */
+  const all=[]; let piso=0, validas=0;
+  const CORTE=26000, DEJAR=9000;
+  for(const n of vivos)
+   for(const mid of midOpts)
+    for(const out of outOpts){
+      const o={base:n.base,top:n.top,mid,out,shoe:n.shoe};
+      const items=out?(mid?[n.base,n.top,mid,out,n.shoe]:[n.base,n.top,out,n.shoe])
+                     :(mid?[n.base,n.top,mid,n.shoe]:[n.base,n.top,n.shoe]);
+      const r=evalOutfit(o,p,items);
+      if(!r||r.s<=0) continue;
+      validas++;
+      if(r.s<=piso) continue;
+      all.push({o,...r});
+      if(all.length>=CORTE){
+        all.sort((a,b)=>b.s-a.s);
+        all.length=DEJAR;
+        piso=all[DEJAR-1].s;
+      }
+    }
+  all.sort((a,b)=>b.s-a.s);
+  all.validas=validas;      /* el conteo real, para el texto de la pantalla */
+  return all;
+}
+/* ---------- memoria de lo que ya te enseñe ----------
+   Sin esto el motor era una funcion determinista: la misma consulta devolvia
+   siempre exactamente las mismas seis tarjetas, hoy y en diciembre. */
+const HISK="armario_historial_v1";
+const HIS_DIAS=14, HIS_TOPE=300;
+const hisRaw=()=>LS.get(HISK,"[]").filter(x=>x&&x.k&&x.t>Date.now()-HIS_DIAS*864e5);
+function hisAdd(keys){
+  const h=hisRaw().concat(keys.filter(Boolean).map(k=>({k,t:Date.now()})));
+  LS.set(HISK,h.slice(-HIS_TOPE));
+}
+function hisEstado(){
+  const h=hisRaw(), prendas={};
+  h.forEach(x=>x.k.split("|").forEach(id=>{ if(id) prendas[id]=(prendas[id]||0)+1; }));
+  return {outfits:new Set(h.map(x=>x.k)), prendas};
+}
+function hisReset(){ LS.set(HISK,[]); }
+
+/* seis outfits distintos entre si Y distintos de los que ya viste.
+   Antes se tomaban los seis primeros de la lista ordenada por puntaje. Con
+   214.000 combinaciones validas eso mostraba siempre las mismas 15 prendas y
+   dejaba 17 del armario sin salir nunca. Ahora se sortea dentro de la franja
+   alta, pesa mas lo que puntua mejor, baja lo que enseñe hace poco, dos de las
+   seis se reservan para prendas frescas y ninguna paleta ocupa mas de la mitad. */
+function diversify(all){
+  if(!all.length) return [];
+  const kOf=o=>SLOTS.map(k=>o[k]&&o[k].id).join("|");
+  const H=hisEstado(), top=all[0].s;
+
+  /* Franja de candidatos: cerca del mejor puntaje. Cuando la franja es enorme hay
+     que recortarla por velocidad, pero recortando por la cabeza se perdian justo
+     las prendas que nunca salen: la chaqueta de jean y la sobrecamisa olivo
+     quedaban a solo 1,4 puntos del techo y aun asi en el puesto 2.500, fuera del
+     corte. Ahora se guarda la cabeza entera y del resto se toma una muestra
+     repartida, asi que lo bueno-pero-no-primero tambien entra al sorteo. */
+  let cand=all.filter(c=>c.s>=top*0.78);
+  if(cand.length<80) cand=all.slice(0,Math.min(80,all.length));
+  if(cand.length>800){
+    const cabeza=cand.slice(0,250), resto=cand.slice(250), paso=resto.length/550;
+    const muestra=[]; for(let i=0;i<550;i++) muestra.push(resto[Math.floor(i*paso)]);
+    cand=cabeza.concat(muestra);
+  }
+
+  const T=Math.max(.45,top*.06);   // temperatura del sorteo, en unidades de puntaje
+  cand.forEach(c=>{
+    const o=c.o; let pen=H.outfits.has(c._k=kOf(o))?2.2:0;
+    const cnt={};
+    SLOTS.forEach(s=>{ const w=o[s]; if(!w) return;
+      pen+=Math.min(3,H.prendas[w.id]||0)*.18;
+      (w._f||[]).forEach(f=>cnt[f]=(cnt[f]||0)+1); });
+    c._adj=c.s-pen;
+    c._fresco=SLOTS.some(s=>o[s]&&!H.prendas[o[s].id]);
+    /* La paleta se clasifica por el ACENTO, no por el color mas repetido. En un
+       armario con mayoria de neutros, agrupar por lo mas frecuente daba "beige"
+       en casi todas las tarjetas y el tope no separaba nada. El acento (olivo,
+       azul, vino, rosa) si distingue de verdad. */
+    const ac=Object.entries(cnt).filter(x=>!NEUTRAL.has(x[0])).sort((a,b)=>b[1]-a[1])[0];
+    const nu=Object.entries(cnt).sort((a,b)=>b[1]-a[1])[0];
+    c._dom=ac?ac[0]:(nu?"neutro:"+nu[0]:"-");
+  });
+
+  const pick=[], use={base:{},out:{},shoe:{},top:{},mid:{}}, dom={};
+  const sample=all.slice(0,3000), lim={};
+  SLOTS.forEach(k=>{ const s=new Set(); sample.forEach(c=>s.add(c.o[k]&&c.o[k].id)); lim[k]=s.size<=2?99:2; });
+  const cap=(m,k,n)=>!k||(m[k]||0)<n;
+  /* Solo cuentan las piezas que ambos llevan y son la misma. Contar tambien los
+     huecos vacios como coincidencia hacia que dos outfits de tres piezas se
+     parecieran en cuatro casillas por no llevar ninguno abrigo, y con anclas que
+     fijan pantalon y prenda de arriba eso dejaba una sola tarjeta en pantalla. */
+  const parecido=(a,b)=>{let n=0;SLOTS.forEach(k=>{const x=a[k]&&a[k].id,y=b[k]&&b[k].id;if(x&&y&&x===y)n++;});return n;};
+
+  function admisible(c,maxDom,maxIgual){
+    const o=c.o;
+    if(!cap(use.shoe,o.shoe.id,lim.shoe)||!cap(use.base,o.base.id,lim.base)) return false;
+    if(o.out&&!cap(use.out,o.out.id,lim.out)) return false;
+    if((dom[c._dom]||0)>=maxDom) return false;
+    return !pick.some(x=>parecido(x.o,o)>=maxIgual);
+  }
+  function anotar(c){
+    const o=c.o; pick.push(c);
+    use.base[o.base.id]=(use.base[o.base.id]||0)+1;
+    use.shoe[o.shoe.id]=(use.shoe[o.shoe.id]||0)+1;
+    use.top[o.top.id]=(use.top[o.top.id]||0)+1;
+    if(o.mid) use.mid[o.mid.id]=(use.mid[o.mid.id]||0)+1;
+    if(o.out) use.out[o.out.id]=(use.out[o.out.id]||0)+1;
+    dom[c._dom||"-"]=(dom[c._dom||"-"]||0)+1;
+  }
+  /* sorteo ponderado: exp((puntaje-mejor)/T). Medio punto por debajo del mejor
+     pesa como un tercio, dos puntos por debajo casi no sale. Hay azar, pero no
+     es una tombola: lo bueno sigue ganando casi siempre. */
+  function sortear(pool){
+    let tot=0; const ws=pool.map(c=>{const w=Math.exp((c._adj-top)/T); tot+=w; return w;});
+    let r=Math.random()*tot;
+    for(let i=0;i<pool.length;i++){ r-=ws[i]; if(r<=0) return pool[i]; }
+    return pool[pool.length-1];
+  }
+  const rondas=[
+    {f:c=>c._fresco, hasta:2, dom:2, ig:3},   // cuota de prendas que llevan tiempo sin salir
+    {f:()=>true,     hasta:5, dom:3, ig:3},
+    {f:()=>true,     hasta:6, dom:4, ig:4}
+  ];
+  for(const R of rondas){
+    let guard=0;
+    while(pick.length<R.hasta && guard++<50){
+      const libres=cand.filter(c=>R.f(c)&&pick.indexOf(c)<0&&admisible(c,R.dom,R.ig));
+      if(!libres.length) break;
+      anotar(sortear(libres));
+    }
+  }
+  // red de seguridad: si la consulta es muy estrecha, se completa al modo clasico
+  for(const c of all){
+    if(pick.length>=6) break;
+    if(pick.indexOf(c)>=0) continue;
+    if(pick.some(x=>parecido(x.o,c.o)>=4)) continue;
+    if(!c._k) c._k=kOf(c.o);
+    anotar(c);
+  }
+  hisAdd(pick.map(c=>c._k));
+  return pick;
+}
+function build(raw){
+  const p=parse(raw);
+  p.anchorSet=p.anchor.length?new Set(p.anchor):null;
+  p.anchorG=(p.grupos&&p.grupos.length)?p.grupos.map(gr=>new Set(gr.ids)):null;
+  p.tight=p.est.includes("minimal")||p.est.includes("old money");
+  p.relax=false; p.anchorSoft=false;
+  /* Banda de formalidad de la consulta: la marca la ocasion, y si no hay ocasion
+     el modo de estilo que se haya pedido. Sin ninguna de las dos, tabla global. */
+  const rango=p.occ?p.occ.r:(p.modo?p.modo.r:null);
+  p.banda=rango?bandaDe((rango[0]+rango[1])/2):null;
+  setBanda(p.banda);
+  let all=enumerate(p);
+  /* si pedir dos o tres prendas a la vez no deja ninguna combinacion posible,
+     se aflojan las anclas antes que devolver una pantalla vacia, y se avisa */
+  if(!all.length&&p.anchorG&&p.anchorG.length>1){ p.anchorSoft=true; all=enumerate(p); }
+  if(all.length<25&&p.occ){ p.relax=true; all=enumerate(p); }
+  const pick=diversify(all);
+  const tuck=!!(p.occ&&p.occ.tuck), modo=p.modoN||null;
+  const pool=all.slice(0,4000);
+  // ahora si: se reconstruyen las explicaciones, solo de lo que se va a mostrar
+  EXPLICA=true;
+  for(const c of new Set(pool.concat(pick))){
+    const o=c.o, items=SLOTS.map(k=>o[k]).filter(Boolean);
+    const r=evalOutfit(o,p,items);
+    c.why=r?r.why:[];
+  }
+  EXPLICA=false;
+  pick.forEach(c=>{c.tuck=tuck;c.modo=modo;}); pool.forEach(c=>{c.tuck=tuck;c.modo=modo;});
+  // se guarda solo la cabeza de la lista: alcanza de sobra para reemplazar tarjetas
+  return {p,pick,total:(all.validas!==undefined?all.validas:all.length),pool};
+}
+/* formalidad maxima que alcanza el guardarropa. Tolera huecos: un armario
+   recien empezado puede no tener abrigos ni capas medias todavia. */
+let TECHO=0;
+function calcTecho(){
+  const mx=l=>l&&l.length?l.reduce((a,b)=>b.f>a.f?b:a):null;
+  const b=mx(BASE),t=mx(TOP),m=mx(MID),o=mx(OUT),s=mx(SHOE);
+  if(!b||!t||!s){ TECHO=0; return; }
+  const A=formality({base:b,top:t,out:o,shoe:s});
+  const B=m?formality({base:b,top:t,mid:m,out:o,shoe:s}):A;
+  TECHO=Math.max(A,B);
+}
+
+/* ---------- pin de referencia ---------- */
+/* La miniatura de "referencia de tu Pinterest" se elegia comparando bolsas de
+   colores: cualquier pin que tuviera beige y marron puntuaba alto contra casi
+   cualquier outfit, asi que salian siempre los mismos tres o cuatro. Ahora se
+   compara POSICION CONTRA POSICION -- el pantalon del pin contra tu pantalon, el
+   abrigo contra tu abrigo -- se penaliza repetir pin dentro de la misma tanda, y
+   si ningun pin se parece de verdad no se muestra ninguno en vez de forzar uno
+   que no tiene que ver. */
+let PINUSO={};
+const pinReset=()=>{PINUSO={};};
+function nearestPin(o,f){
+  let best=null,bs=-99;
+  PINS.forEach((d,i)=>{
+    if(d.pr.includes("guia")||!d.r) return;
+    let s=0,comunes=0;
+    for(const k of SLOTS){
+      const mio=o[k], suyo=d.r[k];
+      if(!mio&&!suyo) continue;
+      if(!mio||!suyo){ s-=.7; continue; }   // uno lleva abrigo y el otro no
+      comunes++;
+      const fs=famsOf(mio), fp=fam(suyo);
+      if(fs.includes(fp)) s+=2.4;                       // mismo color en la misma posicion
+      else if(NEUTRAL.has(fp)&&fs.some(x=>NEUTRAL.has(x))) s+=.5;  // los dos neutros
+      else s-=.6;
+    }
+    if(comunes<3) return;                   // sin al menos tres posiciones comparables, no opina
+    s-=Math.abs((d.f||3)-f)*1.2;
+    s-=(PINUSO[i]||0)*3.5;                  // ya salio en esta tanda
+    if(s>bs){bs=s;best={d,i,s};}
+  });
+  if(!best||best.s<1.5) return null;        // ninguno se parece lo suficiente
+  PINUSO[best.i]=(PINUSO[best.i]||0)+1;
+  return best.d;
+}
+
+/* ---------- render ---------- */
+const IMG=d=>"https://i.pinimg.com/564x/"+d.h+".jpg";
+const PIN=d=>"https://www.pinterest.com/pin/"+d.p+"/";
+/* Una prenda del catalogo de ideas no tiene foto: se dibuja como una mancha
+   de su color con el nombre encima. Tampoco lleva la ✕ de "no disponible",
+   porque no es una prenda que el usuario tenga. */
+const cell=(w,cls)=>{
+  if(!w) return '';
+  if(!w.src) return '<div class="pc '+cls+' virt" style="background:'+(w.hex||'#ddd')+'">'+
+    '<span class="lb">'+w.n+'</span></div>';
+  return '<div class="pc '+cls+'"><img loading="lazy" src="'+w.src+'" alt="'+w.n+'">'+
+    '<button class="x" data-off="'+w.id+'" title="No la tengo disponible hoy">✕</button>'+
+    '<span class="lb">'+w.n+'</span></div>';
+};
+
+function renderOutfit(c,i){
+  const o=c.o, pin=nearestPin(o,c.f);
+  const piezas=["base","top","mid","out","shoe"].map(k=>o[k]).filter(Boolean);
+  /* Un vestido no tiene prenda de arriba: es la pieza principal el mismo. */
+  const nombre=o.top?((o.out?o.out.n:(o.mid?o.mid.n:o.top.n))+" + "+o.base.n.toLowerCase())
+                    :(o.out?(o.out.n+" + "+o.base.n.toLowerCase()):o.base.n);
+  const capas=[o.out,o.mid,o.top].filter(Boolean);
+  const hero=capas.length?capas[0]:o.base;
+  const resto=capas.length?[...capas.slice(1),o.shoe]:[o.shoe];
+  const segundo=capas.length?o.base:null;
+  const look='<div class="look">'+
+    '<div class="col">'+cell(hero,"big")+cell(segundo,"big")+'</div>'+
+    '<div class="col">'+resto.map(w=>cell(w,"sm")).join("")+'</div>'+
+    (pin?'<div class="ref"><div class="pc"><img loading="lazy" onerror="this.closest(\'.ref\').style.display=\'none\'" src="'+IMG(pin)+'" alt="referencia"></div><small>referencia<br>de tu Pinterest</small></div>':'')+
+    '</div>';
+  return '<div class="of">'+
+    '<div class="hd"><b>'+nombre+'</b><span class="sc'+(i===0?' top':'')+'">'+(i===0?'★ ':'')+c.s.toFixed(1)+'</span></div>'+
+    look+
+    '<div class="bd">'+
+      '<div class="lst">'+piezas.map(w=>'<b>'+w.n+'</b>').join(' · ')+'</div>'+
+      '<div class="tags"><span class="tg m">formalidad '+c.f.toFixed(1)+'/5</span>'+
+        [...new Set(piezas.flatMap(famsOf))].map(f=>'<span class="tg">'+f+'</span>').join("")+'</div>'+
+      '<div class="why">'+(c.why||[]).join(" · ")+'</div>'+
+      '<div class="acts"><button class="mini vest" data-uso="'+i+'">Me lo puse</button>'+
+      '<button class="mini ok" data-like="'+i+'">Me queda bien</button>'+
+      '<button class="mini no" data-nope="'+i+'">No me convence</button>'+
+      '<button class="mini" data-swap="'+i+'">Otra</button>'+
+      '<button class="mini" data-prompt="'+i+'">Prompt IA</button>'+
+      (pin?'<a class="mini" style="text-decoration:none" href="'+PIN(pin)+'" target="_blank" rel="noopener">Pin ↗</a>':'')+'</div>'+
+    '</div></div>';
+}
+
+let LAST=[], POOL=[], LASTQ="";
+/* La descripcion fisica llega desde armario_inicial.json o se escribe en
+   "Mi guardarropa". Nunca va escrita en el codigo: es un dato de cada persona
+   y dejarla fija aqui era lo que hacia que la app de un cliente describiera a
+   otro en el prompt de imagen. */
+const PERFIL_DEF="";
+let PERFIL=PERFIL_DEF;
+function promptFor(c){
+  const o=c.o, piezas=["out","mid","top","base","shoe"].map(k=>o[k]).filter(Boolean);
+  const meter=!!o.top&&o.base.t==="pantalon"&&o.top.t!=="camiseta";
+  return "Genera una imagen fotorrealista de cuerpo entero de la persona de la foto adjunta "+
+  (PERFIL?"("+PERFIL+") ":"")+"de pie frente a un espejo, luz natural suave, fondo neutro de interior.\n\n"+
+  "Debe llevar exactamente estas prendas:\n"+
+  piezas.map(w=>"- "+w.n+" ("+w.c.join(", ")+")").join("\n")+
+  (meter||c.tuck
+    ? "\n\nLa prenda de arriba va por dentro del pantalón"+
+      (USA_CORREA?", con cinturón de cuero "+cinturonPara(o.shoe)+", a tono con el calzado.":".")
+    : "\n\nLa prenda de arriba va por fuera del pantalón.")+
+  "\n\nRegistro: formalidad "+c.f.toFixed(1)+" sobre 5. Los pantalones son de pinzas, de corte "+
+  "ancho y recto, con caída limpia hasta el empeine. "+
+  (c.modo?"Aire de "+c.modo+": "+MODOS[c.modo].nota+". ":"")+
+  "Respeta el rostro, el peinado y las proporciones de la persona de la foto sin modificarlos. "+
+  "Sin texto ni marcas de agua en la imagen.";
+}
+
+/* ---------- reemplazo de tarjetas y prendas no disponibles ---------- */
+const keyOf=o=>SLOTS.map(k=>o[k]&&o[k].id).join("|");
+const iguales=(a,b)=>{let n=0;SLOTS.forEach(k=>{if((a[k]&&a[k].id)===(b[k]&&b[k].id))n++;});return n;};
+function siguiente(salvo){
+  const otros=LAST.filter((_,i)=>i!==salvo);
+  const vistos=new Set(LAST.map(c=>keyOf(c.o)));
+  const viejo=LAST[salvo].o;
+  const hist=hisEstado().outfits;
+  /* Cuatro pasadas de mas exigente a menos: primero un cambio de verdad (dos
+     piezas o mas) y que no sea nada que ya te haya enseñado; al final, lo que
+     sea distinto. Dentro de cada pasada se sortea entre las 40 mejores en vez
+     de devolver siempre la primera, que era lo que hacia que el boton diera
+     siempre la misma alternativa. */
+  for(const [minCambio,evitarHist] of [[2,true],[2,false],[1,true],[1,false]]){
+    const aptos=[];
+    for(const c of POOL){
+      if(vistos.has(keyOf(c.o))) continue;
+      if(evitarHist&&hist.has(keyOf(c.o))) continue;
+      if(SLOTS.some(k=>c.o[k]&&EXCL.has(c.o[k].id))) continue;
+      if(5-iguales(c.o,viejo)<minCambio) continue;
+      if(otros.some(x=>iguales(x.o,c.o)>=4)) continue;
+      aptos.push(c);
+      if(aptos.length>=40) break;
+    }
+    if(aptos.length){
+      const c=aptos[Math.floor(Math.random()*aptos.length)];
+      hisAdd([keyOf(c.o)]);
+      return c;
+    }
+  }
+  return null;
+}
+function reemplazar(i,aprender){
+  if(aprender){
+    const fs=[...new Set(SLOTS.map(k=>LAST[i].o[k]).filter(Boolean).flatMap(w=>w._f))];
+    const n=ngGet(); n.push(fs); ngSet(n); addNeg(fs); recalcPAIR();
+  }
+  const c=siguiente(i);
+  if(!c){ alert("Ya no quedan combinaciones distintas para esa consulta. Prueba pidiendo otra cosa o devolviendo alguna prenda."); return; }
+  LAST[i]=c; paint();
+}
+function noDisponible(id){ EXCL.add(id); exSave(); render(LASTQ); }
+function paintExcl(){
+  const el=document.getElementById("excl");
+  if(!EXCL.size){ el.innerHTML=""; return; }
+  el.innerHTML='<div class="readout"><b>Fuera de circulación hoy:</b> '+
+    [...EXCL].map(id=>{const w=W.find(x=>x.id===id);return '<span class="chip" data-on="'+id+'">'+(w?w.n:id)+' ✕</span>';}).join(" ")+
+    ' <button class="mini" id="exclr" style="margin-left:6px">devolver todas</button></div>';
+  el.querySelectorAll("[data-on]").forEach(b=>b.onclick=()=>{EXCL.delete(b.dataset.on);exSave();render(LASTQ);});
+  document.getElementById("exclr").onclick=()=>{EXCL.clear();exSave();render(LASTQ);};
+}
+function paint(){
+  const res=document.getElementById("res");
+  pinReset();   // que las seis tarjetas no repitan el mismo pin de referencia
+  res.innerHTML='<div class="outfits">'+LAST.map(renderOutfit).join("")+'</div>';
+  res.querySelectorAll("[data-prompt]").forEach(b=>b.onclick=()=>{
+    document.getElementById("ptxt").value=promptFor(LAST[+b.dataset.prompt]);
+    document.getElementById("dlg").showModal();
+  });
+  res.querySelectorAll("[data-swap]").forEach(b=>b.onclick=()=>reemplazar(+b.dataset.swap,false));
+  res.querySelectorAll("[data-nope]").forEach(b=>b.onclick=()=>reemplazar(+b.dataset.nope,true));
+  res.querySelectorAll("[data-off]").forEach(b=>b.onclick=e=>{if(e&&e.stopPropagation)e.stopPropagation();noDisponible(b.dataset.off);});
+  res.querySelectorAll("[data-like]").forEach(b=>b.onclick=()=>{
+    const c=LAST[+b.dataset.like];
+    const fs=[...new Set(SLOTS.map(k=>c.o[k]).filter(Boolean).flatMap(w=>w._f))];
+    const all=fbGet(); all.push(fs); fbSet(all); addDoc(fs,.8,"pulgar"); recalcPAIR();
+    b.textContent="Aprendido"; b.classList.add("done"); b.disabled=true;
+  });
+  /* "Me lo puse" registra el uso real. En modo ideas no se registra nada:
+     esas prendas no existen en el armario. */
+  res.querySelectorAll("[data-uso]").forEach(b=>b.onclick=()=>{
+    const c=LAST[+b.dataset.uso];
+    const ids=SLOTS.map(k=>c.o[k]).filter(Boolean).filter(w=>!w.virt).map(w=>w.id);
+    if(!ids.length){ b.textContent="Solo con tu ropa"; b.disabled=true; return; }
+    usoRegistrar(ids);
+    b.textContent="Registrado"; b.classList.add("done"); b.disabled=true;
+    renderUso(); renderGuardarropa();
+  });
+}
+
+function render(raw){
+  LASTQ=raw;
+  /* Si el armario todavia no da para un outfit completo, en vez de una
+     pantalla vacia se entra al catalogo de ideas: mismas reglas de color,
+     pero sobre prendas descritas en lugar de fotografiadas. */
+  const ideas=MODO_IDEAS||!puedeArmarReal();
+  if(ideas) entrarIdeas(); else salirIdeas();
+  const {p,pick,total,pool}=ideas?buildIdeas(raw):build(raw);
+  /* Se vuelve al armario real APENAS termina la consulta. Si no, cualquier
+     salida temprana de esta funcion dejaba la app viviendo en el catalogo
+     de ideas, y a partir de ahi "tengo prendas suficientes" respondia que si
+     mirando ropa que no existe. */
+  const Wq=W;
+  salirIdeas();
+  POOL=pool;
+  pintaNotaIdeas(ideas);
+  const read=document.getElementById("read"), bits=[];
+  if(p.occ)bits.push("<b>Ocasión:</b> "+p.occ.l+" (formalidad "+p.occ.r[0]+"–"+p.occ.r[1]+")");
+  if(p.modoN)bits.push("<b>Referencia:</b> "+MODOS[p.modoN].nota);
+  if(p.est.length)bits.push("<b>Estilo:</b> "+p.est.join(", "));
+  if(p.libre)bits.push("<b>Código relajado:</b> entran jeans y zapatillas");
+  if(p.grupos&&p.grupos.length)bits.push("<b>"+(p.grupos.length>1?"Prendas obligatorias":"Prenda obligatoria")+":</b> "+
+    p.grupos.map(gr=>W.filter(w=>gr.ids.includes(w.id)).map(w=>w.n).join(" o ")).join(" <b>+</b> "));
+  else if(p.gar.length)bits.push("<b>Prenda:</b> "+p.gar.join(", "));
+  if(p.no.length)bits.push("<b>Sin:</b> "+p.no.join(", "));
+  if(p.col.length&&!p.anchor.length)bits.push("<b>Color:</b> "+p.col.join(", "));
+  if(p.tem.length)bits.push("<b>Temporada:</b> "+p.tem.join(", "));
+  read.style.display="block";
+  let txt=bits.length?("Leí esto: "+bits.join(" · ")+" <span style='color:#bbb'>· "+total.toLocaleString("es")+" combinaciones válidas</span>")
+    :"No reconocí ocasión, estilo ni prendas. Prueba mencionando una prenda concreta, un color y para qué es.";
+  if(p.anchorSoft) txt+="<div style='margin-top:8px;color:var(--warn)'><b>Esas prendas juntas no dan ningún outfit válido.</b> Puede ser por temporada, por código de vestimenta o porque las dos ocupan el mismo lugar. Abajo van las combinaciones que cumplen al menos una de las que pediste, ordenadas por cuántas cumplen.</div>";
+  if(p.relax&&p.occ) txt+="<div style='margin-top:8px;color:var(--warn)'><b>Tu ropa no llega a esa formalidad.</b> El conjunto más formal que puedes armar hoy queda en "+TECHO.toFixed(1)+"/5, y "+p.occ.l+" pide "+p.occ.r[0]+"–"+p.occ.r[1]+". Abajo va lo más cercano. Para cerrar esa brecha te falta un saco oscuro y una camisa blanca de vestir.</div>";
+  read.innerHTML=txt;
+
+  paintExcl();
+  const res=document.getElementById("res");
+  LAST=pick;
+  if(!pick.length){
+    const chocaAncla=p.anchor.length&&p.anchor.every(id=>EXCL.has(id));
+    res.innerHTML='<div class="empty">'+(chocaAncla
+      ? "Pediste un outfit con "+Wq.filter(w=>p.anchor.includes(w.id)).map(w=>w.n.toLowerCase()).join(" o ")+", pero justo esa prenda está marcada como no disponible. Devuélvela arriba o pídeme otra cosa."
+      : "Ninguna combinación de tu ropa cumple eso. Suele pasar cuando pides una prenda que no tienes, cuando marcaste demasiadas como no disponibles, o cuando pides una formalidad que tu guardarropa no alcanza.")+'</div>';
+    return;}
+  paint();
+}
+
+/* ---------- guardarropa ---------- */
+const GRP={base:"Pantalones y jeans",top:"Prendas de arriba",mid:"Capas medias",out:"Chaquetas y abrigos",shoe:"Calzado"};
+let USOM={};
+function renderGuardarropa(){
+  USOM=usoPorPrenda();
+  const cont=document.getElementById("wlist");
+  if(!W.length){ cont.innerHTML='<div class="empty">Tu armario esta vacio. Toca <b>Agregar prenda</b> y sacale una foto a lo primero que tengas a mano.</div>'; }
+  else cont.innerHTML=Object.keys(GRP).map(g=>{
+    const it=W.filter(w=>w.cat===g); if(!it.length)return"";
+    return '<h3 class="sec">'+GRP[g]+'</h3><div class="grid">'+
+      it.map(w=>'<div class="gi"><div class="pc"><img loading="lazy" src="'+w.src+'" alt="'+w.n+'"></div>'+
+      '<div class="n">'+w.n+'<small>'+w.c.join(", ")+' &middot; form. '+w.f+
+      ' &middot; '+(USOM[w.id]?("usada "+USOM[w.id].n+(USOM[w.id].n===1?" vez":" veces")):"sin estrenar")+'</small>'+
+      '<div class="gia"><button class="mini" data-edit="'+w.id+'">Editar</button>'+
+      '<button class="mini no" data-del="'+w.id+'">Borrar</button></div></div></div>').join("")+'</div>';
+  }).join("");
+  cont.querySelectorAll("[data-edit]").forEach(b=>b.onclick=()=>abrirPrenda(b.dataset.edit));
+  cont.querySelectorAll("[data-del]").forEach(b=>b.onclick=()=>borrarPrenda(b.dataset.del));
+}
+
+/* ============================================================
+   CLIMA
+   Open-Meteo: gratis, sin cuenta ni clave, y responde con CORS abierto,
+   asi que se llama directo desde el navegador. La respuesta se guarda con
+   su hora: si no hay internet se reusa la ultima de hasta 12 h y la app
+   sigue funcionando igual.
+   No se toca el motor de puntuacion: el clima solo traduce la temperatura
+   a la misma palabra de temporada que ya entiende el buscador.
+   ============================================================ */
+const CLIMA_K="armario_clima_v1", LUGAR_K="armario_lugar_v1";
+const CLIMA_VIDA=12*3600*1000;
+let CLIMA=null;
+
+/* Umbrales pensados para clima costero templado (Lima). Se pueden mover sin
+   tocar nada mas. */
+function temporadaDe(t){
+  if(t<=16) return "invierno";
+  if(t<=21) return "otono";
+  if(t<=26) return "primavera";
+  return "verano";
+}
+const CIELO={0:"despejado",1:"casi despejado",2:"parcialmente nublado",3:"nublado",
+  45:"con neblina",48:"con neblina",51:"con llovizna",53:"con llovizna",55:"con llovizna",
+  61:"con lluvia",63:"con lluvia",65:"con lluvia fuerte",80:"con chubascos",81:"con chubascos",
+  82:"con chubascos fuertes",95:"con tormenta"};
+
+async function geocodificar(ciudad){
+  const u="https://geocoding-api.open-meteo.com/v1/search?count=1&language=es&name="+encodeURIComponent(ciudad);
+  const r=await fetch(u); if(!r.ok) throw new Error("geo");
+  const d=await r.json();
+  if(!d.results||!d.results.length) throw new Error("sin resultados");
+  const g=d.results[0];
+  return {lat:g.latitude, lon:g.longitude, nombre:g.name};
+}
+async function pedirClima(lugar){
+  const u="https://api.open-meteo.com/v1/forecast?latitude="+lugar.lat+"&longitude="+lugar.lon+
+    "&current=temperature_2m,weather_code&daily=temperature_2m_max,temperature_2m_min,precipitation_probability_max"+
+    "&forecast_days=1&timezone=auto";
+  const r=await fetch(u); if(!r.ok) throw new Error("clima");
+  const d=await r.json();
+  const c={
+    t: Math.round(d.current.temperature_2m),
+    min: Math.round(d.daily.temperature_2m_min[0]),
+    max: Math.round(d.daily.temperature_2m_max[0]),
+    lluvia: d.daily.precipitation_probability_max?d.daily.precipitation_probability_max[0]:0,
+    cielo: CIELO[d.current.weather_code]||"",
+    lugar: lugar.nombre||"tu zona",
+    ts: Date.now()
+  };
+  LS.set(CLIMA_K,c); LS.set(LUGAR_K,lugar);
+  return c;
+}
+function ubicar(){
+  return new Promise((ok,err)=>{
+    const guardado=LS.get(LUGAR_K,"null");
+    if(guardado) return ok(guardado);
+    if(!navigator.geolocation) return err(new Error("sin gps"));
+    navigator.geolocation.getCurrentPosition(
+      p=>ok({lat:p.coords.latitude, lon:p.coords.longitude, nombre:""}),
+      ()=>err(new Error("permiso denegado")), {timeout:8000, maximumAge:3600000});
+  });
+}
+function climaGuardado(){
+  const c=LS.get(CLIMA_K,"null");
+  return (c&&Date.now()-c.ts<CLIMA_VIDA)?c:null;
+}
+/* La consulta se arma con la palabra de temporada que el parser ya conoce,
+   y se le suma "abrigado" si va a llover. Cero cambios en la puntuacion. */
+function consultaDelDia(c){
+  const tem=temporadaDe(c.t);
+  let q="para hoy, "+tem;
+  if(c.lluvia>=55) q+=", abrigado";
+  return q;
+}
+function pintaClima(){
+  const caja=$("climaCaja"); if(!caja) return;
+  const c=CLIMA;
+  if(!c){
+    caja.innerHTML='<div class="clima"><span>¿Qué me pongo hoy? Puedo usar el clima de tu ciudad.</span>'+
+      '<button class="mini" id="climaOn">Activar clima</button></div>';
+    $("climaOn").onclick=iniciarClima;
+    return;
+  }
+  const tem=temporadaDe(c.t);
+  caja.innerHTML='<div class="clima"><span><b>'+c.t+'°</b> en '+c.lugar+
+    (c.cielo?", "+c.cielo:"")+' · máx '+c.max+'° mín '+c.min+'°'+
+    (c.lluvia>=55?' · '+c.lluvia+'% de lluvia':'')+
+    '<small>Te propongo ropa de '+tem+'</small></span>'+
+    '<button class="go" id="climaHoy">Outfit de hoy</button>'+
+    '<button class="mini" id="climaOtra">Otra ciudad</button></div>';
+  $("climaHoy").onclick=()=>{ const q=consultaDelDia(c);
+    $("q").value=q; render(q); window.scrollTo({top:0,behavior:"smooth"}); };
+  $("climaOtra").onclick=async()=>{
+    const n=prompt("¿En qué ciudad estás?"); if(!n) return;
+    try{ const l=await geocodificar(n); CLIMA=await pedirClima(l); pintaClima(); }
+    catch(e){ alert("No pude encontrar esa ciudad."); }
+  };
+}
+async function iniciarClima(){
+  const caja=$("climaCaja");
+  caja.innerHTML='<div class="clima"><span>Buscando el clima…</span></div>';
+  try{
+    let lugar;
+    try{ lugar=await ubicar(); }
+    catch(e){
+      const n=prompt("¿En qué ciudad estás?"); if(!n){ CLIMA=null; return pintaClima(); }
+      lugar=await geocodificar(n);
+    }
+    CLIMA=await pedirClima(lugar);
+  }catch(e){
+    CLIMA=climaGuardado();
+    if(!CLIMA){ caja.innerHTML='<div class="clima"><span>No pude traer el clima. Revisa tu conexión.</span>'+
+      '<button class="mini" id="climaOn">Reintentar</button></div>'; $("climaOn").onclick=iniciarClima; return; }
+  }
+  pintaClima();
+}
+
+/* ============================================================
+   REGISTRO DE USO
+   Distinto del historial de 14 dias, que solo evita repetir sugerencias.
+   Esto es lo que la persona DE VERDAD se puso, y no caduca.
+   ============================================================ */
+const USOS_K="armario_usos_v1";
+const hoyISO=()=>new Date().toISOString().slice(0,10);
+const usosGet=()=>LS.get(USOS_K,"[]");
+function usoRegistrar(ids){
+  const u=usosGet();
+  const f=hoyISO();
+  u.push({f, ids:ids.filter(Boolean)});
+  LS.set(USOS_K,u.slice(-2000));
+}
+function usoPorPrenda(){
+  const m={};
+  usosGet().forEach(r=>r.ids.forEach(id=>{
+    if(!m[id]) m[id]={n:0, ult:null};
+    m[id].n++; if(!m[id].ult||r.f>m[id].ult) m[id].ult=r.f;
+  }));
+  return m;
+}
+const diasDesde=f=>Math.floor((Date.now()-new Date(f+"T12:00:00").getTime())/864e5);
+
+function renderUso(){
+  const m=usoPorPrenda(), u=usosGet();
+  const usadas=W.filter(w=>m[w.id]);
+  const nunca=W.filter(w=>!m[w.id]);
+  const total=W.length;
+  $("usoStats").innerHTML=
+    '<div><span>'+u.length+'</span><small>outfits registrados</small></div>'+
+    '<div><span>'+(total?Math.round(usadas.length*100/total):0)+'%</span><small>de tu ropa estrenada</small></div>'+
+    '<div><span>'+nunca.length+'</span><small>prendas sin usar aún</small></div>';
+
+  /* Lo olvidado: primero lo que nunca se uso, despues lo que lleva mas tiempo
+     sin salir. Es la razon principal por la que la gente usa esta pantalla. */
+  const dormidas=[...nunca.map(w=>({w,d:null})),
+    ...usadas.map(w=>({w,d:diasDesde(m[w.id].ult)})).filter(x=>x.d>=21)]
+    .sort((a,b)=>(b.d===null?1e9:b.d)-(a.d===null?1e9:a.d)).slice(0,12);
+  $("usoOlvido").innerHTML = !W.length ? "" :
+    '<h3 class="sec">Lo que tienes olvidado</h3>'+
+    (dormidas.length
+      ? '<div class="grid">'+dormidas.map(x=>
+          '<div class="gi"><div class="pc"><img loading="lazy" src="'+x.w.src+'" alt="'+x.w.n+'">'+
+          '<span class="lb">'+(x.d===null?"sin estrenar":"hace "+x.d+" días")+'</span></div>'+
+          '<div class="n">'+x.w.n+'</div></div>').join("")+'</div>'
+      : '<div class="note">Estás usando todo tu armario. Nada lleva más de tres semanas guardado.</div>');
+
+  /* Calendario simple: ultimas 5 semanas, un punto por dia registrado */
+  const dias=[]; for(let i=34;i>=0;i--){ const d=new Date(Date.now()-i*864e5); dias.push(d.toISOString().slice(0,10)); }
+  const porDia={}; u.forEach(r=>porDia[r.f]=(porDia[r.f]||0)+1);
+  $("usoCal").innerHTML='<h3 class="sec">Últimas cinco semanas</h3><div class="cal">'+
+    dias.map(f=>'<i class="'+(porDia[f]?"on":"")+'" title="'+f+(porDia[f]?": "+porDia[f]+" outfit(s)":": sin registro")+'"></i>').join("")+
+    '</div><div class="note">Cada cuadrito es un día. Los marcados son días en los que registraste un outfit.</div>';
+
+  const top=W.filter(w=>m[w.id]).sort((a,b)=>m[b.id].n-m[a.id].n).slice(0,8);
+  $("usoRank").innerHTML = top.length
+    ? '<h3 class="sec">Tus prendas de siempre</h3><div class="lst">'+
+      top.map(w=>'<b>'+w.n+'</b> — '+m[w.id].n+(m[w.id].n===1?" vez":" veces")).join("<br>")+'</div>'
+    : "";
+}
+
+/* ============================================================
+   MALETA
+   El problema no es armar outfits: eso ya lo hace el motor. El problema es
+   el inverso -- que la MENOR cantidad de prendas alcance para vestir N dias
+   sin repetir el mismo conjunto. Es un problema de cobertura, y se resuelve
+   con una estrategia glotona: dia por dia se elige el mejor outfit que ya
+   este casi entero dentro de la maleta.
+
+   Por eso el resultado se parece a un armario capsula: un par de zapatos y
+   dos pantalones que se repiten, y la variedad puesta arriba, que es lo que
+   pesa poco y se nota en las fotos.
+   ============================================================ */
+const MALETAS={mochila:{n:9,l:"Mochila"},cabina:{n:15,l:"Maleta de cabina"},grande:{n:24,l:"Maleta grande"}};
+const ACTIVIDADES=[
+  {k:"paseo",   l:"Pasear y turistear", q:"paseo"},
+  {k:"trabajo", l:"Trabajo o reuniones", q:"oficina"},
+  {k:"cena",    l:"Cenas y salidas",     q:"cena"},
+  {k:"evento",  l:"Un evento formal",    q:"evento"}
+];
+/* Lo que de verdad ocupa la maleta. Un calzado o un abrigo pesan mucho mas
+   que una camiseta, asi que el motor prefiere repetir zapatos antes que
+   repetir prendas de arriba. */
+function bulto(w){
+  let b=1+(w.w-1)*0.6;
+  if(w.cat==="shoe") b+=2.2;
+  if(w.cat==="out")  b+=1.4;
+  if(w.cat==="base") b+=0.5;
+  return b;
+}
+const TOPE_CAT={shoe:2,out:2,base:3};
+
+function armarMaleta({dias,actividades,temporada,tope}){
+  const acts=actividades.length?actividades:["paseo"];
+  /* Los dias se reparten entre las actividades elegidas. La que mas dias se
+     lleva se resuelve primero: asi define el nucleo de la maleta y las demas
+     reutilizan lo que ya esta adentro. */
+  const base=Math.floor(dias/acts.length); let resto=dias%acts.length;
+  const cupos=acts.map(k=>({k,n:base+(resto-->0?1:0)})).filter(c=>c.n>0)
+                  .sort((a,b)=>b.n-a.n);
+  const pools={};
+  for(const c of cupos){
+    const act=ACTIVIDADES.find(a=>a.k===c.k);
+    const q=act.q+(temporada?", "+temporada:"");
+    try{ pools[c.k]=build(q).pool||[]; }catch(e){ pools[c.k]=[]; }
+  }
+  const maleta=new Map(), porCat={}, plan=[], usados=new Set();
+  const cabe=items=>{
+    const nuevos=items.filter(w=>!maleta.has(w.id));
+    if(maleta.size+nuevos.length>tope) return false;
+    const cuenta={};
+    for(const w of nuevos) cuenta[w.cat]=(cuenta[w.cat]||0)+1;
+    for(const cat in cuenta)
+      if(TOPE_CAT[cat]&&(porCat[cat]||0)+cuenta[cat]>TOPE_CAT[cat]) return false;
+    return true;
+  };
+  const meter=items=>{
+    for(const w of items) if(!maleta.has(w.id)){
+      maleta.set(w.id,w); porCat[w.cat]=(porCat[w.cat]||0)+1;
+    }
+  };
+  const elegir=(pool,permiteRepetir)=>{
+    let mejor=null, mejorP=-1e9;
+    for(const c of pool){
+      const k=keyOf(c.o);
+      if(!permiteRepetir&&usados.has(k)) continue;
+      if(!permiteRepetir&&plan.some(pl=>iguales(pl.c.o,c.o)>=4)) continue;
+      const items=SLOTS.map(s=>c.o[s]).filter(Boolean);
+      if(!cabe(items)) continue;
+      let extra=0;
+      for(const w of items) if(!maleta.has(w.id)) extra+=bulto(w);
+      /* El 7 es el cambio de moneda entre "que lindo se ve" y "cuanto pesa".
+         Mas alto: maletas mas chicas y outfits mas repetidos. */
+      const puntaje=(c.s||0)-extra*7;
+      if(puntaje>mejorP){ mejorP=puntaje; mejor=c; }
+    }
+    return mejor;
+  };
+  for(const cupo of cupos){
+    const pool=pools[cupo.k]||[];
+    for(let d=0;d<cupo.n;d++){
+      let c=elegir(pool,false);
+      let repetido=false;
+      if(!c){ c=elegir(pool,true); repetido=true; }   // ya no entra nada nuevo: se repite
+      if(!c) break;
+      const items=SLOTS.map(s=>c.o[s]).filter(Boolean);
+      meter(items);
+      usados.add(keyOf(c.o));
+      plan.push({act:cupo.k, c, repetido});
+    }
+  }
+  return {maleta:[...maleta.values()], plan, cupos, tope};
+}
+
+/* ---------- clima del destino ---------- */
+async function climaDestino(ciudad,dias){
+  const l=await geocodificar(ciudad);
+  const n=Math.min(16,Math.max(1,dias));
+  const u="https://api.open-meteo.com/v1/forecast?latitude="+l.lat+"&longitude="+l.lon+
+    "&daily=temperature_2m_max,temperature_2m_min&forecast_days="+n+"&timezone=auto";
+  const r=await fetch(u); if(!r.ok) throw new Error("clima");
+  const d=await r.json();
+  const mx=d.daily.temperature_2m_max, mn=d.daily.temperature_2m_min;
+  const prom=(mx.reduce((a,b)=>a+b,0)/mx.length + mn.reduce((a,b)=>a+b,0)/mn.length)/2;
+  return {lugar:l.nombre, prom:Math.round(prom),
+          max:Math.round(Math.max(...mx)), min:Math.round(Math.min(...mn)),
+          temporada:temporadaDe(prom)};
+}
+
+/* ---------- pantalla de viaje ---------- */
+let VJ_CLIMA=null, VJ_ACTS=new Set(["paseo"]);
+function pintaActs(){
+  $("vjOcc").innerHTML=ACTIVIDADES.map(a=>
+    '<span class="chip" data-act="'+a.k+'" aria-pressed="'+(VJ_ACTS.has(a.k)?"true":"false")+'">'+a.l+'</span>').join("");
+  $("vjOcc").querySelectorAll("[data-act]").forEach(c=>c.onclick=()=>{
+    const k=c.dataset.act;
+    if(VJ_ACTS.has(k)) VJ_ACTS.delete(k); else VJ_ACTS.add(k);
+    if(!VJ_ACTS.size) VJ_ACTS.add("paseo");
+    pintaActs();
+  });
+}
+const GRPV={base:"Pantalones",top:"Prendas de arriba",mid:"Capas medias",out:"Abrigos",shoe:"Calzado"};
+function textoMaleta(r,dias,destino){
+  let t="MALETA"+(destino?" para "+destino:"")+" · "+dias+(dias===1?" día":" días")+"\n";
+  if(VJ_CLIMA) t+="Clima: alrededor de "+VJ_CLIMA.prom+"°\n";
+  t+="\n";
+  for(const cat in GRPV){
+    const it=r.maleta.filter(w=>w.cat===cat);
+    if(!it.length) continue;
+    t+=GRPV[cat].toUpperCase()+"\n"+it.map(w=>"- "+w.n).join("\n")+"\n\n";
+  }
+  t+="PLAN POR DÍA\n";
+  r.plan.forEach((pl,i)=>{
+    const nom=SLOTS.map(s=>pl.c.o[s]).filter(Boolean).map(w=>w.n).join(" + ");
+    t+="Día "+(i+1)+" ("+(ACTIVIDADES.find(a=>a.k===pl.act)||{l:""}).l.toLowerCase()+"): "+nom+"\n";
+  });
+  return t;
+}
+function renderViaje(r,dias,destino){
+  if(!r.plan.length){
+    $("vjRes").innerHTML='<div class="empty">No pude armar ni un outfit completo con esas condiciones. '+
+      'Prueba con más días de maleta, otra actividad, o revisa que tengas pantalón, algo de arriba y calzado cargados.</div>';
+    return;
+  }
+  const cats=Object.keys(GRPV).filter(c=>r.maleta.some(w=>w.cat===c));
+  const distintos=new Set(r.plan.map(pl=>keyOf(pl.c.o))).size;
+  let h='<div class="stat">'+
+    '<div><span>'+r.maleta.length+'</span><small>prendas en la maleta</small></div>'+
+    '<div><span>'+distintos+'</span><small>outfits distintos</small></div>'+
+    '<div><span>'+dias+'</span><small>días cubiertos</small></div></div>';
+  h+='<div class="note">Con <b>'+r.maleta.length+'</b> prendas sales '+distintos+' días distinto. '+
+     'El motor repite calzado y pantalones a propósito, que es lo que ocupa la maleta, y cambia lo de arriba.</div>';
+  h+='<h3 class="sec">Qué meter</h3>';
+  for(const cat of cats){
+    const it=r.maleta.filter(w=>w.cat===cat);
+    h+='<div class="lst" style="margin:8px 0 4px"><b>'+GRPV[cat]+'</b></div><div class="grid">'+
+      it.map(w=>'<div class="gi"><div class="pc"><img loading="lazy" src="'+w.src+'" alt="'+w.n+'"></div>'+
+      '<div class="n">'+w.n+'</div></div>').join("")+'</div>';
+  }
+  h+='<h3 class="sec">Día por día</h3><div class="outfits">';
+  r.plan.forEach((pl,i)=>{
+    const piezas=SLOTS.map(s=>pl.c.o[s]).filter(Boolean);
+    h+='<div class="of"><div class="hd"><b>Día '+(i+1)+'</b>'+
+       '<span class="tg">'+(ACTIVIDADES.find(a=>a.k===pl.act)||{l:""}).l.toLowerCase()+'</span>'+
+       (pl.repetido?'<span class="tg">repite conjunto</span>':'')+'</div>'+
+       '<div class="look"><div class="col">'+
+         piezas.slice(0,2).map(w=>'<div class="pc big"><img loading="lazy" src="'+w.src+'" alt="'+w.n+'"><span class="lb">'+w.n+'</span></div>').join("")+
+       '</div><div class="col">'+
+         piezas.slice(2).map(w=>'<div class="pc sm"><img loading="lazy" src="'+w.src+'" alt="'+w.n+'"><span class="lb">'+w.n+'</span></div>').join("")+
+       '</div></div>'+
+       '<div class="bd"><div class="lst">'+piezas.map(w=>'<b>'+w.n+'</b>').join(" · ")+'</div></div></div>';
+  });
+  h+='</div><div class="rw2" style="margin-top:14px"><button class="mini" id="vjCopy">Copiar la lista</button></div>';
+  $("vjRes").innerHTML=h;
+  $("vjCopy").onclick=async()=>{
+    const t=textoMaleta(r,dias,destino);
+    try{ await navigator.clipboard.writeText(t); }catch(e){}
+    const b=$("vjCopy"); b.textContent="Copiada"; b.classList.add("done");
+    setTimeout(()=>{b.textContent="Copiar la lista";b.classList.remove("done");},1600);
+  };
+}
+async function armarViaje(){
+  const dias=Math.max(1,Math.min(21,parseInt($("vjDias").value)||5));
+  const destino=$("vjDest").value.trim();
+  const tope=MALETAS[$("vjMaleta").value].n;
+  if(!puedeArmarReal()){
+    $("vjRes").innerHTML='<div class="empty">Para armar una maleta necesito al menos un pantalón, algo de arriba y un calzado en tu guardarropa.</div>';
+    return;
+  }
+  $("vjRes").innerHTML='<div class="note">Armando la maleta…</div>';
+  VJ_CLIMA=null;
+  if(destino){
+    $("vjClima").innerHTML='<div class="note">Viendo el clima de '+destino+'…</div>';
+    try{ VJ_CLIMA=await climaDestino(destino,dias); }catch(e){}
+    $("vjClima").innerHTML=VJ_CLIMA
+      ? '<div class="clima"><span>En <b>'+VJ_CLIMA.lugar+'</b> se esperan unos '+VJ_CLIMA.prom+
+        '° (entre '+VJ_CLIMA.min+'° y '+VJ_CLIMA.max+'°)<small>Armo la maleta con ropa de '+VJ_CLIMA.temporada+'</small></span></div>'
+      : '<div class="note">No pude ver el clima de ese destino, así que armo la maleta sin filtrar por temporada.</div>';
+  } else $("vjClima").innerHTML="";
+  const r=armarMaleta({dias, actividades:[...VJ_ACTS], temporada:VJ_CLIMA?VJ_CLIMA.temporada:"", tope});
+  renderViaje(r,dias,destino);
+}
+
+/* ---------- panel de reglas ---------- */
+function renderReglas(){
+  const fams=Object.keys(FCOUNT).sort((a,b)=>FCOUNT[b]-FCOUNT[a]);
+  let h='<h3 class="sec">Qué colores conviven en tus referencias</h3><div style="overflow-x:auto"><table style="border-collapse:collapse;background:#fff;border:1px solid var(--line);border-radius:10px;font-size:12.5px">';
+  h+='<tr><th style="padding:7px 9px;background:#f5f1ea"></th>'+fams.map(f=>'<th style="padding:7px 9px;background:#f5f1ea;font-size:11px">'+f+'</th>').join("")+'</tr>';
+  fams.forEach(a=>{
+    h+='<tr><th style="padding:7px 9px;background:#f5f1ea;text-align:left;font-size:11px">'+a+'</th>';
+    fams.forEach(b=>{
+      const n=a===b?null:(AF[[a,b].sort().join("|")]||0);
+      const v=n===null?"·":(n?(Math.round(n*10)/10):"");
+      const bg=n===null?"#fafafa":(n>=4?"#cadcc2":n>=2?"#e4ecdf":n>=1?"#f4f1ea":"#fff");
+      const s=n?(SRC[[a,b].sort().join("|")]||{}):{};
+      const ti=n?" title=\""+Object.entries(s).map(([k,v2])=>k+": "+Math.round(v2*10)/10).join(", ")+"\"":"";
+      h+='<td'+ti+' style="padding:7px 9px;text-align:center;background:'+bg+';border:1px solid var(--line)">'+v+'</td>';
+    });
+    h+='</tr>';
+  });
+  h+='</table></div><div class="note" style="margin-top:14px">El número es cuánta evidencia hay de que esas dos familias funcionan juntas. Sale de tus referencias de estilo y de los outfits que marcaste con «me queda bien». Verde oscuro es lo que el motor prioriza; blanco es lo que evita.'+(REFS.length?'':' Todavía no tienes referencias de color cargadas: la tabla usa solo reglas generales de combinación.')+'</div>'+
+  '<div class="note"><b>El eje de claridad.</b> Lo que más mejora las sugerencias es contrastar el nivel de claridad del pantalón con el de la prenda de arriba. Por eso el motor hunde los conjuntos planos, tipo crema sobre crema sobre arena.</div>'+
+  '<div class="note"><b>Hasta dónde llega tu ropa.</b> Con las prendas que tienes cargadas, la formalidad máxima que alcanza un conjunto completo es <b>'+TECHO.toFixed(1)+'/5</b>. Si pides algo más formal que eso, el motor te lo avisa en vez de inventar.</div>';
+  document.getElementById("afin").innerHTML=h;
+  const c=k=>{const m={};W.forEach(w=>w[k].forEach(v=>m[v]=(m[v]||0)+1));return Object.entries(m).sort((a,b)=>b[1]-a[1]);};
+  const combos=BASE.length*TOP.length*SHOE.length*(MID.length+1)*(OUT.length+1);
+  const dom=W.length?c("c")[0][0]:"-";
+  /* Solo cifras que se recalculan solas con lo que hay cargado en este momento.
+     Los conteos fijos de prendas y de referencias se quitaron: quedaban viejos
+     apenas alguien agregaba o borraba algo. */
+  document.getElementById("stats").innerHTML=
+   '<div><span>'+combos.toLocaleString("es")+'</span><small>combinaciones posibles</small></div>'+
+   '<div><span>'+dom+'</span><small>color dominante</small></div>'+
+   '<div><span>'+TECHO.toFixed(1)+'</span><small>formalidad máxima</small></div>';
+}
+
+/* ---------- ui ---------- */
+const EX=["oficina, elegante","viernes en la oficina, puedo ir casual","reunión con amigos","cita de noche, algo sobrio","verano, algo fresco y minimal","frío, casual y abrigado"];
+document.getElementById("chips").innerHTML=EX.map(e=>'<span class="chip">'+e+'</span>').join("");
+document.querySelectorAll(".chip").forEach(c=>c.onclick=()=>{document.getElementById("q").value=c.textContent;render(c.textContent);window.scrollTo({top:0,behavior:"smooth"});});
+document.getElementById("btn").onclick=()=>render(document.getElementById("q").value);
+document.getElementById("q").addEventListener("keydown",e=>{if(e.key==="Enter"&&(e.metaKey||e.ctrlKey))render(e.target.value);});
+document.querySelectorAll(".tab").forEach(t=>t.onclick=()=>{
+  document.querySelectorAll(".tab").forEach(x=>x.classList.remove("on"));
+  document.querySelectorAll(".panel").forEach(x=>x.classList.remove("on"));
+  t.classList.add("on");document.getElementById(t.dataset.p).classList.add("on");
+  if(t.dataset.p==="p5") renderUso();
+  if(t.dataset.p==="p6") pintaActs();
+});
+document.getElementById("pclose").onclick=()=>document.getElementById("dlg").close();
+document.getElementById("pcopy").onclick=async()=>{
+  const t=document.getElementById("ptxt"); t.select();
+  try{await navigator.clipboard.writeText(t.value);}catch(e){document.execCommand("copy");}
+  const b=document.getElementById("pcopy"); b.textContent="Copiado"; b.classList.add("done");
+  setTimeout(()=>{b.textContent="Copiar";b.classList.remove("done");},1600);
+};
+
+/* ---------- exportar / importar votos ----------
+   Los votos viven en el localStorage del navegador donde los diste. Con la app
+   publicada en internet y usandola desde el celular y desde la PC, son dos
+   memorias separadas que no se ven entre si. Esto las junta a mano. */
+function vmsg(t){ const e=document.getElementById("vmsg"); e.style.display="block"; e.innerHTML=t; }
+document.getElementById("vexp").onclick=()=>{
+  const d={app:"armario",v:1,fecha:new Date().toISOString()};
+  [FBK,FBN,EXK].forEach(k=>d[k]=LS.get(k,"[]"));
+  const a=document.createElement("a");
+  a.href=URL.createObjectURL(new Blob([JSON.stringify(d)],{type:"application/json"}));
+  a.download="armario_votos_"+new Date().toISOString().slice(0,10)+".json";
+  document.body.appendChild(a); a.click(); a.remove(); URL.revokeObjectURL(a.href);
+  vmsg("Archivo descargado con <b>"+fbGet().length+"</b> «me queda bien» y <b>"+ngGet().length+"</b> descartes. Pásalo al otro dispositivo y ábrelo ahí con «Importar votos».");
+};
+document.getElementById("vimp").onchange=e=>{
+  const f=e.target.files&&e.target.files[0]; if(!f) return;
+  const r=new FileReader();
+  r.onload=()=>{
+    let d; try{ d=JSON.parse(r.result); }catch(err){ vmsg("No pude leer ese archivo."); return; }
+    if(!d||d.app!=="armario"){ vmsg("Ese archivo no es un respaldo de votos de esta app."); return; }
+    let n=0;
+    [FBK,FBN].forEach(k=>{
+      const acum=LS.get(k,"[]"), visto=new Set(acum.map(x=>JSON.stringify(x)));
+      (Array.isArray(d[k])?d[k]:[]).forEach(x=>{ const s=JSON.stringify(x);
+        if(!visto.has(s)){ visto.add(s); acum.push(x); n++; } });
+      LS.set(k,acum);
+    });
+    if(Array.isArray(d[EXK])) LS.set(EXK,[...new Set(LS.get(EXK,"[]").concat(d[EXK]))]);
+    vmsg(n?("Importados <b>"+n+"</b> votos que no tenías aquí. Recargando para aplicarlos…")
+          :"Ese archivo no traía ningún voto nuevo: ya los tenías todos.");
+    if(n) setTimeout(()=>location.reload(),1000);
+  };
+  r.readAsText(f);
+};
+document.getElementById("volv").onclick=()=>{ hisReset();
+  vmsg("Hecho. El motor vuelve a tratar todos los outfits como no vistos."); };
+
+/* ============================================================
+   ALMACEN DE PRENDAS
+   Las fotos ya no viven dentro del archivo: viven en IndexedDB,
+   que es el unico almacen del navegador con espacio suficiente
+   (localStorage tope en 5 MB y solo las fotos ya pesaban 2,7).
+   Si IndexedDB no esta disponible (pasa al abrir el archivo con
+   doble clic, protocolo file://) se cae a localStorage y se avisa.
+   ============================================================ */
+/* El nombre de la base tambien lleva el APP_ID: si dos apps distintas usaran
+   "armario_db" a secas, la segunda abriria la base de la primera y mostraria
+   su ropa. Este era el motivo real de que siguiera saliendo el armario viejo. */
+const DB_NOMBRE="armario_db_"+APP_ID, DB_STORE="prendas", LS_PRENDAS="armario_prendas_v1";
+let _db=null, MODO_ALMACEN="idb";
+
+function abrirDB(){
+  return new Promise((ok,err)=>{
+    if(_db) return ok(_db);
+    if(!window.indexedDB) return err(new Error("sin-indexeddb"));
+    let r;
+    try{ r=indexedDB.open(DB_NOMBRE,1); }catch(e){ return err(e); }
+    r.onupgradeneeded=e=>{ const d=e.target.result;
+      if(!d.objectStoreNames.contains(DB_STORE)) d.createObjectStore(DB_STORE,{keyPath:"id"}); };
+    r.onsuccess=e=>{ _db=e.target.result; ok(_db); };
+    r.onerror=()=>err(r.error||new Error("idb"));
+    r.onblocked=()=>err(new Error("idb-bloqueado"));
+  });
+}
+const idbAPI={
+  todas:()=>abrirDB().then(d=>new Promise((ok,err)=>{
+    const q=d.transaction(DB_STORE,"readonly").objectStore(DB_STORE).getAll();
+    q.onsuccess=()=>ok(q.result||[]); q.onerror=()=>err(q.error); })),
+  guardar:ps=>abrirDB().then(d=>new Promise((ok,err)=>{
+    const t=d.transaction(DB_STORE,"readwrite"), s=t.objectStore(DB_STORE);
+    ps.forEach(p=>s.put(p)); t.oncomplete=()=>ok(); t.onerror=()=>err(t.error); })),
+  borrar:id=>abrirDB().then(d=>new Promise((ok,err)=>{
+    const t=d.transaction(DB_STORE,"readwrite");
+    t.objectStore(DB_STORE).delete(id); t.oncomplete=()=>ok(); t.onerror=()=>err(t.error); })),
+  vaciar:()=>abrirDB().then(d=>new Promise((ok,err)=>{
+    const t=d.transaction(DB_STORE,"readwrite");
+    t.objectStore(DB_STORE).clear(); t.oncomplete=()=>ok(); t.onerror=()=>err(t.error); }))
+};
+const lsAPI={
+  todas:()=>Promise.resolve(LS.get(LS_PRENDAS,"[]")),
+  guardar:ps=>{ const m=LS.get(LS_PRENDAS,"[]"), ix={};
+    m.forEach((p,i)=>ix[p.id]=i);
+    ps.forEach(p=>{ if(ix[p.id]!==undefined) m[ix[p.id]]=p; else m.push(p); });
+    LS.set(LS_PRENDAS,m); return Promise.resolve(); },
+  borrar:id=>{ LS.set(LS_PRENDAS,LS.get(LS_PRENDAS,"[]").filter(p=>p.id!==id)); return Promise.resolve(); },
+  vaciar:()=>{ LS.set(LS_PRENDAS,[]); return Promise.resolve(); }
+};
+let Almacen=idbAPI;
+
+/* ============================================================
+   FOTO: se achica y se le saca el color dominante en el navegador.
+   Sin llamadas a ninguna IA, asi que no cuesta nada por prenda.
+   ============================================================ */
+const PALETA={
+ negro:[26,26,26], carbon:[58,58,58], gris:[138,138,138], plomo:[110,110,110],
+ blanco:[245,245,242], hueso:[239,234,222], marfil:[242,234,216], crema:[239,230,210],
+ beige:[217,199,168], arena:[221,208,176], piedra:[184,178,166], taupe:[168,152,128],
+ camel:[193,154,107], tostado:[176,122,74], marron:[107,74,47], chocolate:[74,47,34],
+ tabaco:[122,82,48], "azul marino":[31,42,68], azul:[63,111,168], celeste:[168,200,224],
+ denim:[74,109,146], verde:[74,107,63], olivo:[107,107,63], militar:[79,90,58],
+ salvia:[154,171,144], vino:[110,34,51], granate:[92,31,42], guinda:[107,31,46],
+ rosa:[224,168,176], salmon:[232,164,138]
+};
+const rgbCss=n=>{const c=PALETA[n];return"rgb("+c[0]+","+c[1]+","+c[2]+")";};
+function nombreColor(r,g,b){
+  let best=null,bd=1e9;
+  for(const n in PALETA){ const c=PALETA[n];
+    /* se pesa mas el verde porque el ojo lo distingue mejor; sin eso los
+       marrones y los olivos se confunden todo el tiempo */
+    const d=2*(r-c[0])**2+4*(g-c[1])**2+3*(b-c[2])**2;
+    if(d<bd){bd=d;best=n;} }
+  return best;
+}
+function coloresDe(cx,w,h){
+  /* Se mira solo el centro de la foto: los bordes casi siempre son la pared,
+     la cama o el piso, y ganaban el conteo. */
+  const x0=Math.floor(w*.22), y0=Math.floor(h*.22);
+  const dw=Math.max(1,Math.floor(w*.56)), dh=Math.max(1,Math.floor(h*.56));
+  const d=cx.getImageData(x0,y0,dw,dh).data, cnt={};
+  for(let i=0;i<d.length;i+=16){
+    if(d[i+3]<128) continue;
+    const k=(d[i]>>5)+","+(d[i+1]>>5)+","+(d[i+2]>>5);
+    (cnt[k]=cnt[k]||{n:0,r:0,g:0,b:0}); const c=cnt[k];
+    c.n++; c.r+=d[i]; c.g+=d[i+1]; c.b+=d[i+2];
+  }
+  const tops=Object.values(cnt).sort((a,b)=>b.n-a.n).slice(0,4);
+  const out=[];
+  for(const c of tops){
+    const n=nombreColor(c.r/c.n,c.g/c.n,c.b/c.n);
+    if(!out.includes(n)) out.push(n);
+    if(out.length>=2) break;
+  }
+  return out;
+}
+/* ============================================================
+   EMBELLECEDOR
+   Recorta el fondo, deja la prenda sobre blanco y la encuadra centrada.
+   Todo con canvas puro: sin modelos de IA, sin servidor y sin costo por
+   foto, para no romper la promesa de que la app funciona sin internet.
+
+   Como funciona: el fondo de una foto de ropa casi siempre toca los bordes
+   y es mas uniforme que la prenda. Se siembran semillas en todo el marco y
+   se expande por color parecido (relleno por inundacion). Lo que la marea
+   NO alcanza es la prenda.
+
+   Es honesto decir que no llega al nivel de un modelo entrenado: con un
+   fondo muy cargado el recorte se queda corto. Por eso, si el resultado no
+   es creible -se comio casi todo o casi nada- se descarta y la foto se deja
+   como estaba, solo encuadrada. Nunca deja una prenda destrozada.
+   ============================================================ */
+const FONDO_TOL=46*46*3;   /* radio de color admitido, al cuadrado */
+function quitarFondo(cx,w,h){
+  const d=cx.getImageData(0,0,w,h), p=d.data;
+  const N=w*h;
+
+  /* 1. Colores de referencia del fondo: se toma un marco alrededor de la foto
+     y se agrupa por color. Se guardan hasta seis grupos, porque el fondo real
+     suele tener dos o tres cosas a la vez (el ropero y el piso, la cama y la
+     pared). */
+  const gx=Math.max(1,Math.round(w*0.05)), gy=Math.max(1,Math.round(h*0.05));
+  const bins={}; let nMarco=0;
+  for(let y=0;y<h;y++)for(let x=0;x<w;x++){
+    if(x>=gx&&y>=gy&&x<w-gx&&y<h-gy) continue;
+    const j=(y*w+x)*4;
+    const k=((p[j]>>4)<<8)|((p[j+1]>>4)<<4)|(p[j+2]>>4);
+    const b=(bins[k]=bins[k]||{n:0,r:0,g:0,b:0});
+    b.n++; b.r+=p[j]; b.g+=p[j+1]; b.b+=p[j+2]; nMarco++;
+  }
+  const refs=Object.values(bins).sort((a,b)=>b.n-a.n).slice(0,6)
+    .filter(b=>b.n>nMarco*0.02)
+    .map(b=>[b.r/b.n, b.g/b.n, b.b/b.n]);
+  const fondo=new Uint8Array(N);
+  if(!refs.length) return fondo;
+
+  /* 2. Un pixel puede ser fondo solo si se parece a alguna de esas referencias.
+     Esta es la diferencia clave con comparar contra el pixel vecino: si cada
+     paso admite un poco de diferencia, la marea cruza cualquier degradado y
+     termina comiendose la prenda entera. Comparando siempre contra el color
+     original del fondo, la inundacion se detiene en el borde de la prenda. */
+  const esFondo=j=>{
+    for(let k=0;k<refs.length;k++){
+      const r=refs[k];
+      const dr=p[j]-r[0], dg=p[j+1]-r[1], db=p[j+2]-r[2];
+      if(dr*dr+dg*dg+db*db<FONDO_TOL) return true;
+    }
+    return false;
+  };
+
+  /* 3. Inundacion desde los bordes. Se exige que este conectado al borde para
+     no borrar un hueco interior del mismo color (el espacio entre las piernas
+     de un pantalon si que se borra, porque si toca el borde). */
+  const cola=new Int32Array(N); let ini=0, fin=0;
+  const sem=(x,y)=>{ const i=y*w+x; if(!fondo[i]&&esFondo(i*4)){ fondo[i]=1; cola[fin++]=i; } };
+  for(let x=0;x<w;x++){ sem(x,0); sem(x,h-1); }
+  for(let y=0;y<h;y++){ sem(0,y); sem(w-1,y); }
+  while(ini<fin){
+    const i=cola[ini++], x=i%w, y=(i/w)|0;
+    const v=(nx,ny)=>{
+      if(nx<0||ny<0||nx>=w||ny>=h) return;
+      const ni=ny*w+nx; if(fondo[ni]) return;
+      if(esFondo(ni*4)){ fondo[ni]=1; cola[fin++]=ni; }
+    };
+    v(x+1,y); v(x-1,y); v(x,y+1); v(x,y-1);
+  }
+  return fondo;
+}
+/* Se queda solo con la mancha de prenda mas grande: descarta manchones
+   sueltos del fondo que quedaron sin inundar (una esquina de la cama, un
+   reflejo del piso). */
+function mayorMancha(fondo,w,h){
+  const N=w*h, lab=new Int32Array(N).fill(-1), cola=new Int32Array(N);
+  let mejor=-1, mejorN=0, id=0;
+  for(let s=0;s<N;s++){
+    if(fondo[s]||lab[s]>=0) continue;
+    let ini=0,fin=0; cola[fin++]=s; lab[s]=id; let n=0;
+    while(ini<fin){
+      const i=cola[ini++], x=i%w, y=(i/w)|0; n++;
+      const v=(nx,ny)=>{ if(nx<0||ny<0||nx>=w||ny>=h) return;
+        const ni=ny*w+nx; if(fondo[ni]||lab[ni]>=0) return;
+        lab[ni]=id; cola[fin++]=ni; };
+      v(x+1,y); v(x-1,y); v(x,y+1); v(x,y-1);
+    }
+    if(n>mejorN){ mejorN=n; mejor=id; }
+    id++;
+  }
+  if(mejor<0) return fondo;
+  const out=new Uint8Array(N);
+  for(let i=0;i<N;i++) out[i]=(lab[i]===mejor)?0:1;
+  return out;
+}
+
+/* Decide si el recorte es creible. Es la parte que evita el peor resultado
+   posible: una prenda cortada por la mitad con cara de estar bien. La prueba
+   fuerte es el centro: en una foto de ropa la prenda SIEMPRE ocupa el medio,
+   asi que si el centro quedo marcado como fondo, la inundacion se comio la
+   prenda y hay que rendirse. */
+function mascaraPrenda(cx,w,h){
+  let fondo=quitarFondo(cx,w,h);
+  fondo=limpiarMascara(fondo,w,h);
+  fondo=mayorMancha(fondo,w,h);
+  let prenda=0;
+  for(let i=0;i<fondo.length;i++) if(!fondo[i]) prenda++;
+  const frac=prenda/(w*h);
+  const x0=Math.round(w*0.35), x1=Math.round(w*0.65);
+  const y0=Math.round(h*0.35), y1=Math.round(h*0.65);
+  let cen=0, cenTot=0;
+  for(let y=y0;y<y1;y++)for(let x=x0;x<x1;x++){ cenTot++; if(!fondo[y*w+x]) cen++; }
+  const centroLleno=cenTot?cen/cenTot:0;
+  const valido = frac>0.12 && frac<0.92 && centroLleno>0.80;
+  return {fondo, valido, frac, centroLleno};
+}
+
+function limpiarMascara(fondo,w,h){
+  /* Rellena huecos sueltos: pixeles marcados como prenda pero rodeados de
+     fondo, y al reves. Evita el efecto "sal y pimienta" en los bordes. */
+  const out=new Uint8Array(fondo);
+  for(let y=1;y<h-1;y++)for(let x=1;x<w-1;x++){
+    const i=y*w+x;
+    let n=0;
+    n+=fondo[i-1]+fondo[i+1]+fondo[i-w]+fondo[i+w];
+    if(fondo[i]&&n<=1) out[i]=0;
+    if(!fondo[i]&&n>=4) out[i]=1;
+  }
+  return out;
+}
+function procesarFoto(file,maxLado,calidad,embellecer){
+  maxLado=maxLado||760; calidad=calidad||.82;
+  return new Promise((ok,err)=>{
+    const fr=new FileReader();
+    fr.onerror=()=>err(new Error("No pude leer el archivo."));
+    fr.onload=()=>{
+      const im=new Image();
+      im.onerror=()=>err(new Error("Ese archivo no parece una imagen."));
+      im.onload=()=>{
+        let w=im.naturalWidth,h=im.naturalHeight;
+        const esc=Math.min(1,maxLado/Math.max(w,h));
+        w=Math.max(1,Math.round(w*esc)); h=Math.max(1,Math.round(h*esc));
+        const cv=document.createElement("canvas"); cv.width=w; cv.height=h;
+        const cx=cv.getContext("2d",{willReadFrequently:true});
+        cx.drawImage(im,0,0,w,h);
+        let cols=[]; try{ cols=coloresDe(cx,w,h); }catch(e){}
+
+        if(embellecer===false) return ok({src:cv.toDataURL("image/jpeg",calidad),colores:cols,limpia:false});
+
+        let limpia=false;
+        try{
+          const r=mascaraPrenda(cx,w,h);
+          const fondo=r.fondo;
+          if(r.valido){
+            const d=cx.getImageData(0,0,w,h), p=d.data;
+            let x0=w,y0=h,x1=0,y1=0;
+            for(let y=0;y<h;y++)for(let x=0;x<w;x++){
+              const i=y*w+x;
+              if(fondo[i]){ const j=i*4; p[j]=255;p[j+1]=255;p[j+2]=255; }
+              else { if(x<x0)x0=x; if(x>x1)x1=x; if(y<y0)y0=y; if(y>y1)y1=y; }
+            }
+            cx.putImageData(d,0,0);
+            /* encuadre: cuadrado, prenda centrada, con un respiro alrededor */
+            const pw=x1-x0+1, ph=y1-y0+1;
+            if(pw>8&&ph>8){
+              const L=Math.round(Math.max(pw,ph)*1.10);
+              const cu=document.createElement("canvas"); cu.width=L; cu.height=L;
+              const ct=cu.getContext("2d");
+              ct.fillStyle="#fff"; ct.fillRect(0,0,L,L);
+              ct.drawImage(cv,x0,y0,pw,ph,Math.round((L-pw)/2),Math.round((L-ph)/2),pw,ph);
+              const fin=document.createElement("canvas");
+              fin.width=maxLado; fin.height=maxLado;
+              const cf=fin.getContext("2d");
+              cf.fillStyle="#fff"; cf.fillRect(0,0,maxLado,maxLado);
+              cf.imageSmoothingQuality="high";
+              cf.drawImage(cu,0,0,maxLado,maxLado);
+              return ok({src:fin.toDataURL("image/jpeg",calidad),colores:cols,limpia:true});
+            }
+          }
+        }catch(e){}
+        /* No se pudo recortar el fondo. Aun asi se cuadra: se centra sobre un
+           lienzo blanco cuadrado, SIN recortar nada de la foto. La rejilla del
+           guardarropa queda pareja igual, y no se pierde ni un pedazo de la
+           prenda por intentar adivinar donde esta. */
+        try{
+          const L=Math.max(w,h);
+          const cu=document.createElement("canvas"); cu.width=maxLado; cu.height=maxLado;
+          const ct=cu.getContext("2d");
+          ct.fillStyle="#fff"; ct.fillRect(0,0,maxLado,maxLado);
+          ct.imageSmoothingQuality="high";
+          const k=maxLado/L;
+          ct.drawImage(cv,Math.round((maxLado-w*k)/2),Math.round((maxLado-h*k)/2),Math.round(w*k),Math.round(h*k));
+          return ok({src:cu.toDataURL("image/jpeg",calidad),colores:cols,limpia:false,cuadrada:true});
+        }catch(e){}
+        ok({src:cv.toDataURL("image/jpeg",calidad),colores:cols,limpia:limpia});
+      };
+      im.src=fr.result;
+    };
+    fr.readAsDataURL(file);
+  });
+}
+
+/* ============================================================
+   FORMULARIO DE PRENDA
+   ============================================================ */
+const CATS={base:"Pantalones y jeans",top:"Prendas de arriba",mid:"Capa media",
+            out:"Chaquetas y abrigos",shoe:"Calzado"};
+const TIPOS={base:["pantalon","jeans"],top:["camisa","camiseta","polo"],
+             mid:["sueter","camisa"],out:["abrigo","chaqueta","saco"],
+             shoe:["zapatos","zapatillas"]};
+const TIPO_ETIQ={pantalon:"Pantalon",jeans:"Jeans",camisa:"Camisa",camiseta:"Camiseta",
+  polo:"Polo",sueter:"Sueter o chompa",abrigo:"Abrigo",chaqueta:"Chaqueta o casaca",
+  saco:"Saco o blazer",zapatos:"Zapatos",zapatillas:"Zapatillas"};
+const DEF={pantalon:{f:3,w:1},jeans:{f:2,w:1},camisa:{f:4,w:1},camiseta:{f:2,w:1},
+  polo:{f:3,w:1},sueter:{f:3,w:2},chaqueta:{f:3,w:2},saco:{f:5,w:2},abrigo:{f:4,w:3},
+  zapatos:{f:4,w:1},zapatillas:{f:2,w:1}};
+const TEMPS=[["todo","Todo el año"],["verano","Verano"],["otono","Otoño"],
+             ["invierno","Invierno"],["primavera","Primavera"]];
+const ABRIGO=["","Ligera","Media","Abrigadora"];
+
+let EDITANDO=null, FOTO_NUEVA=null, COLS=new Set(), TEMS=new Set();
+const $=id=>document.getElementById(id);
+
+function pintaPaleta(){
+  $("dpPal").innerHTML=Object.keys(PALETA).map(n=>
+    '<span class="chip" data-col="'+n+'" aria-pressed="'+(COLS.has(n)?"true":"false")+'">'+
+    '<i style="background:'+rgbCss(n)+'"></i>'+n+'</span>').join("");
+  $("dpPal").querySelectorAll("[data-col]").forEach(c=>c.onclick=()=>{
+    const n=c.dataset.col;
+    if(COLS.has(n)) COLS.delete(n); else { if(COLS.size>=3) return; COLS.add(n); }
+    pintaPaleta();
+  });
+}
+function pintaTemps(){
+  $("dpTem").innerHTML=TEMPS.map(([k,l])=>
+    '<span class="chip" data-tem="'+k+'" aria-pressed="'+(TEMS.has(k)?"true":"false")+'">'+l+'</span>').join("");
+  $("dpTem").querySelectorAll("[data-tem]").forEach(c=>c.onclick=()=>{
+    const k=c.dataset.tem;
+    if(k==="todo"){ TEMS.clear(); TEMS.add("todo"); }
+    else { TEMS.delete("todo"); if(TEMS.has(k)) TEMS.delete(k); else TEMS.add(k); }
+    if(!TEMS.size) TEMS.add("todo");
+    pintaTemps();
+  });
+}
+function pintaTipos(){
+  const cat=$("dpCat").value, actual=$("dpTipo").value;
+  $("dpTipo").innerHTML=TIPOS[cat].map(t=>'<option value="'+t+'">'+TIPO_ETIQ[t]+'</option>').join("");
+  if(TIPOS[cat].includes(actual)) $("dpTipo").value=actual;
+  aplicaDefaults();
+}
+function aplicaDefaults(){
+  if(EDITANDO) return;
+  const d=DEF[$("dpTipo").value]; if(!d) return;
+  $("dpF").value=d.f; $("dpW").value=d.w; pintaRangos();
+}
+function pintaRangos(){
+  $("dpFv").textContent=$("dpF").value+" / 5";
+  $("dpWv").textContent=ABRIGO[+$("dpW").value];
+}
+function abrirPrenda(id){
+  const p=id?W.find(x=>x.id===id):null;
+  EDITANDO=p||null; FOTO_NUEVA=null;
+  $("dpErr").style.display="none";
+  $("dpTit").textContent=p?"Editar prenda":"Agregar prenda";
+  $("dpCat").innerHTML=Object.keys(CATS).map(k=>'<option value="'+k+'">'+CATS[k]+'</option>').join("");
+  $("dpCat").value=p?p.cat:"top";
+  pintaTipos();
+  if(p) $("dpTipo").value=p.t;
+  $("dpNom").value=p?p.n:"";
+  COLS=new Set(p?p.c.filter(c=>PALETA[c]):[]);
+  TEMS=new Set(p?p.te:["todo"]);
+  $("dpF").value=p?p.f:3; $("dpW").value=p?p.w:1; pintaRangos();
+  $("dpAuto").textContent="";
+  $("dpFoto").innerHTML=p?'<img src="'+p.src+'" alt="">':'<span>Tocar para tomar o elegir la foto</span>';
+  pintaPaleta(); pintaTemps();
+  $("dprenda").showModal();
+}
+async function guardarPrenda(){
+  const err=t=>{ $("dpErr").textContent=t; $("dpErr").style.display="block"; };
+  const src=FOTO_NUEVA?FOTO_NUEVA.src:(EDITANDO?EDITANDO.src:null);
+  if(!src) return err("Falta la foto de la prenda.");
+  if(!COLS.size) return err("Elige al menos un color.");
+  const tipo=$("dpTipo").value;
+  const nom=$("dpNom").value.trim()||(TIPO_ETIQ[tipo]+" "+[...COLS][0]);
+  const p={
+    id: EDITANDO?EDITANDO.id:("u"+Date.now().toString(36)+Math.floor(Math.random()*900+100)),
+    n: nom, t: tipo, cat: $("dpCat").value, c: [...COLS],
+    f: +$("dpF").value, te: [...TEMS], w: +$("dpW").value, src: src
+  };
+  try{ await Almacen.guardar([p]); }catch(e){ return err("No pude guardar: "+(e.message||e)); }
+  const i=W.findIndex(x=>x.id===p.id);
+  if(i>=0) W[i]=p; else W.push(p);
+  $("dprenda").close();
+  aplicarW();
+}
+async function borrarPrenda(id){
+  const p=W.find(x=>x.id===id); if(!p) return;
+  if(!confirm("¿Borrar «"+p.n+"» del armario? No se puede deshacer.")) return;
+  try{ await Almacen.borrar(id); }catch(e){ alert("No pude borrarla: "+(e.message||e)); return; }
+  W=W.filter(x=>x.id!==id);
+  EXCL.delete(id); exSave();
+  aplicarW();
+}
+
+/* ============================================================
+   RECALCULO: todo lo que dependia de W y antes corria al cargar
+   ============================================================ */
+function aplicarW(){
+  precomputaW(); recalcSlots(); recalcPAIR(); calcTecho();
+  renderGuardarropa(); renderReglas();
+  if(typeof pintaModo==="function"){ pintaModo(); pintaNotaIdeas(MODO_IDEAS||!puedeArmarReal()); }
+}
+
+/* ---------------- importar / exportar el armario ---------------- */
+function exportarArmario(){
+  const d={app:"armario",tipo:"guardarropa",v:1,fecha:new Date().toISOString(),
+           perfil:PERFIL,prendas:W.map(({_i,_n,_f,_st,_p,_v,...r})=>r)};
+  const a=document.createElement("a");
+  a.href=URL.createObjectURL(new Blob([JSON.stringify(d)],{type:"application/json"}));
+  a.download="armario_"+new Date().toISOString().slice(0,10)+".json";
+  document.body.appendChild(a); a.click(); a.remove();
+  setTimeout(()=>URL.revokeObjectURL(a.href),3000);
+}
+async function importarArmario(file){
+  const txt=await file.text();
+  let d; try{ d=JSON.parse(txt); }catch(e){ return alert("No pude leer ese archivo."); }
+  const ps=Array.isArray(d)?d:(d.prendas||[]);
+  if(!ps.length) return alert("Ese archivo no trae prendas.");
+  const validas=ps.filter(p=>p&&p.id&&p.src&&p.cat&&Array.isArray(p.c));
+  if(!validas.length) return alert("Las prendas de ese archivo no tienen el formato esperado.");
+  if(!confirm("Se van a agregar "+validas.length+" prendas a tu armario. ¿Sigo?")) return;
+  try{ await Almacen.guardar(validas); }catch(e){ return alert("No pude guardar: "+(e.message||e)); }
+  const ix={}; W.forEach((p,i)=>ix[p.id]=i);
+  validas.forEach(p=>{ if(ix[p.id]!==undefined) W[ix[p.id]]=p; else W.push(p); });
+  if(d.perfil){ PERFIL=d.perfil; LS.set("armario_perfil_v1",PERFIL); $("perfilTxt").value=PERFIL; }
+  aplicarW();
+  alert("Listo: "+validas.length+" prendas cargadas.");
+}
+
+/* ============================================================
+   ARRANQUE
+   ============================================================ */
+function dbAviso(html){ const e=$("dbmsg"); e.innerHTML='<div class="aviso">'+html+'</div>'; }
+
+async function arrancar(){
+  PERFIL=LS.get("armario_perfil_v1",JSON.stringify(PERFIL_DEF))||PERFIL_DEF;
+  $("perfilTxt").value=PERFIL;
+  /* Sin valor guardado se deja vacio a proposito: lo decide el campo "sexo"
+     de armario_inicial.json, no el codigo. */
+  SEXO=LS.get("armario_sexo_v1",'""')||"";
+  USA_CORREA=!!LS.get("armario_correa_v1","false");
+  MODO_IDEAS=!!LS.get("armario_modo_v1","false");
+  $("chkCorrea").checked=USA_CORREA;
+
+  /* Gustos (pines, referencias de color, modos de estilo): son de cada
+     persona, igual que las prendas. Si no vinieron con el paquete, la app
+     funciona igual pero sin ese sesgo personal: puntua por las reglas
+     generales, sin pines de Pinterest ni modos tipo "estilo de tal actor". */
+  try{
+    const r=await fetch("gustos_inicial.json",{cache:"no-store"});
+    if(r.ok){
+      const g=await r.json();
+      PINS=g.pines||[]; REFS=g.referencias||[]; MODOS=g.modos||{};
+    }
+  }catch(e){}
+  recalcAFB();
+
+  let prendas=[];
+  try{ prendas=await Almacen.todas(); }
+  catch(e){
+    Almacen=lsAPI; MODO_ALMACEN="ls";
+    try{ prendas=await Almacen.todas(); }catch(e2){ prendas=[]; }
+    dbAviso("Este navegador no me deja usar el almacen grande (pasa al abrir el archivo "+
+            "con doble clic). Estoy usando el chico, que solo aguanta unas pocas fotos. "+
+            "<b>Sube la app a una direccion web</b> y funcionara completo.");
+  }
+
+  /* Armario inicial. Se lee SIEMPRE (el service worker nunca lo cachea) y
+     trae una marca "version". Se vuelca al dispositivo en dos casos:
+       - el armario esta vacio (instalacion nueva), o
+       - la version del archivo cambio respecto de la ya cargada.
+     Ese segundo caso es el que permite entregar la app a otra persona
+     cambiando solo los dos JSON: al subir un armario con version nueva, el
+     telefono reemplaza el anterior solo, sin que nadie borre datos del
+     navegador a mano. */
+  try{
+    const r=await fetch("armario_inicial.json",{cache:"no-store"});
+    if(r.ok){
+      const d=await r.json();
+      const ps=(d&&d.prendas)||[];
+      const ver=String((d&&d.version)||"");
+      const verPrev=LS.get("armario_version_v1",'""')||"";
+      const nueva=ver&&ver!==verPrev;
+      if(ps.length&&(!prendas.length||nueva)){
+        try{ await Almacen.vaciar(); }catch(e){}
+        await Almacen.guardar(ps);
+        prendas=ps;
+        if(d.perfil){ PERFIL=d.perfil; LS.set("armario_perfil_v1",PERFIL); $("perfilTxt").value=PERFIL; }
+        if(d.sexo==="hombre"||d.sexo==="mujer"){ SEXO=d.sexo; LS.set("armario_sexo_v1",SEXO); }
+      }
+      if(ver) LS.set("armario_version_v1",ver);
+    }
+  }catch(e){}
+
+  W=prendas;
+  aplicarW();
+
+  if(SEXO!=="hombre"&&SEXO!=="mujer") SEXO="mujer";
+
+  /* Clima: si ya se uso antes, se refresca solo; si nunca se activo, se
+     muestra el boton y no se pide permiso de ubicacion sin que lo pidan. */
+  CLIMA=climaGuardado();
+  pintaClima();
+  if(LS.get(LUGAR_K,"null")&&!CLIMA) iniciarClima();
+
+  renderUso();
+  pintaActs();
+  pintaModo();
+  pintaNotaIdeas(MODO_IDEAS||!puedeArmarReal());
+}
+
+/* ---------------- eventos del guardarropa ---------------- */
+$("bAdd").onclick=()=>abrirPrenda(null);
+$("bExp").onclick=exportarArmario;
+$("bImp").onclick=()=>$("fImp").click();
+$("fImp").onchange=e=>{ const f=e.target.files&&e.target.files[0]; if(f) importarArmario(f); e.target.value=""; };
+$("bPerfil").onclick=()=>{ PERFIL=$("perfilTxt").value.trim()||PERFIL_DEF;
+  LS.set("armario_perfil_v1",PERFIL); const b=$("bPerfil");
+  b.textContent="Guardada"; b.classList.add("done");
+  setTimeout(()=>{b.textContent="Guardar descripcion";b.classList.remove("done");},1600); };
+$("dpCat").onchange=pintaTipos;
+$("dpTipo").onchange=aplicaDefaults;
+$("dpF").oninput=pintaRangos;
+$("dpW").oninput=pintaRangos;
+$("dpCancel").onclick=()=>$("dprenda").close();
+$("dpOk").onclick=guardarPrenda;
+let ULTIMO_ARCHIVO=null;
+async function cargarFoto(f){
+  ULTIMO_ARCHIVO=f;
+  const emb=$("dpEmb").checked;
+  $("dpFoto").innerHTML='<span>'+(emb?"Recortando el fondo…":"Procesando…")+'</span>';
+  $("dpEmbMsg").style.display="none";
+  try{
+    FOTO_NUEVA=await procesarFoto(f,760,.82,emb);
+    $("dpFoto").innerHTML='<img src="'+FOTO_NUEVA.src+'" alt="">';
+    if(emb&&!FOTO_NUEVA.limpia){
+      $("dpEmbMsg").textContent="Solo la encuadré: el fondo de esta foto se parece demasiado a la prenda y recortarlo la habría cortado por la mitad. Sale limpio si cuelgas la prenda sobre una pared lisa o la echas sobre la cama, con buena luz.";
+      $("dpEmbMsg").style.display="block";
+    }
+    if(FOTO_NUEVA.colores.length&&!EDITANDO){
+      COLS=new Set(FOTO_NUEVA.colores); pintaPaleta();
+      $("dpAuto").textContent="· detectados solos, corrigelos si fallan";
+    }
+  }catch(err){
+    $("dpFoto").innerHTML='<span>No pude procesar esa foto. Prueba con otra.</span>';
+  }
+}
+$("dpFile").onchange=async e=>{
+  const f=e.target.files&&e.target.files[0];
+  e.target.value="";
+  if(f) await cargarFoto(f);
+};
+/* Si el recorte no convence, se reprocesa la misma foto sin tocar nada mas. */
+$("dpEmb").onchange=()=>{ if(ULTIMO_ARCHIVO) cargarFoto(ULTIMO_ARCHIVO); };
+$("vjGo").onclick=armarViaje;
+
+
+/* ============================================================
+   CATALOGO DE IDEAS
+   Cuando todavia no hay fotos, el motor no se queda mudo: trabaja
+   sobre un catalogo de prendas DESCRITAS (tipo + color) y aplica
+   exactamente las mismas tablas de color y de formalidad. Cuando
+   empiezan a entrar fotos, se vuelve solo al armario real.
+   ============================================================ */
+const CV_COL={
+  beige:{c:"beige",  n:"beige",       hex:"#d9c7a8"},
+  crema:{c:"crema",  n:"crema",       hex:"#efe6d2"},
+  blanco:{c:"blanco",n:"blanco",      hex:"#f2f1ec"},
+  negro:{c:"negro",  n:"negro",       hex:"#22201e"},
+  gris:{c:"gris",    n:"gris",        hex:"#8a8a8a"},
+  navy:{c:"azul marino",n:"azul marino",hex:"#26314b"},
+  azul:{c:"azul",    n:"azul",        hex:"#4a6d92"},
+  marron:{c:"marron",n:"marrón",      hex:"#6b4a2f"},
+  olivo:{c:"olivo",  n:"verde olivo", hex:"#6b6b3f"},
+  vino:{c:"vino",    n:"vino",        hex:"#6e2233"}
+};
+const CV_PAL={
+  base:["beige","crema","negro","gris","navy","azul","marron","olivo"],
+  top:["blanco","crema","beige","negro","gris","azul","navy","vino"],
+  mid:["beige","gris","navy","negro","olivo","vino"],
+  out:["negro","navy","beige","gris","marron","olivo"],
+  shoe:["negro","blanco","marron","beige","gris"],
+  vestido:["negro","navy","vino","beige","crema","olivo","gris","azul"]
+};
+/* [tipo que entiende el buscador, como se llama, formalidad, cuanto abriga, temporadas] */
+const CV_TIPOS={
+  hombre:{
+    base:[["pantalon","Pantalón",3,1,["todo"]],["jeans","Jeans",2,1,["todo"]],
+          ["short","Short",1,1,["verano","primavera"]]],
+    top:[["camiseta","Camiseta",2,1,["todo"]],["polo","Polo",3,1,["todo"]],
+         ["camisa","Camisa",4,1,["todo"]]],
+    mid:[["sueter","Chompa",3,2,["otono","invierno"]]],
+    out:[["chaqueta","Casaca",2,2,["otono","primavera"]],["saco","Saco",5,2,["todo"]],
+         ["abrigo","Gabardina",4,2,["otono","invierno","primavera"]],
+         ["abrigo","Abrigo",4,3,["invierno"]]],
+    shoe:[["zapatillas","Zapatillas",2,1,["todo"]],["zapatos","Zapatos",4,1,["todo"]],
+          ["zapatos","Botines",3,1,["otono","invierno"]]],
+    vestido:[]
+  },
+  mujer:{
+    base:[["pantalon","Pantalón",3,1,["todo"]],["jeans","Jeans",2,1,["todo"]],
+          ["falda","Falda",3,1,["todo"]],["short","Short",1,1,["verano","primavera"]]],
+    top:[["camiseta","Camiseta",2,1,["todo"]],["blusa","Blusa",3,1,["todo"]],
+         ["blusa","Top",2,1,["verano","primavera"]],["camisa","Camisa",4,1,["todo"]]],
+    mid:[["sueter","Chompa",3,2,["otono","invierno"]]],
+    out:[["chaqueta","Casaca",2,2,["otono","primavera"]],["saco","Blazer",5,2,["todo"]],
+         ["abrigo","Gabardina",4,2,["otono","invierno","primavera"]],
+         ["abrigo","Abrigo",4,3,["invierno"]]],
+    shoe:[["zapatillas","Zapatillas",2,1,["todo"]],["zapatos","Zapatos bajos",3,1,["todo"]],
+          ["zapatos","Zapatos de taco",4,1,["todo"]],["zapatos","Botines",3,1,["otono","invierno"]]],
+    vestido:[["vestido","Vestido",3,1,["todo"]]]
+  }
+};
+let SEXO="hombre";
+function catalogoIdeas(sexo){
+  const T=CV_TIPOS[sexo]||CV_TIPOS.hombre, out=[];
+  for(const cat in T){
+    for(const [t,etiq,f,w,te] of T[cat]){
+      for(const ck of CV_PAL[cat]||[]){
+        const col=CV_COL[ck];
+        out.push({ id:"v_"+cat+"_"+etiq.replace(/\s/g,"")+"_"+ck,
+          n:etiq+" "+col.n, t:t, cat:cat, c:[col.c], f:f, te:te.slice(), w:w,
+          src:null, hex:col.hex, virt:true });
+      }
+    }
+  }
+  return out;
+}
+
+/* ---------- cambio de mundo: armario real <-> catalogo de ideas ---------- */
+let W_REAL=null, MODO_IDEAS=false;
+const puedeArmarReal=()=>{
+  const c={}; W.forEach(w=>c[w.cat]=(c[w.cat]||0)+1);
+  return !!(c.base&&c.top&&c.shoe);
+};
+function refrescarMotor(){ precomputaW(); recalcSlots(); recalcPAIR(); calcTecho(); }
+function entrarIdeas(){
+  if(W_REAL) return;
+  W_REAL=W; W=catalogoIdeas(SEXO); refrescarMotor();
+}
+function salirIdeas(){
+  if(!W_REAL) return;
+  W=W_REAL; W_REAL=null; refrescarMotor();
+}
+
+/* ---------- vestidos ----------
+   Un vestido resuelve el torso y las piernas de una sola vez, asi que no
+   encaja en el motor de cinco huecos: si entrara como "base" el motor le
+   pondria una camisa encima. Va por un carril propio, corto, que usa las
+   mismas tablas de color y de formalidad. */
+function outfitsVestido(p){
+  const vestidos=W.filter(w=>w.cat==="vestido");
+  if(!vestidos.length) return [];
+  const enTemp=w=>!p.tem.length||w.te.includes("todo")||p.tem.some(t=>w.te.includes(t));
+  const shoes=SHOE.filter(enTemp), outs=[null,...OUT.filter(enTemp)];
+  const res=[];
+  for(const v of vestidos){
+    if(!enTemp(v)) continue;
+    if(p.no.includes("vestido")) continue;
+    for(const s of shoes) for(const o of outs){
+      if(o&&p.no.includes(o.t)) continue;
+      if(p.no.includes(s.t)) continue;
+      const items=o?[v,s,o]:[v,s];
+      let sc=colorScore(items)*2.6;
+      const f=o?(v.f*.55+s.f*.25+o.f*.20):(v.f*.68+s.f*.32);
+      const why=[];
+      if(p.occ){
+        const lo=p.occ.r[0]-.4, hi=p.occ.r[1]+.4;
+        if(f<lo||f>hi) continue;
+        sc+=2.4; why.push("formalidad "+f.toFixed(1)+"/5 encaja");
+      }
+      if(p.tem.includes("invierno")){ if(!o) continue; sc+=1; why.push("abriga"); }
+      if(p.tem.includes("verano")){ if(o) continue; why.push("ligero"); }
+      if(p.col.length){
+        const cf=new Set(items.flatMap(x=>x._f));
+        const hit=p.col.filter(c=>cf.has(c));
+        if(hit.length){ sc+=1.5*hit.length; why.push("color "+hit.join(", ")); }
+      }
+      const claros=new Set(items.map(x=>x._v));
+      if(claros.size===1) sc-=1.6; else sc+=.8;
+      why.unshift("un vestido resuelve el outfit completo");
+      res.push({o:{base:v,top:null,mid:null,out:o,shoe:s},s:sc,f,why,vestido:true});
+    }
+  }
+  res.sort((a,b)=>b.s-a.s);
+  return res;
+}
+
+/* ---------- build del modo ideas ----------
+   Reutiliza el motor completo y, si son prendas de mujer, reserva dos de las
+   seis tarjetas para propuestas con vestido, que no salen del motor normal. */
+function buildIdeas(raw){
+  const r=build(raw);
+  const vs=outfitsVestido(r.p);
+  if(!vs.length) return r;
+  const elegidos=[]; const usadoV=new Set(), usadoS=new Set();
+  for(const c of vs){
+    if(elegidos.length>=2) break;
+    if(usadoV.has(c.o.base.id)||usadoS.has(c.o.shoe.id)) continue;
+    usadoV.add(c.o.base.id); usadoS.add(c.o.shoe.id);
+    c.tuck=false; c.modo=r.p.modoN||null;
+    elegidos.push(c);
+  }
+  if(!elegidos.length) return r;
+  const pick=r.pick.slice(0,Math.max(0,6-elegidos.length)).concat(elegidos);
+  return {p:r.p,pick,total:r.total+vs.length,pool:r.pool};
+}
+
+/* ---------- nota y controles del modo ideas ---------- */
+function pintaNotaIdeas(ideas){
+  const e=document.getElementById("ideasNota");
+  if(!ideas){ e.style.display="none"; return; }
+  e.style.display="block";
+  e.innerHTML= puedeArmarReal()
+    ? "<b>Modo ideas.</b> Te estoy proponiendo prendas por descripción, no las tuyas. "+
+      "Sirve para ver qué te conviene comprar. Toca <b>Con mi ropa</b> para volver a tu armario."
+    : "<b>Todavía no tienes prendas suficientes.</b> Mientras tanto te propongo combinaciones "+
+      "descritas, con las mismas reglas de color. Apenas subas un pantalón, algo de arriba y un "+
+      "calzado, empiezo a armarte outfits con tu ropa de verdad.";
+}
+function pintaModo(){
+  const real=puedeArmarReal();
+  document.getElementById("mReal").setAttribute("aria-pressed", (!MODO_IDEAS&&real)?"true":"false");
+  document.getElementById("mIdeas").setAttribute("aria-pressed",(MODO_IDEAS||!real)?"true":"false");
+  document.getElementById("mReal").style.opacity=real?"1":".45";
+  document.getElementById("selSexo").style.display=(MODO_IDEAS||!real)?"":"none";
+  document.getElementById("selSexo").value=SEXO;
+}
+document.getElementById("mReal").onclick=()=>{
+  if(!puedeArmarReal()) return;
+  MODO_IDEAS=false; LS.set("armario_modo_v1",false); pintaModo();
+  if(LASTQ) render(LASTQ);
+};
+document.getElementById("mIdeas").onclick=()=>{
+  MODO_IDEAS=true; LS.set("armario_modo_v1",true); pintaModo();
+  if(LASTQ) render(LASTQ);
+};
+document.getElementById("selSexo").onchange=e=>{
+  SEXO=e.target.value; LS.set("armario_sexo_v1",SEXO);
+  if(W_REAL){ W=catalogoIdeas(SEXO); refrescarMotor(); }
+  if(LASTQ) render(LASTQ);
+};
+document.getElementById("chkCorrea").onchange=e=>{
+  USA_CORREA=e.target.checked; LS.set("armario_correa_v1",USA_CORREA);
+  if(LASTQ) render(LASTQ);
+};
+
+/* ---------------- service worker: instalable y offline ---------------- */
+if("serviceWorker" in navigator){
+  window.addEventListener("load",()=>{
+    navigator.serviceWorker.register("sw.js").catch(()=>{});
+  });
+}
+
+arrancar();
+
+</script>
+</body>
+</html>
